@@ -50,6 +50,32 @@ const en: Dictionary = {
     stat2Label: "Machine categories",
     stat3Value: "100%",
     stat3Label: "After-sales service",
+    slides: [
+      {
+        image: "/hero/hero.svg",
+        eyebrow: "CNC Machine Tools · Engineering · Service",
+        titleLine1: "The Industrial Power",
+        titleLine2: "of Precision",
+        subtitle:
+          "From CNC lathes to vertical and horizontal machining centers, grinding and gear-profile grinding machines — machine-tool solutions that advance your production, with uninterrupted service for every machine you buy from us.",
+      },
+      {
+        image: "/categories/cnc-tornalar.svg",
+        eyebrow: "CNC Lathes · High Torque",
+        titleLine1: "Micron-Level",
+        titleLine2: "Turning Power",
+        subtitle:
+          "From serial production to single-part manufacturing — cut your cycle times and boost productivity with high-speed, rigid, live-tooling CNC turning solutions.",
+      },
+      {
+        image: "/categories/disli-taslama.svg",
+        eyebrow: "Grinding · Gear Profile Grinding",
+        titleLine1: "Flawless Surfaces,",
+        titleLine2: "Repeatable Quality",
+        subtitle:
+          "Machine-tool technologies delivering DIN-class precision and long-term stability across cylindrical, surface and gear-profile grinding applications.",
+      },
+    ],
   },
   categories: {
     eyebrow: "Product Families",

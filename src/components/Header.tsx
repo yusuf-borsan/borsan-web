@@ -26,6 +26,23 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     setOpen(false);
   }, [pathname]);
 
+  // Lock body scroll while the drawer is open.
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  // Close the drawer with the Escape key.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   const links = [
     { href: localePath(locale, routes.products), label: dict.nav.products },
     { href: localePath(locale, routes.about), label: dict.nav.about },
@@ -37,6 +54,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     pathname === href || (href !== localePath(locale) && pathname.startsWith(href));
 
   return (
+    <>
     <header
       className={`sticky top-0 z-50 border-b transition-all duration-300 ${
         scrolled
@@ -100,33 +118,70 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           </button>
         </div>
       </div>
+      </header>
 
-      {/* Mobile drawer */}
+      {/* ---- Mobile slide-in drawer (flyout from the right) ---- */}
+      {/* Rendered OUTSIDE <header> so the header's backdrop-blur (when scrolled)
+          can't become the containing block for these fixed elements. */}
+      {/* Dimmed overlay — click to close */}
       <div
-        className={`overflow-hidden border-t border-ink-100 bg-white lg:hidden ${
-          open ? "max-h-96" : "max-h-0"
-        } transition-[max-height] duration-300 ease-in-out`}
+        onClick={() => setOpen(false)}
+        className={`fixed inset-0 z-[60] bg-ink-950/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden
+      />
+
+      {/* Side panel */}
+      <aside
+        role="dialog"
+        aria-modal="true"
+        aria-label={dict.meta.siteName}
+        className={`fixed right-0 top-0 z-[70] flex h-full w-[86%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
+          open ? "translate-x-0" : "translate-x-full"
+        }`}
       >
-        <nav className="flex flex-col gap-1 px-5 py-4 sm:px-8">
+        <div className="flex h-20 shrink-0 items-center justify-between border-b border-ink-100 px-6">
+          <Image
+            src="/branding/logo.png"
+            alt={dict.meta.siteName}
+            width={1939}
+            height={423}
+            className="h-8 w-auto"
+          />
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Kapat / Close"
+            className="flex h-11 w-11 items-center justify-center rounded-sm text-ink-700 transition-colors hover:bg-ink-50 hover:text-brand-600"
+          >
+            <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6" aria-hidden>
+              <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-6 py-8">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={`rounded-sm px-3 py-3 text-base font-medium ${
-                isActive(link.href) ? "bg-brand-50 text-brand-600" : "text-ink-800 hover:bg-ink-50"
+              className={`font-display border-b border-ink-100/70 py-4 text-2xl tracking-tight transition-colors sm:text-3xl ${
+                isActive(link.href) ? "text-brand-600" : "text-ink-900 hover:text-brand-600"
               }`}
             >
               {link.label}
             </Link>
           ))}
-          <div className="mt-3 flex items-center justify-between px-3">
-            <LocaleSwitcher locale={locale} />
-            <ButtonLink href={localePath(locale, routes.contact)} variant="primary" size="md" withArrow>
-              {dict.nav.getQuote}
-            </ButtonLink>
-          </div>
         </nav>
-      </div>
-    </header>
+
+        <div className="flex shrink-0 items-center justify-between gap-4 border-t border-ink-100 px-6 py-6">
+          <LocaleSwitcher locale={locale} />
+          <ButtonLink href={localePath(locale, routes.contact)} variant="primary" size="lg" withArrow>
+            {dict.nav.getQuote}
+          </ButtonLink>
+        </div>
+      </aside>
+    </>
   );
 }

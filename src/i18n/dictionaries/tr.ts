@@ -48,6 +48,32 @@ const tr = {
     stat2Label: "Tezgah kategorisi",
     stat3Value: "%100",
     stat3Label: "Satış sonrası servis",
+    slides: [
+      {
+        image: "/hero/hero.svg",
+        eyebrow: "CNC Takım Tezgahları · Mühendislik · Servis",
+        titleLine1: "Hassasiyetin",
+        titleLine2: "Endüstriyel Gücü",
+        subtitle:
+          "CNC tornalardan dik ve yatay işleme merkezlerine, taşlama ve dişli profil taşlama tezgahlarına kadar; üretiminizi ileri taşıyan tezgah çözümleri ve satın aldığınız her makine için kesintisiz servis.",
+      },
+      {
+        image: "/categories/cnc-tornalar.svg",
+        eyebrow: "CNC Tornalar · Yüksek Tork",
+        titleLine1: "Mikron Düzeyinde",
+        titleLine2: "Tornalama Gücü",
+        subtitle:
+          "Seri üretimden tekil parça imalatına; yüksek devirli, rijit ve tahrikli takımlı CNC torna çözümleriyle çevrim sürenizi kısaltın, verimliliğinizi artırın.",
+      },
+      {
+        image: "/categories/disli-taslama.svg",
+        eyebrow: "Taşlama · Dişli Profil Taşlama",
+        titleLine1: "Kusursuz Yüzey,",
+        titleLine2: "Tekrarlanabilir Kalite",
+        subtitle:
+          "Silindirik, satıh ve dişli profil taşlama uygulamalarında DIN sınıfı hassasiyet ve uzun vadeli kararlılık sunan tezgah teknolojileri.",
+      },
+    ],
   },
   categories: {
     eyebrow: "Ürün Aileleri",

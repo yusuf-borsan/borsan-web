@@ -4,6 +4,7 @@ import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { localePath, routes } from "@/lib/routes";
 import { Container, Eyebrow, ButtonLink } from "./ui";
+import { ReferenceMarquee } from "./ReferenceMarquee";
 
 export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
   return (
@@ -130,18 +131,10 @@ export function ReferencesSection({ dict }: { dict: Dictionary }) {
             {dict.references.subtitle}
           </p>
         </div>
-        <div className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-ink-100 bg-ink-100 sm:grid-cols-4">
-          {REFERENCE_NAMES.map((name) => (
-            <div
-              key={name}
-              className="flex h-24 items-center justify-center bg-white px-4 transition-colors hover:bg-steel-300/10"
-              title={dict.references.placeholder}
-            >
-              <span className="font-display text-sm tracking-[0.18em] text-ink-400">{name}</span>
-            </div>
-          ))}
-        </div>
       </Container>
+
+      {/* Infinite flowing reference strip — eases to a slow flow on hover */}
+      <ReferenceMarquee items={REFERENCE_NAMES} placeholder={dict.references.placeholder} />
     </section>
   );
 }

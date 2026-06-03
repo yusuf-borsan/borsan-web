@@ -4,9 +4,10 @@ import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { categories } from "@/lib/products";
 import { localePath, routes } from "@/lib/routes";
-import { Container, Eyebrow, ButtonLink, SectionHeading, Arrow } from "@/components/ui";
+import { Container, ButtonLink, SectionHeading, Arrow } from "@/components/ui";
 import { CategoryIcon, FeatureIcon } from "@/components/icons";
 import { ReferencesSection, CtaSection } from "@/components/sections";
+import { HeroCarousel } from "@/components/HeroCarousel";
 
 export default async function HomePage({
   params,
@@ -21,63 +22,18 @@ export default async function HomePage({
 
   return (
     <>
-      {/* ---------------- HERO ---------------- */}
+      {/* ---------------- HERO (carousel) ---------------- */}
       <section className="relative overflow-hidden bg-ink-950 text-white">
-        <div className="absolute inset-0 bg-grid opacity-60" aria-hidden />
-        <Image
-          src="/hero/hero.svg"
-          alt=""
-          fill
-          priority
-          className="object-cover opacity-30 mix-blend-luminosity lg:opacity-40"
+        <HeroCarousel
+          slides={dict.hero.slides}
+          ctaPrimary={dict.hero.ctaPrimary}
+          ctaSecondary={dict.hero.ctaSecondary}
+          productsHref={localePath(locale, routes.products)}
+          contactHref={localePath(locale, routes.contact)}
         />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(90deg, #0c0e13 0%, rgba(12,14,19,0.92) 42%, rgba(12,14,19,0.55) 100%)",
-          }}
-          aria-hidden
-        />
-        <Container className="relative">
-          <div className="grid min-h-[78vh] grid-cols-1 items-center gap-12 py-20 lg:grid-cols-12 lg:py-28">
-            <div className="lg:col-span-7">
-              <div className="animate-fade-up">
-                <Eyebrow tone="light">{dict.hero.eyebrow}</Eyebrow>
-              </div>
-              <h1
-                className="font-display mt-6 text-5xl leading-[0.98] sm:text-6xl lg:text-7xl xl:text-[5.5rem] animate-fade-up"
-                style={{ animationDelay: "60ms" }}
-              >
-                {dict.hero.titleLine1}
-                <br />
-                <span className="text-brand-400">{dict.hero.titleLine2}</span>
-              </h1>
-              <p
-                className="mt-7 max-w-xl text-lg leading-relaxed text-steel-300 animate-fade-up"
-                style={{ animationDelay: "120ms" }}
-              >
-                {dict.hero.subtitle}
-              </p>
-              <div
-                className="mt-9 flex flex-col gap-3 sm:flex-row animate-fade-up"
-                style={{ animationDelay: "180ms" }}
-              >
-                <ButtonLink href={localePath(locale, routes.products)} variant="primary" size="lg" withArrow>
-                  {dict.hero.ctaPrimary}
-                </ButtonLink>
-                <ButtonLink
-                  href={localePath(locale, routes.contact)}
-                  size="lg"
-                  className="bg-white/5 text-white ring-1 ring-inset ring-white/20 backdrop-blur hover:bg-white/10"
-                >
-                  {dict.hero.ctaSecondary}
-                </ButtonLink>
-              </div>
-            </div>
-          </div>
 
-          {/* Stats bar */}
+        {/* Stats bar */}
+        <Container className="relative">
           <div className="relative grid grid-cols-1 gap-px overflow-hidden border-t border-white/10 sm:grid-cols-3">
             {[
               [dict.hero.stat1Value, dict.hero.stat1Label],
