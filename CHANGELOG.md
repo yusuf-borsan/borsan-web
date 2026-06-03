@@ -11,6 +11,20 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v2.1.0 — Menü her ekranda 3 çizgi (2026-06-03)
+
+### Değişiklikler
+- Üçlü çizgi (hamburger) menü butonu artık **masaüstü dahil tüm ekran
+  boyutlarında** görünüyor. Geniş ekranda üstteki yatay menü (Ürünler,
+  Hakkımızda, Servis, İletişim) ile birlikte yer alıyor; tıklanınca sağdan
+  açılan panel her boyutta çalışıyor.
+
+### Teknik
+- `Header.tsx`'te hamburger butonu, karartma katmanı (overlay) ve yan panelden
+  `lg:hidden` (geniş ekranda gizle) kuralı kaldırıldı.
+
+---
+
 ## v2.0.0 — Dinamik arayüz modülleri (2026-06-03)
 
 İlk kurumsal sürümün üzerine üç dinamik/etkileşimli modül eklendi. Renk paleti ve

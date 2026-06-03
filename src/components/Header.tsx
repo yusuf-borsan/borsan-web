@@ -108,7 +108,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
             aria-expanded={open}
-            className="flex h-10 w-10 items-center justify-center rounded-sm text-ink-900 lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-sm text-ink-900"
           >
             <span className="relative flex h-4 w-6 flex-col justify-between">
               <span className={`h-0.5 w-full bg-current transition-transform ${open ? "translate-y-[7px] rotate-45" : ""}`} />
@@ -126,7 +126,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       {/* Dimmed overlay — click to close */}
       <div
         onClick={() => setOpen(false)}
-        className={`fixed inset-0 z-[60] bg-ink-950/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-[60] bg-ink-950/60 backdrop-blur-sm transition-opacity duration-300 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden
@@ -137,7 +137,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         role="dialog"
         aria-modal="true"
         aria-label={dict.meta.siteName}
-        className={`fixed right-0 top-0 z-[70] flex h-full w-[86%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
+        className={`fixed right-0 top-0 z-[70] flex h-full w-[86%] max-w-sm flex-col bg-white shadow-2xl transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
