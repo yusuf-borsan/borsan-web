@@ -11,6 +11,23 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v2.2.0 — Başlık yerleşimi iyileştirmeleri (2026-06-03)
+
+### Değişiklikler
+- Başlıklarda **dengeli satır kırma** (`text-wrap: balance`) ve paragraflarda
+  `text-wrap: pretty` uygulandı; tek kelimenin alt satıra düşmesi gibi biçimsiz
+  görünümler giderildi. (Yazı tipi, renk ve boyut değişmedi — sadece yerleşim.)
+- **"Her Uygulama İçin Doğru Tezgah"** başlığı masaüstünde **tek satır** olacak
+  şekilde genişletildi; diğer başlıklar dengeli iki satır olarak korundu.
+
+### Teknik
+- `text-balance` / `text-pretty`: HeroCarousel, SectionHeading, PageHero,
+  CtaSection, ReferencesSection ve ürün detay başlığı.
+- Hero başlık sütunu genişletildi (uzun ikinci satırların tek satıra sığması için).
+- Kategoriler bölüm başlığına yalnızca o örnek için `lg:max-w-3xl`.
+
+---
+
 ## v2.1.0 — Menü her ekranda 3 çizgi (2026-06-03)
 
 ### Değişiklikler

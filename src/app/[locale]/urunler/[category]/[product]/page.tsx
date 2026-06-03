@@ -64,7 +64,7 @@ export default async function ProductPage({
             <span className="inline-flex w-fit items-center rounded-sm bg-brand-600 px-3 py-1 text-sm font-bold tracking-wide">
               {p.model}
             </span>
-            <h1 className="font-display text-3xl leading-tight sm:text-4xl lg:text-5xl">{p.name[locale]}</h1>
+            <h1 className="font-display text-balance text-3xl leading-tight sm:text-4xl lg:text-5xl">{p.name[locale]}</h1>
             <p className="max-w-2xl text-lg text-steel-300">{p.summary[locale]}</p>
           </div>
         </Container>

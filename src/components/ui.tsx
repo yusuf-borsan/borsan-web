@@ -56,11 +56,11 @@ export function SectionHeading({
     <div className={`flex flex-col gap-4 ${maxW} ${alignment} ${className}`}>
       {eyebrow && <Eyebrow tone={tone === "light" ? "light" : "brand"}>{eyebrow}</Eyebrow>}
       <h2
-        className={`font-display text-3xl leading-[1.05] sm:text-4xl lg:text-[2.75rem] ${titleColor}`}
+        className={`font-display text-balance text-3xl leading-[1.05] sm:text-4xl lg:text-[2.75rem] ${titleColor}`}
       >
         {title}
       </h2>
-      {subtitle && <p className={`text-base leading-relaxed sm:text-lg ${subColor}`}>{subtitle}</p>}
+      {subtitle && <p className={`text-pretty text-base leading-relaxed sm:text-lg ${subColor}`}>{subtitle}</p>}
     </div>
   );
 }

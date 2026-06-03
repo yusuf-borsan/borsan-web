@@ -57,6 +57,7 @@ export default async function HomePage({
               eyebrow={dict.categories.eyebrow}
               title={dict.categories.title}
               subtitle={dict.categories.subtitle}
+              className="lg:max-w-3xl"
             />
             <ButtonLink
               href={localePath(locale, routes.products)}

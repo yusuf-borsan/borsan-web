@@ -57,11 +57,11 @@ export function PageHero({
         )}
         <div className="max-w-3xl">
           {eyebrow && <Eyebrow tone="light">{eyebrow}</Eyebrow>}
-          <h1 className="font-display mt-4 text-4xl leading-[1.04] sm:text-5xl lg:text-6xl">
+          <h1 className="font-display mt-4 text-balance text-4xl leading-[1.04] sm:text-5xl lg:text-6xl">
             {title}
           </h1>
           {subtitle && (
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-steel-300">{subtitle}</p>
+            <p className="mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-steel-300">{subtitle}</p>
           )}
         </div>
       </Container>
@@ -84,10 +84,10 @@ export function CtaSection({ locale, dict }: { locale: Locale; dict: Dictionary 
       <Container className="relative py-16 lg:py-20">
         <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
           <div className="max-w-2xl">
-            <h2 className="font-display text-3xl leading-tight text-white sm:text-4xl">
+            <h2 className="font-display text-balance text-3xl leading-tight text-white sm:text-4xl">
               {dict.cta.title}
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-brand-100">{dict.cta.subtitle}</p>
+            <p className="mt-4 text-pretty text-base leading-relaxed text-brand-100">{dict.cta.subtitle}</p>
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <ButtonLink href={localePath(locale, routes.contact)} variant="light" size="lg" withArrow>
@@ -124,7 +124,7 @@ export function ReferencesSection({ dict }: { dict: Dictionary }) {
       <Container className="py-16 lg:py-20">
         <div className="flex flex-col gap-3">
           <Eyebrow>{dict.references.eyebrow}</Eyebrow>
-          <h2 className="font-display max-w-2xl text-2xl leading-tight text-ink-900 sm:text-3xl">
+          <h2 className="font-display max-w-2xl text-balance text-2xl leading-tight text-ink-900 sm:text-3xl">
             {dict.references.title}
           </h2>
           <p className="max-w-2xl text-base leading-relaxed text-ink-500">

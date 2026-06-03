@@ -80,16 +80,16 @@ export function HeroCarousel({
       {/* Slide content */}
       <Container className="relative">
         <div className="grid min-h-[78vh] grid-cols-1 items-center py-20 lg:grid-cols-12 lg:py-28">
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-12">
             {/* key forces the fade-up animation to replay on slide change */}
             <div key={active} className="animate-fade-up">
               <Eyebrow tone="light">{slides[active].eyebrow}</Eyebrow>
-              <h1 className="font-display mt-6 text-5xl leading-[0.98] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
+              <h1 className="font-display mt-6 text-balance text-5xl leading-[0.98] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
                 {slides[active].titleLine1}
                 <br />
                 <span className="text-brand-400">{slides[active].titleLine2}</span>
               </h1>
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-steel-300">
+              <p className="mt-7 max-w-xl text-pretty text-lg leading-relaxed text-steel-300">
                 {slides[active].subtitle}
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
