@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/*
+  BORSAN TEKNOLOJİ — Design System
+  Industrial • Engineering • Premium
+  Brand blue  #1F4488  (logo wordmark)
+  Brand gray  #606060  (logo subtitle)
+  Anthracite surfaces, white, light grey, blue accent.
+*/
+
+@theme {
+  /* Brand blue scale (derived from logo #1F4488) */
+  --color-brand-50: #eef3fb;
+  --color-brand-100: #d8e3f5;
+  --color-brand-200: #b3c8ea;
+  --color-brand-300: #84a3d8;
+  --color-brand-400: #517cc1;
+  --color-brand-500: #2e5aa6;
+  --color-brand-600: #1f4488;
+  --color-brand-700: #1a3a73;
+  --color-brand-800: #16305e;
+  --color-brand-900: #13284c;
+  --color-brand-950: #0c1830;
+
+  /* Anthracite / ink surfaces */
+  --color-ink-500: #4a5160;
+  --color-ink-600: #353b48;
+  --color-ink-700: #262b35;
+  --color-ink-800: #1b1f27;
+  --color-ink-900: #14171d;
+  --color-ink-950: #0d0f14;
+
+  /* Steel grey (logo helper #606060) + neutrals */
+  --color-steel-300: #c7ccd2;
+  --color-steel-400: #9aa0a8;
+  --color-steel-500: #707681;
+  --color-steel-600: #606060;
+  --color-steel-700: #4b4f56;
+
+  /* Fonts */
+  --font-display: var(--font-display), "Arial Narrow", system-ui, sans-serif;
+  --font-sans: var(--font-sans), system-ui, sans-serif;
+
+  /* Container */
+  --breakpoint-3xl: 100rem;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #14171d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Display headings: tight, technical */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+/* Thin engineering eyebrow */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+/* Engineered grid background for dark sections */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.bg-grid-light {
+  background-image:
+    linear-gradient(to right, rgba(20, 23, 29, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 23, 29, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
