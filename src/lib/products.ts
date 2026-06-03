@@ -87,8 +87,13 @@ export const categories: Category[] = [
           { tr: "Servo taretle hızlı takım değişimi", en: "Fast tool change with servo turret" },
           { tr: "Fanuc / Siemens kontrol seçenekleri", en: "Fanuc / Siemens control options" },
         ],
-        image: "/machines/cnc-torna.svg",
-        gallery: ["/machines/cnc-torna.svg", "/machines/cnc-torna-2.svg", "/machines/cnc-torna-3.svg"],
+        image: "/machines/bt-l250-1.jpg",
+        gallery: [
+          "/machines/bt-l250-1.jpg",
+          "/machines/bt-l250-2.jpg",
+          "/machines/bt-l250-3.jpg",
+          "/machines/bt-l250-4.png",
+        ],
         catalog: "/catalogs/bt-l250.pdf",
         specs: [
           { label: L.control, value: { tr: "Fanuc 0i-TF Plus", en: "Fanuc 0i-TF Plus" } },
