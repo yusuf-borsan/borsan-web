@@ -26,9 +26,9 @@ export default async function HomePage({
       <section className="relative overflow-hidden bg-ink-950 text-white">
         <HeroCarousel
           slides={dict.hero.slides}
+          locale={locale}
           ctaPrimary={dict.hero.ctaPrimary}
           ctaSecondary={dict.hero.ctaSecondary}
-          productsHref={localePath(locale, routes.products)}
           contactHref={localePath(locale, routes.contact)}
         />
 

@@ -27,6 +27,7 @@ const en: Dictionary = {
     home: "Home",
     products: "Products",
     technicalSpecs: "Technical Specifications",
+    productFeatures: "Product Features",
     highlights: "Highlights",
     gallery: "Gallery",
     catalog: "Catalog",
@@ -46,13 +47,14 @@ const en: Dictionary = {
     ctaSecondary: "Get a Quote",
     stat1Value: "30+",
     stat1Label: "Years of industry experience",
-    stat2Value: "6",
+    stat2Value: "7",
     stat2Label: "Machine categories",
     stat3Value: "100%",
     stat3Label: "After-sales service",
     slides: [
       {
         image: "/hero/hero.svg",
+        href: "/urunler",
         eyebrow: "CNC Machine Tools · Engineering · Service",
         titleLine1: "The Industrial Power",
         titleLine2: "of Precision",
@@ -61,6 +63,7 @@ const en: Dictionary = {
       },
       {
         image: "/categories/cnc-tornalar.svg",
+        href: "/urunler/cnc-tornalar",
         eyebrow: "CNC Lathes · High Torque",
         titleLine1: "Micron-Level",
         titleLine2: "Turning Power",
@@ -69,11 +72,21 @@ const en: Dictionary = {
       },
       {
         image: "/categories/disli-taslama.svg",
+        href: "/urunler/disli-profil-taslama",
         eyebrow: "Grinding · Gear Profile Grinding",
         titleLine1: "Flawless Surfaces,",
         titleLine2: "Repeatable Quality",
         subtitle:
           "Machine-tool technologies delivering DIN-class precision and long-term stability across cylindrical, surface and gear-profile grinding applications.",
+      },
+      {
+        image: "/hero/swiss-type-v2.jpg",
+        href: "/urunler/cnc-kayar-otomatlar",
+        eyebrow: "CNC Swiss Type Lathes · Serial Production",
+        titleLine1: "Maximum Speed on",
+        titleLine2: "Small-Diameter Parts",
+        subtitle:
+          "Micron-accurate, high-speed and uninterrupted serial production with Swiss-type lathes; guide-bushing technology for a complete finished part in a single setup.",
       },
     ],
   },
@@ -176,7 +189,7 @@ const en: Dictionary = {
     stats: [
       { value: "30+", label: "Years of experience" },
       { value: "500+", label: "Machines commissioned" },
-      { value: "6", label: "Machine categories" },
+      { value: "7", label: "Machine categories" },
       { value: "100%", label: "Customer-dedicated service" },
     ],
   },

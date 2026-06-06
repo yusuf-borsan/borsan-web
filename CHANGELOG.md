@@ -11,6 +11,31 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v2.3.0 — CNC Kayar Otomatlar kategorisi + ilk gerçek ürünler (2026-06-07)
+
+### Eklenenler
+- **7. kategori: CNC Kayar Otomatlar** (CNC Swiss Type Lathes) — kendi ikonu,
+  kategori sayfası ve ürünler listesi.
+- **Hero slider'a 4. slayt** (CNC Kayar Otomatlar) — gerçek showroom fotoğrafı,
+  doğrudan kategori sayfasına bağlantı.
+- **Ürün detayında sekmeli yapı**: "Teknik Özellikler" ve "Ürün Özellikleri"
+  sekmeleri (aktif sekme kurumsal mavi). Veri modeline `features` (string[]) alanı.
+- **İlk gerçek ürünler:** `JIANKE MA25-6S` ve `JIANKE MA25-5 II` — teknik veriler
+  ve özellikler resmi JIANKE kataloğundan (docx) çekildi; her biri 4 görselli galeri,
+  öne çıkanlar (mühendis odaklı 4 madde), teknik tablo ve teklif formu entegrasyonu.
+- Gelecek için altyapı: `public/machines/swiss-type/`, `public/catalogs/swiss-type/`
+  (yer tutucu PDF'ler).
+
+### İyileştirmeler / Düzeltmeler
+- Ürün galerisi ve kartlarında görseller **beyaz arka plan + object-contain** ile
+  kırpılmadan, kusursuz beyaz zeminde gösteriliyor (PNG/şeffaf/siyah-bg sorunları giderildi).
+- Teknik özellikler tablosunda **satır kırılması engellendi** (`whitespace-nowrap`),
+  sütun genişletilerek taşma giderildi — tablo tek satır, jilet gibi hizalı.
+- Marka adı tüm sayfa ve formlarda **JIANKE** (büyük harf) olarak standartlaştırıldı.
+- Hero 4. slayt görseli ölçeklendirme ve yerleşim ince ayarları.
+
+---
+
 ## v2.2.0 — Başlık yerleşimi iyileştirmeleri (2026-06-03)
 
 ### Değişiklikler

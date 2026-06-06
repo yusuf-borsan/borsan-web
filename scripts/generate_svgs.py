@@ -143,8 +143,23 @@ def sch_gear(accent=BLUE):
     b += dim(cx-r, cx+r, 760, "Ø 800 mm · m16")
     return b
 
+def sch_swiss(accent=BLUE):
+    b = floor(1200, 720)
+    b += R(150, 470, 150, 130, STEEL, 4)              # main headstock
+    b += C(300, 535, 30, accent, 5)                   # collet
+    b += R(300, 525, 360, 20, STEEL_DK, 4, "#20242c") # bar stock
+    b += R(648, 505, 44, 60, accent, 5)               # guide bushing
+    b += R(560, 360, 180, 70, STEEL, 4)               # gang tool post
+    b += P("M600 430v34M650 430v34M700 430v34", accent, 5)  # gang tools
+    b += R(770, 480, 150, 110, STEEL, 4)              # sub / back spindle
+    b += C(770, 535, 24, accent, 5)                   # sub collet
+    b += R(940, 520, 70, 50, STEEL, 4)                # parts catcher
+    b += P("M180 600v60M880 590v70", STEEL, 5)        # legs
+    b += dim(150, 920, 760, "Ø 20 mm · 7 eksen")
+    return b
+
 SCHEM = {"lathe": sch_lathe, "vmc": sch_vmc, "hmc": sch_hmc, "vtl": sch_vtl,
-         "grinder": sch_grinder, "gear": sch_gear}
+         "grinder": sch_grinder, "gear": sch_gear, "swiss": sch_swiss}
 
 def write(path, content):
     full = os.path.join(PUB, path)
@@ -161,6 +176,7 @@ CATS = [
     ("dik-torna.svg", "vtl", "DİK TORNALAR", "VTL"),
     ("taslama.svg", "grinder", "TAŞLAMA TEZGAHLARI", "GR"),
     ("disli-taslama.svg", "gear", "DİŞLİ PROFİL TAŞLAMA", "GP"),
+    ("cnc-kayar-otomatlar.svg", "swiss", "CNC KAYAR OTOMATLAR", "SW"),
 ]
 for fn, kind, label, code in CATS:
     body = SCHEM[kind](BLUE)
@@ -179,6 +195,15 @@ for i, (fn, kind, code) in enumerate(MACH):
     accent = BLUE if i % 2 == 0 else "#5a86d0"
     body = SCHEM[kind](accent)
     write(f"machines/{fn}.svg", frame(1200, 900, body, code=code))
+
+# Swiss-type machine images (new subfolder for future real photos)
+SWISS = [
+    ("bt-sw20-1", "BT-SW20"), ("bt-sw20-2", "BT-SW20"), ("bt-sw20-3", "BT-SW20"),
+    ("bt-sw32-1", "BT-SW32"),
+]
+for i, (fn, code) in enumerate(SWISS):
+    accent = BLUE if i % 2 == 0 else "#5a86d0"
+    write(f"machines/swiss-type/{fn}.svg", frame(1200, 900, sch_swiss(accent), code=code))
 
 # Hero (wide)
 hero_body = sch_vmc(BLUE)

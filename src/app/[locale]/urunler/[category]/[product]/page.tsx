@@ -8,6 +8,7 @@ import { localePath, routes } from "@/lib/routes";
 import { Container, ButtonLink } from "@/components/ui";
 import { Breadcrumb } from "@/components/sections";
 import { Gallery } from "@/components/Gallery";
+import { ProductTabs } from "@/components/ProductTabs";
 import { QuoteForm } from "@/components/QuoteForm";
 import { ProductCard } from "@/components/ProductCard";
 import { CheckIcon, DocIcon } from "@/components/icons";
@@ -75,7 +76,7 @@ export default async function ProductPage({
         <Container className="py-14 lg:py-20">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
             {/* Left: gallery + highlights */}
-            <div className="lg:col-span-7">
+            <div className="lg:col-span-6">
               <Gallery images={p.gallery} alt={p.name[locale]} />
 
               <div className="mt-10">
@@ -94,30 +95,18 @@ export default async function ProductPage({
             </div>
 
             {/* Right: specs + catalog + quote CTA */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-6">
               <div className="lg:sticky lg:top-24">
-                <div className="overflow-hidden rounded-md border border-ink-100">
-                  <div className="border-b border-ink-100 bg-ink-950 px-6 py-4">
-                    <h2 className="font-display text-lg text-white">{dict.common.technicalSpecs}</h2>
-                  </div>
-                  <table className="w-full text-sm">
-                    <tbody>
-                      {p.specs.map((spec, i) => (
-                        <tr key={spec.label[locale]} className={i % 2 === 1 ? "bg-steel-300/10" : "bg-white"}>
-                          <th scope="row" className="w-1/2 px-6 py-3 text-left font-medium text-ink-500">
-                            {spec.label[locale]}
-                          </th>
-                          <td className="px-6 py-3 text-right font-semibold text-ink-900">
-                            {spec.value[locale]}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                  <p className="border-t border-ink-100 bg-white px-6 py-3 text-xs text-ink-400">
-                    {dict.productPage.specsNote}
-                  </p>
-                </div>
+                <ProductTabs
+                  specs={p.specs}
+                  features={p.features ?? p.highlights}
+                  locale={locale}
+                  labels={{
+                    specs: dict.common.technicalSpecs,
+                    features: dict.common.productFeatures,
+                    specsNote: dict.productPage.specsNote,
+                  }}
+                />
 
                 {/* Catalog */}
                 <div className="mt-6 flex items-center gap-4 rounded-md border border-ink-100 bg-steel-300/5 p-5">
@@ -164,8 +153,8 @@ export default async function ProductPage({
               <div className="rounded-md border border-ink-100 bg-white p-6 sm:p-8">
                 <QuoteForm
                   dict={dict}
-                  defaultProduct={`${p.model} — ${p.name[locale]}`}
-                  productOptions={cat.products.map((x) => `${x.model} — ${x.name[locale]}`)}
+                  defaultProduct={p.name[locale]}
+                  productOptions={cat.products.map((x) => x.name[locale])}
                 />
               </div>
             </div>

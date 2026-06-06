@@ -9,14 +9,14 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-ink-100 bg-ink-950">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-ink-100 bg-white">
         <Image
           src={unique[active]}
           alt={alt}
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 55vw"
-          className="object-cover"
+          className="object-contain"
         />
       </div>
       {unique.length > 1 && (
@@ -28,11 +28,11 @@ export function Gallery({ images, alt }: { images: string[]; alt: string }) {
               onClick={() => setActive(i)}
               aria-label={`${alt} ${i + 1}`}
               aria-current={i === active}
-              className={`relative aspect-[4/3] overflow-hidden rounded-sm border bg-ink-950 transition-all ${
+              className={`relative aspect-[4/3] overflow-hidden rounded-sm border bg-white transition-all ${
                 i === active ? "border-brand-500 ring-1 ring-brand-500" : "border-ink-100 hover:border-brand-300"
               }`}
             >
-              <Image src={src} alt="" fill sizes="20vw" className="object-cover" />
+              <Image src={src} alt="" fill sizes="20vw" className="object-contain" />
             </button>
           ))}
         </div>

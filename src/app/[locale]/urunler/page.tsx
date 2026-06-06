@@ -46,8 +46,9 @@ export default async function ProductsPage({
             {categories.map((cat, i) => (
               <Link
                 key={cat.slug}
+                id={cat.slug}
                 href={localePath(locale, routes.category(cat.slug))}
-                className="group grid grid-cols-1 overflow-hidden rounded-md border border-ink-100 bg-white transition-all duration-300 hover:border-brand-200 hover:shadow-[0_24px_50px_-30px_rgba(20,23,29,0.45)] lg:grid-cols-12"
+                className="group grid scroll-mt-28 grid-cols-1 overflow-hidden rounded-md border border-ink-100 bg-white transition-all duration-300 hover:border-brand-200 hover:shadow-[0_24px_50px_-30px_rgba(20,23,29,0.45)] lg:grid-cols-12"
               >
                 <div className={`relative aspect-[16/10] overflow-hidden bg-ink-950 lg:col-span-5 lg:aspect-auto ${i % 2 === 1 ? "lg:order-2" : ""}`}>
                   <Image

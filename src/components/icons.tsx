@@ -89,6 +89,20 @@ export function GearIcon(props: IconProps) {
   );
 }
 
+export function SwissIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M5 30h38" />
+      <rect x="7" y="20" width="8" height="10" rx="1" />
+      <circle cx="11" cy="25" r="1.4" />
+      <rect x="19" y="22" width="6" height="6" rx="1" />
+      <path d="M25 25h17" />
+      <path d="M30 22l2-4 2 4M37 22l2-4 2 4" />
+      <path d="M9 34v4M40 34v4" />
+    </svg>
+  );
+}
+
 const categoryIcons: Record<string, (p: IconProps) => React.ReactElement> = {
   lathe: LatheIcon,
   vmc: VmcIcon,
@@ -96,6 +110,7 @@ const categoryIcons: Record<string, (p: IconProps) => React.ReactElement> = {
   vtl: VtlIcon,
   grinder: GrinderIcon,
   gear: GearIcon,
+  swiss: SwissIcon,
 };
 
 export function CategoryIcon({ name, ...props }: { name: string } & IconProps) {

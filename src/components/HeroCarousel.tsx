@@ -2,10 +2,14 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
+import type { Locale } from "@/i18n/config";
+import { localePath } from "@/lib/routes";
 import { Container, Eyebrow, ButtonLink } from "./ui";
 
 export type HeroSlide = {
   image: string;
+  /** Locale-neutral path the slide's primary CTA links to (e.g. "/urunler"). */
+  href: string;
   eyebrow: string;
   titleLine1: string;
   titleLine2: string;
@@ -14,9 +18,9 @@ export type HeroSlide = {
 
 type Props = {
   slides: HeroSlide[];
+  locale: Locale;
   ctaPrimary: string;
   ctaSecondary: string;
-  productsHref: string;
   contactHref: string;
 };
 
@@ -24,9 +28,9 @@ const AUTOPLAY_MS = 6500;
 
 export function HeroCarousel({
   slides,
+  locale,
   ctaPrimary,
   ctaSecondary,
-  productsHref,
   contactHref,
 }: Props) {
   const [active, setActive] = useState(0);
@@ -52,18 +56,27 @@ export function HeroCarousel({
     >
       {/* Background slides (cross-fade) */}
       <div className="absolute inset-0" aria-hidden>
-        {slides.map((slide, i) => (
-          <Image
-            key={slide.image + i}
-            src={slide.image}
-            alt=""
-            fill
-            priority={i === 0}
-            className={`object-cover mix-blend-luminosity transition-opacity duration-700 ease-out ${
-              i === active ? "opacity-40" : "opacity-0"
-            }`}
-          />
-        ))}
+        {slides.map((slide, i) => {
+          // Real photos (e.g. the Swiss-type showroom shot) render in full colour,
+          // centred with object-cover so the machines stay sharp and the empty
+          // left of the frame sits under the headline text.
+          // SVG blueprint slides keep their original luminosity/opacity treatment.
+          const isPhoto = /\.(jpe?g|png|webp)$/i.test(slide.image);
+          return (
+            <Image
+              key={slide.image + i}
+              src={slide.image}
+              alt=""
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className={`object-cover transition-opacity duration-700 ease-out ${
+                isPhoto ? "" : "mix-blend-luminosity"
+              } ${i === active ? (isPhoto ? "opacity-100" : "opacity-40") : "opacity-0"}`}
+              style={isPhoto ? { objectPosition: "54% 50%", transform: "scale(1.08)" } : undefined}
+            />
+          );
+        })}
       </div>
 
       {/* Engineered grid + directional gradient (same tones as before) */}
@@ -93,7 +106,7 @@ export function HeroCarousel({
                 {slides[active].subtitle}
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-                <ButtonLink href={productsHref} variant="primary" size="lg" withArrow>
+                <ButtonLink href={localePath(locale, slides[active].href)} variant="primary" size="lg" withArrow>
                   {ctaPrimary}
                 </ButtonLink>
                 <ButtonLink

@@ -25,6 +25,7 @@ const tr = {
     home: "Ana Sayfa",
     products: "Ürünler",
     technicalSpecs: "Teknik Özellikler",
+    productFeatures: "Ürün Özellikleri",
     highlights: "Öne Çıkanlar",
     gallery: "Görsel Galerisi",
     catalog: "Katalog",
@@ -44,13 +45,14 @@ const tr = {
     ctaSecondary: "Teklif Alın",
     stat1Value: "30+",
     stat1Label: "Yıllık sektör tecrübesi",
-    stat2Value: "6",
+    stat2Value: "7",
     stat2Label: "Tezgah kategorisi",
     stat3Value: "%100",
     stat3Label: "Satış sonrası servis",
     slides: [
       {
         image: "/hero/hero.svg",
+        href: "/urunler",
         eyebrow: "CNC Takım Tezgahları · Mühendislik · Servis",
         titleLine1: "Hassasiyetin",
         titleLine2: "Endüstriyel Gücü",
@@ -59,6 +61,7 @@ const tr = {
       },
       {
         image: "/categories/cnc-tornalar.svg",
+        href: "/urunler/cnc-tornalar",
         eyebrow: "CNC Tornalar · Yüksek Tork",
         titleLine1: "Mikron Düzeyinde",
         titleLine2: "Tornalama Gücü",
@@ -67,11 +70,21 @@ const tr = {
       },
       {
         image: "/categories/disli-taslama.svg",
+        href: "/urunler/disli-profil-taslama",
         eyebrow: "Taşlama · Dişli Profil Taşlama",
         titleLine1: "Kusursuz Yüzey,",
         titleLine2: "Tekrarlanabilir Kalite",
         subtitle:
           "Silindirik, satıh ve dişli profil taşlama uygulamalarında DIN sınıfı hassasiyet ve uzun vadeli kararlılık sunan tezgah teknolojileri.",
+      },
+      {
+        image: "/hero/swiss-type-v2.jpg",
+        href: "/urunler/cnc-kayar-otomatlar",
+        eyebrow: "CNC Kayar Otomatlar · Seri Üretim",
+        titleLine1: "Küçük Çaplı Parçada",
+        titleLine2: "Maksimum Hız",
+        subtitle:
+          "Kayar otomatlarla mikron hassasiyetinde, yüksek hızlı ve kesintisiz seri üretim; tek bağlamada komple bitmiş parça için kılavuz burç teknolojisi.",
       },
     ],
   },
@@ -174,7 +187,7 @@ const tr = {
     stats: [
       { value: "30+", label: "Yıllık tecrübe" },
       { value: "500+", label: "Devreye alınan tezgah" },
-      { value: "6", label: "Tezgah kategorisi" },
+      { value: "7", label: "Tezgah kategorisi" },
       { value: "%100", label: "Müşteriye özel servis" },
     ],
   },
