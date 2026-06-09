@@ -142,6 +142,9 @@ const en: Dictionary = {
   },
   categoryPage: {
     modelsTitle: "Models",
+    modelsEyebrow: "Model Range",
+    modelsTitleSuffix: "",
+    modelsSubtitle: "Explore technical specifications and find the model best suited to your production requirements.",
     noProducts: "Models for this category are coming soon. Please contact us for details.",
   },
   productPage: {

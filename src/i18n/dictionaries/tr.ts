@@ -140,6 +140,9 @@ const tr = {
   },
   categoryPage: {
     modelsTitle: "Modeller",
+    modelsEyebrow: "Model Seçimi",
+    modelsTitleSuffix: " Modelleri",
+    modelsSubtitle: "Teknik özellikleri inceleyin ve üretim ihtiyaçlarınıza en uygun modeli seçin.",
     noProducts: "Bu kategoriye ait modeller yakında eklenecektir. Bilgi için bizimle iletişime geçin.",
   },
   productPage: {

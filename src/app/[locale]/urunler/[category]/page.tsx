@@ -50,11 +50,25 @@ export default async function CategoryPage({
         ]}
       />
 
-      <section className="bg-white">
+      <section className="bg-[#f5f7fa]">
         <Container className="py-16 lg:py-24">
-          <h2 className="font-display text-2xl text-ink-900">{dict.categoryPage.modelsTitle}</h2>
+
+          {/* Premium section heading */}
+          <div className="mb-10 lg:mb-14">
+            <span className="eyebrow mb-3 block text-brand-600">
+              {dict.categoryPage.modelsEyebrow}
+            </span>
+            <h2 className="font-display text-balance text-3xl text-ink-900 sm:text-4xl">
+              {cat.name[locale]}{dict.categoryPage.modelsTitleSuffix}
+            </h2>
+            <p className="mt-3 max-w-xl text-base leading-relaxed text-ink-500">
+              {dict.categoryPage.modelsSubtitle}
+            </p>
+            <div className="mt-6 h-0.5 w-12 rounded-full bg-brand-600" />
+          </div>
+
           {cat.products.length > 0 ? (
-            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {cat.products.map((product) => (
                 <ProductCard key={product.slug} product={product} locale={locale} dict={dict} />
               ))}
