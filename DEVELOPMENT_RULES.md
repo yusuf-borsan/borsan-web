@@ -6,7 +6,7 @@
 > kullanıcıdan **açık onay** al ve gerekçeni yaz.
 >
 > Bağlam için önce oku: `PROJECT_HANDOFF.md` (durum), `CHANGELOG.md` (geçmiş),
-> `README.md` (genel bakış). Sürüm: v2.3.0.
+> `README.md` (genel bakış). Sürüm: v2.4.0.
 
 ---
 
@@ -104,8 +104,8 @@ tiplere sadık kal; her adımda derle + test et.
 
 Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
 
-1. **Veri kaynağı**: Resmi katalog **docx**'inden çek (`python-docx` ile tabloları
-   UTF-8 dosyaya yaz; cp1254 hatasından kaçınmak için stdout'a yazma).
+1. **Veri kaynağı**: Resmi katalog **docx/PDF**'inden çek (`python-docx` / `pypdf` ile
+   tabloları UTF-8 dosyaya yaz; cp1254 hatasından kaçınmak için stdout'a yazma).
 2. **`src/lib/products.ts`** içine ilgili kategorinin `products` dizisine yeni `Product`
    nesnesi ekle. **Zorunlu alanlar** (hepsi TR + EN):
    - `slug`, `model`, `categorySlug`, `name` (resmi tam ad), `summary`
@@ -114,9 +114,9 @@ Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
    - `features`: daha geniş avantaj listesi (Ürün Özellikleri sekmesi)
    - `specs`: teknik tablo (kataloğdaki tüm anlamlı satırlar; tekrarlayan etiketler için
      `L` sabitini kullan, ürüne özel olanları inline `{ tr, en }` yaz)
-   - `image` (ana = 1. fotoğraf), `gallery` (4'e kadar), `catalog` (placeholder PDF yolu)
+   - `image` (ana = 1. fotoğraf), `gallery` (3–4'e kadar), `catalog` (placeholder PDF yolu)
 3. **Marka adı standardı**: `name` = `"JIANKE - <MODEL> CNC Kayar Otomat"` (TR) /
-   `"JIANKE - <MODEL> Swiss Type Lathe"` (EN). **JIANKE büyük harf.**
+   `"JIANKE - <MODEL> Swiss Type Lathe"` (EN). **JIANKE her yerde BÜYÜK HARF.**
 4. **Teklif formu** ürün adını otomatik gösterir (ürün detay sayfası `defaultProduct={p.name[locale]}`
    geçer) — ekstra iş gerekmez.
 5. Ekledikten sonra: **`rm -rf .next && npm run build`** ile derle, TR+EN rotalarını ve
@@ -124,6 +124,9 @@ Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
 
 > Not: Spec değerlerinde TR ondalık virgül (`0,001`), EN nokta (`0.001`); binlik için
 > TR nokta (`3.050`), EN virgül (`3,050`).
+>
+> **Spec değerlerini KISA tut.** Uzun bileşik string YASAK (örn. `"3,5 / 3,5 kW (nom.) — 6,0 / 6,0 kW (maks.)"`).
+> Doğru form: `"3,5 / 6,0 kW"`. Uzun değer → `whitespace-nowrap` olsa bile tablo yatay kayar.
 
 ---
 
@@ -142,9 +145,11 @@ Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
     mümkünse kullanıcıdan beyaz-zemin sürümü iste.
 - **Placeholder**: gerçek foto yoksa `scripts/generate_svgs.py` ile blueprint SVG üret
   (4:3, koyu antrasit zemin — `bg-white`/`object-contain` ile uyumlu, tam doldurur).
-- **Kaynak bulma**: kullanıcının yapıştırdığı görseller bazen diske düşmez; önce
-  Desktop/Downloads ve kullanıcının belirttiği klasörü ara; yoksa **docx içinden**
-  çıkar (`zipfile` → `word/media/`).
+- **Kaynak bulma — ZORUNLU KURAL**: Görseller **yalnızca kullanıcının sohbete yüklediği
+  fotoğraflardan alınır.** Kullanıcı yüklenen görselleri masaüstündeki
+  `publicmachinesswiss-type` klasörüne kaydeder; oradan `public/machines/swiss-type/`'a
+  kopyalanır. Kullanıcı sohbete yüklediğinde bu klasörde ara.
+  **PDF/docx içinden görsel çekmek YASAK** (düşük kalite, yanlış arka plan).
 - Görsel dosyasını değiştirdiysen Next/Image önbelleği için **`rm -rf .next`** + sert yenileme.
 
 ---
@@ -221,7 +226,10 @@ Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
 - 🚫 Kullanıcı istemeden commit/push yapmak, sürüm/etiket/Release oluşturmak.
 - 🚫 Yeni Tailwind sınıfı ekleyip `.next` temizlemeden "çalışmıyor" diye yapıyı değiştirmek.
 - 🚫 Mock data yapısını DB planı olmadan dağıtmak/yeniden kurgulamak.
-- 🚫 `JIANKE` markasını küçük harfle yazmak.
+- 🚫 `JIANKE` markasını küçük harfle yazmak (her yerde büyük harf zorunludur).
+- 🚫 Ürün görselini PDF/docx'ten çekmek — **yalnızca kullanıcının sohbete yüklediği
+  fotoğraflar** kullanılır.
+- 🚫 Teknik tablo spec değerlerine uzun bileşik string yazmak — tablo kaydırmalı olur.
 - 🚫 Bozuk/404 link (eksik görsel/PDF) bırakmak — placeholder üret.
 - 🚫 Mevcut sürümleri (tag/Release) değiştirmek/silmek; geçmişi yeniden yazmak.
 

@@ -11,6 +11,28 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v2.4.0 — 4 gerçek JIANKE ürünü + görsel ve tablo standartları (2026-06-09)
+
+### Eklenenler
+- **JIANKE MA12-5 II** — CNC Kayar Otomat (Mitsubishi M80 çift kanal, Ø12 mm, 5 eksen,
+  12.000/10.000 dev/dak, 4 gerçek fotoğraf galerisi, tam teknik tablo).
+- **JIANKE MR32-5 II** — CNC Kayar Otomat (SYNTEC 210TB-A çift kanal, Ø32 mm, 5 eksen,
+  8.000/8.000 dev/dak, 3 gerçek fotoğraf galerisi, tam teknik tablo).
+
+### İyileştirmeler / Düzeltmeler
+- **Görsel kaynak kuralı**: bundan itibaren ürün fotoğrafları yalnızca kullanıcının
+  sohbete yüklediği görüntülerden alınır; PDF/docx içinden çekilmez.
+- **Teknik tablo taşma düzeltmesi (MR32-5 II)**: iki uzun bileşik spec değeri kısaltıldı
+  (`"3,5 / 6,0 kW"`, `"Ø 13 / M12 (ER20, eksenel)"`) — tablo artık kaydırmasız.
+- **Dokümanlar güncellendi**: `PROJECT_HANDOFF.md` (4 gerçek ürün, 57 sayfa, yeni kurallar)
+  ve `DEVELOPMENT_RULES.md` (JIANKE büyük harf, kısa spec standardı, görsel kaynak kuralı).
+
+### Teknik
+- Statik derleme: **53 → 57 sayfa** (her yeni ürün TR+EN = +2 sayfa).
+- Gerçek ürün sayısı: 2 → 4 (tümü `cnc-kayar-otomatlar` kategorisinde).
+
+---
+
 ## v2.3.0 — CNC Kayar Otomatlar kategorisi + ilk gerçek ürünler (2026-06-07)
 
 ### Eklenenler

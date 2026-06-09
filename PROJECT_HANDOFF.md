@@ -2,7 +2,7 @@
 
 > Bu doküman, projeyi devralacak bir geliştirici için hazırlanmıştır. Projenin
 > mevcut durumunu, eksiklerini ve production yol haritasını eksiksiz anlatır.
-> Son güncelleme: 2026-06-07 · Sürüm: **v2.3.0** · Durum: **Prototip / MVP**
+> Son güncelleme: 2026-06-09 · Sürüm: **v2.4.0** · Durum: **Prototip / MVP**
 
 ---
 
@@ -32,7 +32,7 @@ UX tamamlandı; gerçek içerik ve backend entegrasyonları henüz eksiktir.
 
 - **Bağımlılıklar minimal**: yalnızca `next`, `react`, `react-dom`. Harici UI/form/auth/DB
   kütüphanesi YOK.
-- **Render**: Tamamen statik (SSG). Son derlemede **53 sayfa** prerender ediliyor
+- **Render**: Tamamen statik (SSG). Son derlemede **57 sayfa** prerender ediliyor
   (`generateStaticParams` ile her locale + her ürün/kategori).
 - **Çoklu dil**: Harici i18n kütüphanesi yok; **kendi sözlük tabanlı (custom dictionary)**
   altyapısı kullanılıyor (aşağıda).
@@ -50,7 +50,7 @@ borsan-web/
 │  ├─ categories/          kategori görselleri (SVG blueprint placeholder)
 │  ├─ hero/                hero.svg + swiss-type-v2.jpg (slayt 4 gerçek foto)
 │  ├─ machines/            ürün görselleri (SVG placeholder)
-│  │  └─ swiss-type/       JIANKE gerçek fotoğrafları (ma25-6s-*, ma25-5ii-*)
+│  │  └─ swiss-type/       JIANKE gerçek fotoğrafları (ma25-6s-*, ma25-5ii-*, ma12-5ii-*, mr32-5ii-*)
 │  ├─ catalogs/swiss-type/ yer tutucu katalog PDF'leri (660 bayt, gerçek değil)
 │  ├─ company/  references/ (boş — gelecekte gerçek görseller)
 ├─ scripts/
@@ -110,8 +110,11 @@ type Category = { slug, icon, name, tagline, description, image, products };
 ### Mevcut içerik
 - **7 kategori**: CNC Tornalar, CNC Dik/Yatay İşleme Merkezleri, Dik Tornalar, Taşlama,
   Dişli Profil Taşlama, **CNC Kayar Otomatlar**.
-- **14 ürün** — bunların **2'si GERÇEK** (resmi katalogdan): `JIANKE MA25-6S`,
-  `JIANKE MA25-5 II`. Diğer 12'si **placeholder/uydurma** (`BT-*` kodlu, blueprint SVG görselli).
+- **16 ürün** — bunların **4'ü GERÇEK** (resmi katalogdan, gerçek fotoğraflarla):
+  `JIANKE MA25-6S`, `JIANKE MA25-5 II`, `JIANKE MA12-5 II`, `JIANKE MR32-5 II`.
+  Diğer 12'si **placeholder/uydurma** (`BT-*` kodlu, blueprint SVG görselli).
+- Gerçek ürünlerin tümü `cnc-kayar-otomatlar` kategorisindedir; her biri tam teknik tablo,
+  özellikler sekmesi, galeri (3–4 fotoğraf) ve placeholder PDF kataloğa sahiptir.
 
 ### Supabase'e geçiş notu
 - `Localized` alanlar → ya `*_tr`/`*_en` sütunlar ya da `jsonb`.
@@ -143,15 +146,21 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 
 Şu an "ürün yönetimi" = **`src/lib/products.ts` dosyasını elle düzenlemek**.
 
-- Yeni ürün eklemek için izlenen pattern (bu projede 2 kez uygulandı):
-  1. Resmi katalog **docx**'inden teknik veriler çekilir (`python-docx`).
-  2. Görseller docx içinden (`zipfile word/media/`) veya kullanıcıdan alınır;
-     `public/machines/swiss-type/` altına konur (gerekirse beyaz arka plan işlenir).
+- Yeni ürün eklemek için izlenen pattern (bu projede 4 kez uygulandı):
+  1. Resmi katalog **docx/PDF**'inden teknik veriler çekilir (`python-docx` / `pypdf`).
+  2. **Görseller YALNIZCA kullanıcının sohbete yüklediği fotoğraflardan alınır.**
+     Kullanıcı görselleri masaüstündeki `publicmachinesswiss-type` klasörüne kaydeder;
+     `public/machines/swiss-type/` altına kopyalanır (gerekirse beyaz arka plan işlenir).
+     PDF/docx'ten görsel çekme — BU ARTIK YASAK.
   3. `products.ts`'e yeni `Product` nesnesi eklenir (TR/EN specs + features + highlights).
   4. Yer tutucu katalog PDF'i `public/catalogs/...` altına eklenir.
 - **Görsel standardı**: ürün fotoğrafları **beyaz arka plan + `object-contain`** ile
   gösterilir (Gallery ve ProductCard). Siyah/şeffaf arka plan sorunlarını önler.
-- **Galeri**: ürün detayında 4'e kadar görsel + tıklanabilir küçük resimler.
+- **Görsel kaynağı kuralı**: fotoğraflar **yalnızca kullanıcının sohbete yüklediği**
+  resimlerden alınır; PDF/docx'ten çekilmez.
+- **Galeri**: ürün detayında 3–4 görsel + tıklanabilir küçük resimler.
+- **Teknik tablo standardı**: tüm spec değerleri kısa tutulur; uzun bileşik string
+  (em-dash, iki ayrı birim birleştirme) kesinlikle kullanılmaz → tablo yatay kaymaz.
 - Eksik: toplu içe aktarma, görsel optimizasyon pipeline'ı, stok/fiyat yönetimi (yok ve
   gerekmiyor — bu bir vitrin sitesi).
 
@@ -195,7 +204,8 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 - **Öne Çıkanlar** (mühendis odaklı 4 madde) bölümü.
 - **Teklif formu** (ürün adı otomatik dolar) + **iletişim formu** — UI tamam.
 - **Hakkımızda / Servis / İletişim** sayfaları.
-- **2 gerçek ürün** (JIANKE MA25-6S, MA25-5 II) tam teknik veriyle.
+- **4 gerçek ürün** (JIANKE MA25-6S, MA25-5 II, MA12-5 II, MR32-5 II) tam teknik veriyle,
+  gerçek fotoğraf galerileri ve `whitespace-nowrap` kaymaz teknik tablolarla.
 - **Marka kimliği**: logodan örneklenen mavi (#1F4488) + gri (#606060), endüstriyel tasarım.
 - Tipografi: dengeli satır kırma (`text-wrap: balance`), teknik tabloda `whitespace-nowrap`.
 - **Sürümleme**: git tag + GitHub Release + CHANGELOG (v1.0.0 → v2.3.0).
@@ -206,7 +216,7 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 
 - **Form backend'i** — teklif/iletişim formları HİÇBİR YERE veri göndermez (sadece
   ekranda "teşekkürler" gösterir). Lead/talep kaybı var.
-- **Gerçek içerik** — 14 üründen 12'si uydurma placeholder (BT-*); gerçek iletişim
+- **Gerçek içerik** — 16 üründen 12'si uydurma placeholder (BT-*); gerçek iletişim
   bilgileri (adres, telefon, e-posta) yok (örnek/dummy).
 - **Gerçek görseller** — çoğu ürün ve tüm referans logoları placeholder.
 - **Gerçek katalog PDF'leri** — şu an 660 baytlık yer tutucular.
@@ -236,8 +246,8 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
    değil, SEO/UX'te küçük tutarsızlık.
 4. **Form doğrulaması zayıf** — sadece HTML `required`; e-posta format/spam koruması yok
    (zaten backend olmadığı için kritik değil, ama eklenmeli).
-5. **Karışık veri** — gerçek JIANKE ürünleri ile uydurma BT-* ürünleri aynı kategoride;
-   yayına çıkmadan placeholder'lar temizlenmeli.
+5. **Karışık veri** — 4 gerçek JIANKE ürünü (CNC Kayar Otomatlar kategorisinde) ve 12
+   uydurma BT-* ürünü aynı sistemde; yayına çıkmadan tüm placeholder'lar temizlenmeli.
 6. Not: Geliştirme sırasında "preview" aracının bazı ekran görüntüleri/scroll'ları
    tutarsızdı — bu bir **kod hatası değil**, araç kaynaklı; site tarayıcıda düzgün çalışır.
 
