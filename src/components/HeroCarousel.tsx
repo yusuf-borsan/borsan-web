@@ -64,15 +64,26 @@ export function HeroCarousel({
           // no zoom. The image is narrower than the viewport so the left portion
           // stays dark — perfect for headline text. mirror: true flips the image
           // when the focal action is in the left half of the original photo.
-          const heightFitConfig: Record<string, { mirror: boolean }> = {
+          // rightOffset: shifts image further right (clips that many px from right edge).
+          // leftFade: CSS mask fades the image's left edge into the background.
+          const heightFitConfig: Record<string, { mirror: boolean; rightOffset?: number; leftFade?: boolean }> = {
             "/hero/hero-main.png":  { mirror: true  }, // drill at ~48% → flip → 68%
             "/hero/hero-main2.png": { mirror: false }, // sparks already at ~65%
             "/hero/hero-main3.png": { mirror: false }, // gear+shaft right of centre, dark bg left
-            "/hero/hero-main4.png": { mirror: false }, // operator+JIANKE machines at 53-90%, wall left
+            "/hero/hero-main4.png": { mirror: false, rightOffset: 180, leftFade: true }, // operator shifted right, smooth left edge
           };
           const hfc = heightFitConfig[slide.image];
 
           if (hfc) {
+            const imgStyle = {
+              right: hfc.rightOffset !== undefined ? `-${hfc.rightOffset}px` : "0",
+              ...(hfc.mirror ? { transform: "scaleX(-1)" } : {}),
+              ...(hfc.leftFade ? {
+                WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 28%)",
+                maskImage: "linear-gradient(to right, transparent 0%, black 28%)",
+              } : {}),
+            };
+
             return (
               <div
                 key={slide.image + i}
@@ -84,8 +95,8 @@ export function HeroCarousel({
                 <img
                   src={slide.image}
                   alt=""
-                  className="absolute right-0 top-0 h-full w-auto"
-                  style={hfc.mirror ? { transform: "scaleX(-1)" } : undefined}
+                  className="absolute top-0 h-full w-auto"
+                  style={imgStyle}
                 />
               </div>
             );
