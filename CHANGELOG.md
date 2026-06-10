@@ -11,6 +11,62 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v2.7.0 — Navbar yeniden tasarımı + MA25-5B + UI yenilemeleri (2026-06-10)
+
+### Navbar (Header.tsx + LocaleSwitcher.tsx) — Tam Yeniden Tasarım
+- **Yükseklik** 80px → **70px** (`h-[70px]`); daha kompakt, modern oran.
+- **Frosted-glass arka plan**: her zaman `bg-white/90 backdrop-blur-md`; scroll'da ince
+  alt border + hafif gölge eklenir.
+- **Hover alt çizgi animasyonu**: `after:` pseudo-element ile `w-0 → w-full` (200ms).
+- **Link hiyerarşisi**: Ürünler & Servis → `font-semibold text-ink-800` (birincil);
+  Hakkımızda & İletişim → `font-medium text-ink-500` (ikincil); aralarında ince divider.
+- **LocaleSwitcher yenilendi**: "TR / EN" toggle yerine **"TR ▼" dropdown** (animasyonlu
+  chevron, dışarı tıklamayla kapanır).
+- **"Teklif Al" butonu**: daha geniş padding + `shadow-md` + `hover:-translate-y-0.5` kaldırma efekti.
+- **Hamburger**: `h-px` ince çizgiler, 300ms smooth ↔ X animasyonu, desktop'ta `lg:hidden`.
+- **Ürünler Mega Menüsü**: hover ile açılan, tüm 7 kategoriyi 4 sütunlu grid'de gösteren
+  dropdown (CategoryIcon + kategori adı + tagline; `Tüm Ürünleri Gör →` linki).
+- **Mobil drawer**: yükseklik 70px'e senkronize, "TR ▼" + "Teklif Al" footer bölümünde.
+
+### Yeni Ürün
+- **JIANKE MA25-5B** (8. ürün, `cnc-kayar-otomatlar`) — 5+B eksen (X1,Y1,Z1,X2,Z2+B1),
+  SYNTEC 210TB-A kontrol, Ø25 bar, 4 gerçek fotoğraf galerisi, tam teknik tablo TR/EN.
+
+### Ürün Detayı — Teklif Bölümü Yenilendi
+- **2 sütunlu layout**: sol = Opsiyonel Donanımlar kartları (Bar Sürücü, Soğutma, Yağ
+  Buharı Ayırıcı, Parça Yakalama — beyaz kart + brand-600 ikon); sağ = dark form.
+- **QuoteForm dark varyantı** (`dark` prop): `bg-brand-600` arka plan, beyaz inputlar,
+  beyaz submit butonu.
+- 4 yeni SVG ikon eklendi: `BarFeederIcon`, `CoolantIcon`, `OilMistIcon`, `PartsIcon`.
+
+### İletişim Sayfası Yenilendi
+- Sol sütun: 2×2 **beyaz kart** grid (bg-white + brand-600/10 ikon, hover'da solid
+  brand-600 ikon + border/shadow değişimi).
+- Sağ sütun: `QuoteForm dark` — dark blue `bg-brand-600` form.
+
+### Düzeltmeler / İyileştirmeler
+- Teknik özellikler tablosu yatay kaydırma tamamen kaldırıldı (`ProductTabs.tsx`).
+- Marka rengi tutarlılığı: `#005088` → `bg-brand-600` (#1F4488) tüm bileşenlerde.
+- MA25-5B birinci fotoğraf güncellendi (`.jpg` → `.png`).
+- ProductCard ve kategori sayfası görsel modernizasyonu.
+
+### Teknik
+- Statik derleme: **57 → 65 sayfa** (yeni ürün TR+EN, opsiyonel donanım dictionary girişleri).
+- Yeni `Dictionary` alanları: `productPage.optionalEquipmentTitle`, `productPage.optionalEquipment[]`.
+
+---
+
+## v2.5.0 — DT38-5 II, DT38-6S, ZR20-5 II + doğruluk düzeltmeleri (2026-06-09)
+
+### Eklenenler
+- **JIANKE DT38-5 II**, **DT38-6S**, **ZR20-5 II** — 3 yeni CNC Kayar Otomat ürünü
+  (teknik veriler ve özellikler resmi kataloglardan; her biri TR/EN).
+
+### Düzeltmeler
+- Spec değerlerinde doğruluk düzeltmeleri.
+
+---
+
 ## v2.4.0 — 4 gerçek JIANKE ürünü + görsel ve tablo standartları (2026-06-09)
 
 ### Eklenenler

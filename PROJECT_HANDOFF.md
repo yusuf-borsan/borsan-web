@@ -2,7 +2,7 @@
 
 > Bu doküman, projeyi devralacak bir geliştirici için hazırlanmıştır. Projenin
 > mevcut durumunu, eksiklerini ve production yol haritasını eksiksiz anlatır.
-> Son güncelleme: 2026-06-09 · Sürüm: **v2.4.0** · Durum: **Prototip / MVP**
+> Son güncelleme: 2026-06-10 · Sürüm: **v2.7.0** · Durum: **Prototip / MVP**
 
 ---
 
@@ -70,8 +70,9 @@ borsan-web/
 │  │        ├─ page.tsx                       ürün listesi (kategoriler)
 │  │        ├─ [category]/page.tsx            kategori → model listesi
 │  │        └─ [category]/[product]/page.tsx  ürün detayı (galeri, tab, teklif formu)
-│  ├─ components/   Header, Footer, HeroCarousel, ReferenceMarquee, ProductTabs,
-│  │               Gallery, QuoteForm, ProductCard, LocaleSwitcher, ui, icons, sections
+│  ├─ components/   Header (navbar+mega menu), Footer, HeroCarousel, ReferenceMarquee,
+│  │               ProductTabs, Gallery, QuoteForm (dark varyant), ProductCard,
+│  │               LocaleSwitcher (TR▼ dropdown), ui, icons, sections
 │  ├─ i18n/
 │  │  ├─ config.ts          locale tanımları (tr/en, default tr)
 │  │  ├─ dictionaries/tr.ts, en.ts, index.ts   TÜM arayüz metinleri
@@ -110,9 +111,9 @@ type Category = { slug, icon, name, tagline, description, image, products };
 ### Mevcut içerik
 - **7 kategori**: CNC Tornalar, CNC Dik/Yatay İşleme Merkezleri, Dik Tornalar, Taşlama,
   Dişli Profil Taşlama, **CNC Kayar Otomatlar**.
-- **16 ürün** — bunların **4'ü GERÇEK** (resmi katalogdan, gerçek fotoğraflarla):
-  `JIANKE MA25-6S`, `JIANKE MA25-5 II`, `JIANKE MA12-5 II`, `JIANKE MR32-5 II`.
-  Diğer 12'si **placeholder/uydurma** (`BT-*` kodlu, blueprint SVG görselli).
+- **19 ürün** — bunların **8'i GERÇEK** (resmi katalogdan, gerçek fotoğraflarla):
+  `JIANKE MA25-6S`, `MA25-5 II`, `MA12-5 II`, `MR32-5 II`, `DT38-5 II`, `DT38-6S`,
+  `ZR20-5 II`, `MA25-5B`. Diğer 11'i **placeholder/uydurma** (`BT-*` kodlu, blueprint SVG görselli).
 - Gerçek ürünlerin tümü `cnc-kayar-otomatlar` kategorisindedir; her biri tam teknik tablo,
   özellikler sekmesi, galeri (3–4 fotoğraf) ve placeholder PDF kataloğa sahiptir.
 
@@ -204,11 +205,16 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 - **Öne Çıkanlar** (mühendis odaklı 4 madde) bölümü.
 - **Teklif formu** (ürün adı otomatik dolar) + **iletişim formu** — UI tamam.
 - **Hakkımızda / Servis / İletişim** sayfaları.
-- **4 gerçek ürün** (JIANKE MA25-6S, MA25-5 II, MA12-5 II, MR32-5 II) tam teknik veriyle,
-  gerçek fotoğraf galerileri ve `whitespace-nowrap` kaymaz teknik tablolarla.
+- **8 gerçek ürün** (JIANKE MA25-6S, MA25-5 II, MA12-5 II, MR32-5 II, DT38-5 II, DT38-6S,
+  ZR20-5 II, MA25-5B) tam teknik veriyle, gerçek fotoğraf galerileri ve kaymaz teknik tablolarla.
+- **Navbar**: 70px yükseklik, frosted-glass (`bg-white/90 backdrop-blur-md`), hover alt çizgi
+  animasyonu, link hiyerarşisi, "TR ▼" dropdown, Ürünler mega menüsü (7 kategori).
+- **Ürün detayı teklif bölümü**: 2 sütunlu layout, Opsiyonel Donanımlar kartları, dark form.
+- **İletişim sayfası**: 2×2 beyaz kart + hover efekti + dark blue form.
+- **QuoteForm dark varyantı**: `bg-brand-600` arka plan, beyaz inputlar (ürün detayı + iletişim).
 - **Marka kimliği**: logodan örneklenen mavi (#1F4488) + gri (#606060), endüstriyel tasarım.
 - Tipografi: dengeli satır kırma (`text-wrap: balance`), teknik tabloda `whitespace-nowrap`.
-- **Sürümleme**: git tag + GitHub Release + CHANGELOG (v1.0.0 → v2.3.0).
+- **Sürümleme**: git tag + GitHub Release + CHANGELOG (v1.0.0 → v2.7.0).
 
 ---
 
