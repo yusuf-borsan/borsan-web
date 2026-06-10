@@ -63,8 +63,10 @@ export function HeroCarousel({
 
           // Per-photo positioning: tune so the focal point lands on the right
           // half of the frame, leaving the darker left side for headline text.
+          // hero-main.png: drill action is at ~45% from left → mirror horizontally
+          // (scaleX -1) so it moves to ~55% (right half), safely away from text.
           const photoStyle: Record<string, { objectPosition: string; transform: string }> = {
-            "/hero/hero-main.png":    { objectPosition: "62% 50%", transform: "scale(1.04)" },
+            "/hero/hero-main.png":     { objectPosition: "50% 50%", transform: "scale(-1.05, 1.05)" },
             "/hero/swiss-type-v2.jpg": { objectPosition: "54% 50%", transform: "scale(1.08)" },
           };
           const ps = isPhoto
