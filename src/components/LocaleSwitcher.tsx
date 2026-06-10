@@ -23,7 +23,7 @@ export function LocaleSwitcher({
     return segments.join("/") || `/${target}`;
   }
 
-  // Close dropdown on outside click
+  // Close on outside click
   useEffect(() => {
     const onOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -67,12 +67,13 @@ export function LocaleSwitcher({
         </svg>
       </button>
 
+      {/* Slide-down — no bubble, same style as mega menu */}
       <div
         role="listbox"
-        className={`absolute right-0 top-full mt-2 min-w-[72px] overflow-hidden rounded-lg border border-ink-100 bg-white shadow-lg transition-all duration-200 ${
+        className={`absolute right-0 top-full min-w-full bg-white/95 backdrop-blur-sm transition-all duration-200 ${
           open
             ? "pointer-events-auto translate-y-0 opacity-100"
-            : "pointer-events-none -translate-y-1 opacity-0"
+            : "pointer-events-none -translate-y-2 opacity-0"
         }`}
       >
         {otherLocales.map((loc) => (
@@ -82,7 +83,11 @@ export function LocaleSwitcher({
             role="option"
             aria-selected={loc === locale}
             onClick={() => setOpen(false)}
-            className="block px-4 py-2.5 text-sm font-semibold text-ink-600 transition-colors duration-150 hover:bg-brand-50 hover:text-brand-600"
+            className={`block px-3 py-2 text-center text-sm font-semibold transition-colors duration-150 ${
+              tone === "light"
+                ? "text-white/80 hover:text-white"
+                : "text-ink-700 hover:text-brand-600"
+            }`}
           >
             {localeShort[loc]}
           </Link>

@@ -82,7 +82,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       return `${base} ${weight} text-brand-600 after:w-full`;
     }
     return `${base} ${weight} ${
-      primary ? "text-ink-800 hover:text-ink-900" : "text-ink-500 hover:text-ink-700"
+      primary ? "text-ink-800 hover:text-ink-900" : "text-ink-800 hover:text-ink-900"
     } after:w-0 hover:after:w-full`;
   };
 
