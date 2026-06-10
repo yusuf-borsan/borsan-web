@@ -67,6 +67,7 @@ export function HeroCarousel({
           const heightFitConfig: Record<string, { mirror: boolean }> = {
             "/hero/hero-main.png":  { mirror: true  }, // drill at ~48% → flip → 68%
             "/hero/hero-main2.png": { mirror: false }, // sparks already at ~65%
+            "/hero/hero-main3.png": { mirror: false }, // gear+shaft right of centre, dark bg left
           };
           const hfc = heightFitConfig[slide.image];
 

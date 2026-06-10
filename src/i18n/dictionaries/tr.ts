@@ -69,7 +69,7 @@ const tr = {
           "Seri üretimden tekil parça imalatına; yüksek devirli, rijit ve tahrikli takımlı CNC torna çözümleriyle çevrim sürenizi kısaltın, verimliliğinizi artırın.",
       },
       {
-        image: "/categories/disli-taslama.svg",
+        image: "/hero/hero-main3.png",
         href: "/urunler/disli-profil-taslama",
         eyebrow: "Taşlama · Dişli Profil Taşlama",
         titleLine1: "Kusursuz Yüzey,",

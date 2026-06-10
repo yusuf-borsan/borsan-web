@@ -71,7 +71,7 @@ const en: Dictionary = {
           "From serial production to single-part manufacturing — cut your cycle times and boost productivity with high-speed, rigid, live-tooling CNC turning solutions.",
       },
       {
-        image: "/categories/disli-taslama.svg",
+        image: "/hero/hero-main3.png",
         href: "/urunler/disli-profil-taslama",
         eyebrow: "Grinding · Gear Profile Grinding",
         titleLine1: "Flawless Surfaces,",
