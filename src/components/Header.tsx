@@ -136,31 +136,37 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             </div>
 
             {/* Primary: Servis */}
-            <Link
-              href={localePath(locale, routes.service)}
-              className={`px-3 ${navLinkCls(localePath(locale, routes.service), true)}`}
-            >
-              {dict.nav.service}
-            </Link>
+            <div className="flex items-center px-3">
+              <Link
+                href={localePath(locale, routes.service)}
+                className={navLinkCls(localePath(locale, routes.service), true)}
+              >
+                {dict.nav.service}
+              </Link>
+            </div>
 
             {/* Visual separator */}
             <span className="mx-2 h-4 w-px bg-ink-200" aria-hidden />
 
             {/* Secondary: Hakkımızda */}
-            <Link
-              href={localePath(locale, routes.about)}
-              className={`px-3 ${navLinkCls(localePath(locale, routes.about), false)}`}
-            >
-              {dict.nav.about}
-            </Link>
+            <div className="flex items-center px-3">
+              <Link
+                href={localePath(locale, routes.about)}
+                className={navLinkCls(localePath(locale, routes.about), false)}
+              >
+                {dict.nav.about}
+              </Link>
+            </div>
 
             {/* Secondary: İletişim */}
-            <Link
-              href={localePath(locale, routes.contact)}
-              className={`px-3 ${navLinkCls(localePath(locale, routes.contact), false)}`}
-            >
-              {dict.nav.contact}
-            </Link>
+            <div className="flex items-center px-3">
+              <Link
+                href={localePath(locale, routes.contact)}
+                className={navLinkCls(localePath(locale, routes.contact), false)}
+              >
+                {dict.nav.contact}
+              </Link>
+            </div>
 
           </nav>
 
