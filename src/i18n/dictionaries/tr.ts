@@ -51,7 +51,7 @@ const tr = {
     stat3Label: "Satış sonrası servis",
     slides: [
       {
-        image: "/hero/hero.svg",
+        image: "/hero/hero-main.png",
         href: "/urunler",
         eyebrow: "CNC Takım Tezgahları · Mühendislik · Servis",
         titleLine1: "Hassasiyetin",

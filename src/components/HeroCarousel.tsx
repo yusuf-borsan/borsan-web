@@ -57,11 +57,20 @@ export function HeroCarousel({
       {/* Background slides (cross-fade) */}
       <div className="absolute inset-0" aria-hidden>
         {slides.map((slide, i) => {
-          // Real photos (e.g. the Swiss-type showroom shot) render in full colour,
-          // centred with object-cover so the machines stay sharp and the empty
-          // left of the frame sits under the headline text.
-          // SVG blueprint slides keep their original luminosity/opacity treatment.
+          // Real photos render in full colour with object-cover.
+          // SVG blueprint slides use luminosity blend + reduced opacity.
           const isPhoto = /\.(jpe?g|png|webp)$/i.test(slide.image);
+
+          // Per-photo positioning: tune so the focal point lands on the right
+          // half of the frame, leaving the darker left side for headline text.
+          const photoStyle: Record<string, { objectPosition: string; transform: string }> = {
+            "/hero/hero-main.png":    { objectPosition: "62% 50%", transform: "scale(1.04)" },
+            "/hero/swiss-type-v2.jpg": { objectPosition: "54% 50%", transform: "scale(1.08)" },
+          };
+          const ps = isPhoto
+            ? (photoStyle[slide.image] ?? { objectPosition: "54% 50%", transform: "scale(1.04)" })
+            : undefined;
+
           return (
             <Image
               key={slide.image + i}
@@ -73,7 +82,7 @@ export function HeroCarousel({
               className={`object-cover transition-opacity duration-700 ease-out ${
                 isPhoto ? "" : "mix-blend-luminosity"
               } ${i === active ? (isPhoto ? "opacity-100" : "opacity-40") : "opacity-0"}`}
-              style={isPhoto ? { objectPosition: "54% 50%", transform: "scale(1.08)" } : undefined}
+              style={ps}
             />
           );
         })}
@@ -85,7 +94,7 @@ export function HeroCarousel({
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, #0c0e13 0%, rgba(12,14,19,0.92) 42%, rgba(12,14,19,0.55) 100%)",
+            "linear-gradient(90deg, #0c0e13 0%, rgba(12,14,19,0.90) 38%, rgba(12,14,19,0.50) 100%)",
         }}
         aria-hidden
       />

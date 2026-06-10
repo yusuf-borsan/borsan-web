@@ -53,7 +53,7 @@ const en: Dictionary = {
     stat3Label: "After-sales service",
     slides: [
       {
-        image: "/hero/hero.svg",
+        image: "/hero/hero-main.png",
         href: "/urunler",
         eyebrow: "CNC Machine Tools · Engineering · Service",
         titleLine1: "The Industrial Power",
