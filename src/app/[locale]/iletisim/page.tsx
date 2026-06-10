@@ -57,8 +57,8 @@ export default async function ContactPage({
                 {cards.map((c) => {
                   const Icon = c.icon;
                   return (
-                    <div key={c.title} className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600">
+                    <div key={c.title} className="group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-brand-300/60 hover:shadow-md">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600 transition-all duration-200 group-hover:bg-brand-600 group-hover:text-white">
                         <Icon className="h-6 w-6" />
                       </span>
                       <h3 className="mt-4 text-xs font-semibold uppercase tracking-wider text-ink-400">
