@@ -57,22 +57,32 @@ export function HeroCarousel({
       {/* Background slides (cross-fade) */}
       <div className="absolute inset-0" aria-hidden>
         {slides.map((slide, i) => {
-          // Real photos render in full colour with object-cover.
-          // SVG blueprint slides use luminosity blend + reduced opacity.
           const isPhoto = /\.(jpe?g|png|webp)$/i.test(slide.image);
+          const isActive = i === active;
 
-          // Per-photo positioning: tune so the focal point lands on the right
-          // half of the frame, leaving the darker left side for headline text.
-          // hero-main.png: drill action is at ~45% from left → mirror horizontally
-          // (scaleX -1) so it moves to ~55% (right half), safely away from text.
-          const photoStyle: Record<string, { objectPosition: string; transform: string }> = {
-            "/hero/hero-main.png":     { objectPosition: "50% 50%", transform: "scaleX(-1)" },
-            "/hero/swiss-type-v2.jpg": { objectPosition: "54% 50%", transform: "scale(1.08)" },
-          };
-          const ps = isPhoto
-            ? (photoStyle[slide.image] ?? { objectPosition: "54% 50%", transform: "scale(1.04)" })
-            : undefined;
+          // hero-main.png: rendered at natural height-fit (no zoom), right-aligned,
+          // then mirrored. Because the image is ~978px wide on a ~1456px screen,
+          // the left ~33% stays dark (text area) and the drill action lands at ~68%.
+          if (slide.image === "/hero/hero-main.png") {
+            return (
+              <div
+                key={slide.image + i}
+                className={`absolute inset-0 overflow-hidden transition-opacity duration-700 ease-out ${
+                  isActive ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={slide.image}
+                  alt=""
+                  className="absolute right-0 top-0 h-full w-auto"
+                  style={{ transform: "scaleX(-1)" }}
+                />
+              </div>
+            );
+          }
 
+          // All other slides (SVGs + swiss-type photo)
           return (
             <Image
               key={slide.image + i}
@@ -83,8 +93,12 @@ export function HeroCarousel({
               sizes="100vw"
               className={`object-cover transition-opacity duration-700 ease-out ${
                 isPhoto ? "" : "mix-blend-luminosity"
-              } ${i === active ? (isPhoto ? "opacity-100" : "opacity-40") : "opacity-0"}`}
-              style={ps}
+              } ${isActive ? (isPhoto ? "opacity-100" : "opacity-40") : "opacity-0"}`}
+              style={
+                isPhoto
+                  ? { objectPosition: "54% 50%", transform: "scale(1.08)" }
+                  : undefined
+              }
             />
           );
         })}
