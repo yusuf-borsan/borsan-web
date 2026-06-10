@@ -53,27 +53,23 @@ export function ProductTabs({
       {/* Panel: technical specifications */}
       {tab === "specs" && (
         <div>
-          {/* overflow-x-auto: keeps every label/value on a single line (no wrapping);
-              on very narrow screens the table scrolls instead of breaking. */}
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <tbody>
-                {specs.map((spec, i) => (
-                  <tr key={spec.label[locale]} className={i % 2 === 1 ? "bg-steel-300/10" : "bg-white"}>
-                    <th
-                      scope="row"
-                      className="whitespace-nowrap px-4 py-3 text-left font-medium text-ink-500"
-                    >
-                      {spec.label[locale]}
-                    </th>
-                    <td className="whitespace-nowrap px-4 py-3 text-right font-semibold text-ink-900">
-                      {spec.value[locale]}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <table className="w-full text-sm">
+            <tbody>
+              {specs.map((spec, i) => (
+                <tr key={spec.label[locale]} className={i % 2 === 1 ? "bg-steel-300/10" : "bg-white"}>
+                  <th
+                    scope="row"
+                    className="w-[45%] whitespace-nowrap px-4 py-3 text-left font-medium text-ink-500"
+                  >
+                    {spec.label[locale]}
+                  </th>
+                  <td className="px-4 py-3 text-right font-semibold text-ink-900">
+                    {spec.value[locale]}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
           <p className="border-t border-ink-100 bg-white px-4 py-3 text-xs text-ink-400">
             {labels.specsNote}
           </p>
