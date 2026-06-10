@@ -60,10 +60,17 @@ export function HeroCarousel({
           const isPhoto = /\.(jpe?g|png|webp)$/i.test(slide.image);
           const isActive = i === active;
 
-          // hero-main.png: rendered at natural height-fit (no zoom), right-aligned,
-          // then mirrored. Because the image is ~978px wide on a ~1456px screen,
-          // the left ~33% stays dark (text area) and the drill action lands at ~68%.
-          if (slide.image === "/hero/hero-main.png") {
+          // Height-fit photos: rendered at natural height-scale, right-aligned,
+          // no zoom. The image is narrower than the viewport so the left portion
+          // stays dark — perfect for headline text. mirror: true flips the image
+          // when the focal action is in the left half of the original photo.
+          const heightFitConfig: Record<string, { mirror: boolean }> = {
+            "/hero/hero-main.png":  { mirror: true  }, // drill at ~48% → flip → 68%
+            "/hero/hero-main2.png": { mirror: false }, // sparks already at ~65%
+          };
+          const hfc = heightFitConfig[slide.image];
+
+          if (hfc) {
             return (
               <div
                 key={slide.image + i}
@@ -76,13 +83,13 @@ export function HeroCarousel({
                   src={slide.image}
                   alt=""
                   className="absolute right-0 top-0 h-full w-auto"
-                  style={{ transform: "scaleX(-1)" }}
+                  style={hfc.mirror ? { transform: "scaleX(-1)" } : undefined}
                 />
               </div>
             );
           }
 
-          // All other slides (SVGs + swiss-type photo)
+          // SVGs and other full-cover photos (swiss-type showroom)
           return (
             <Image
               key={slide.image + i}

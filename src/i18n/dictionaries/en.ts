@@ -62,7 +62,7 @@ const en: Dictionary = {
           "From CNC lathes to vertical and horizontal machining centers, grinding and gear-profile grinding machines — machine-tool solutions that advance your production, with uninterrupted service for every machine you buy from us.",
       },
       {
-        image: "/categories/cnc-tornalar.svg",
+        image: "/hero/hero-main2.png",
         href: "/urunler/cnc-tornalar",
         eyebrow: "CNC Lathes · High Torque",
         titleLine1: "Micron-Level",

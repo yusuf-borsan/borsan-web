@@ -60,7 +60,7 @@ const tr = {
           "CNC tornalardan dik ve yatay işleme merkezlerine, taşlama ve dişli profil taşlama tezgahlarına kadar; üretiminizi ileri taşıyan tezgah çözümleri ve satın aldığınız her makine için kesintisiz servis.",
       },
       {
-        image: "/categories/cnc-tornalar.svg",
+        image: "/hero/hero-main2.png",
         href: "/urunler/cnc-tornalar",
         eyebrow: "CNC Tornalar · Yüksek Tork",
         titleLine1: "Mikron Düzeyinde",
