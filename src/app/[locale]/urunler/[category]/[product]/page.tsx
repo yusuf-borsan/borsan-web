@@ -11,7 +11,14 @@ import { Gallery } from "@/components/Gallery";
 import { ProductTabs } from "@/components/ProductTabs";
 import { QuoteForm } from "@/components/QuoteForm";
 import { ProductCard } from "@/components/ProductCard";
-import { CheckIcon, DocIcon } from "@/components/icons";
+import { CheckIcon, DocIcon, BarFeederIcon, CoolantIcon, OilMistIcon, PartsIcon } from "@/components/icons";
+
+const equipmentIcons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
+  barfeeder: BarFeederIcon,
+  coolant: CoolantIcon,
+  oilmist: OilMistIcon,
+  partscatcher: PartsIcon,
+};
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -137,27 +144,54 @@ export default async function ProductPage({
         </Container>
       </section>
 
-      {/* Quote form */}
-      <section id="teklif" className="scroll-mt-24 border-t border-ink-100 bg-steel-300/10">
+      {/* Quote + Optional Equipment */}
+      <section id="teklif" className="scroll-mt-24 bg-slate-50">
         <Container className="py-16 lg:py-20">
-          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-            <div className="lg:col-span-5">
-              <h2 className="font-display text-2xl text-ink-900 sm:text-3xl">
+          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+
+            {/* ── Left: Optional Equipment ── */}
+            <div>
+              <h3 className="font-display text-xl font-bold text-brand-700">
+                {dict.productPage.optionalEquipmentTitle}
+              </h3>
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                {dict.productPage.optionalEquipment.map((item) => {
+                  const Icon = equipmentIcons[item.icon] ?? BarFeederIcon;
+                  return (
+                    <div
+                      key={item.icon}
+                      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                    >
+                      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-slate-50 p-2 flex items-center justify-center">
+                        <Icon className="h-16 w-16 text-brand-600" />
+                      </div>
+                      <p className="mt-3 text-sm font-semibold text-slate-800">
+                        {item.name}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* ── Right: Quote Form (dark blue) ── */}
+            <div className="rounded-2xl bg-[#005088] p-8 shadow-2xl sm:p-10">
+              <h2 className="font-display text-2xl text-white sm:text-3xl">
                 {dict.productPage.requestQuoteTitle}
               </h2>
-              <p className="mt-4 max-w-md text-base leading-relaxed text-ink-500">
+              <p className="mt-3 text-sm leading-relaxed text-white/70">
                 {dict.productPage.requestQuoteText}
               </p>
-            </div>
-            <div className="lg:col-span-7">
-              <div className="rounded-md border border-ink-100 bg-white p-6 sm:p-8">
+              <div className="mt-8">
                 <QuoteForm
                   dict={dict}
                   defaultProduct={p.name[locale]}
                   productOptions={cat.products.map((x) => x.name[locale])}
+                  dark
                 />
               </div>
             </div>
+
           </div>
         </Container>
       </section>

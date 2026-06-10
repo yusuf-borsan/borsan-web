@@ -224,3 +224,72 @@ export function CheckIcon(props: IconProps) {
     </svg>
   );
 }
+
+/* ---- Optional Equipment icons ---- */
+
+export function BarFeederIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      {/* bar/rod */}
+      <rect x="6" y="21" width="26" height="6" rx="3" />
+      {/* feed arrow */}
+      <path d="M34 24h8" />
+      <path d="M38 20l4 4-4 4" />
+      {/* support rollers */}
+      <circle cx="13" cy="24" r="2.5" />
+      <circle cx="23" cy="24" r="2.5" />
+      {/* feed tube hint */}
+      <path d="M6 19v-5a2 2 0 0 1 2-2h10" />
+    </svg>
+  );
+}
+
+export function CoolantIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      {/* nozzle body */}
+      <path d="M10 20h10l4-6h6v12H24l-4-6H10z" />
+      {/* spray drops */}
+      <path d="M34 16l4-4M34 24l4 4M36 20h6" strokeWidth={1.2} />
+      {/* pipe */}
+      <path d="M10 20v10a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-4" />
+      {/* drop */}
+      <path d="M38 12 Q40 10 42 12 Q42 15 40 16 Q38 15 38 12z" />
+    </svg>
+  );
+}
+
+export function OilMistIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      {/* main cylinder/separator */}
+      <rect x="14" y="10" width="20" height="28" rx="3" />
+      {/* inlet pipe (top left) */}
+      <path d="M14 18 H8 V12 H14" />
+      {/* outlet pipe (top right) */}
+      <path d="M34 16 H40 V10 H34" />
+      {/* drain pipe (bottom) */}
+      <path d="M24 38v5" />
+      {/* filter layers inside */}
+      <path d="M17 22h14M17 28h14" strokeWidth={1.2} />
+    </svg>
+  );
+}
+
+export function PartsIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      {/* collection bin */}
+      <path d="M8 28 L12 42 H36 L40 28 Z" />
+      {/* bin opening rim */}
+      <path d="M6 28 H42" />
+      {/* conveyor belt hint */}
+      <path d="M10 34 H38" strokeWidth={1.2} />
+      {/* falling part */}
+      <circle cx="24" cy="16" r="4" />
+      {/* motion arrow */}
+      <path d="M24 21 V25" />
+      <path d="M21 24 L24 27 L27 24" />
+    </svg>
+  );
+}

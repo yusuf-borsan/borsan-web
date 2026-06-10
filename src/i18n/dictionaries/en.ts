@@ -154,6 +154,13 @@ const en: Dictionary = {
     catalogTitle: "Technical Catalog",
     catalogText: "Download the catalog for full technical details, drawings and the option list.",
     specsNote: "Technical values may vary depending on the model and configuration.",
+    optionalEquipmentTitle: "Optional Equipment",
+    optionalEquipment: [
+      { name: "Auto Bar Feeder", icon: "barfeeder" },
+      { name: "High-Pressure Coolant", icon: "coolant" },
+      { name: "Oil Mist Separator", icon: "oilmist" },
+      { name: "Parts Catcher Unit", icon: "partscatcher" },
+    ],
   },
   quoteForm: {
     title: "Quote Form",

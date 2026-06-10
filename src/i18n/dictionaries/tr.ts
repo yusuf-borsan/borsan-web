@@ -152,6 +152,13 @@ const tr = {
     catalogTitle: "Teknik Katalog",
     catalogText: "Modelin tüm teknik detayları, çizimler ve opsiyon listesi için kataloğu indirin.",
     specsNote: "Teknik değerler modele ve konfigürasyona göre değişiklik gösterebilir.",
+    optionalEquipmentTitle: "Opsiyonel Donanımlar",
+    optionalEquipment: [
+      { name: "Otomatik Çubuk Sürücü", icon: "barfeeder" },
+      { name: "Yüksek Basınçlı Soğutma", icon: "coolant" },
+      { name: "Yağ Buharı Ayırıcı", icon: "oilmist" },
+      { name: "Parça Yakalama Ünitesi", icon: "partscatcher" },
+    ],
   },
   quoteForm: {
     title: "Teklif Formu",
