@@ -175,7 +175,7 @@ export default async function ProductPage({
             </div>
 
             {/* ── Right: Quote Form (dark blue) ── */}
-            <div className="rounded-2xl bg-[#005088] p-8 shadow-2xl sm:p-10">
+            <div className="rounded-2xl bg-brand-600 p-8 shadow-2xl sm:p-10">
               <h2 className="font-display text-2xl text-white sm:text-3xl">
                 {dict.productPage.requestQuoteTitle}
               </h2>

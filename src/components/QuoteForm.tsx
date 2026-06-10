@@ -100,7 +100,7 @@ export function QuoteForm({ dict, productOptions, defaultProduct, dark = false }
         {dark ? (
           <button
             type="submit"
-            className="w-full rounded-xl bg-white py-4 text-sm font-bold text-[#005088] transition-all hover:scale-[1.02] hover:bg-slate-100"
+            className="w-full rounded-xl bg-white py-4 text-sm font-bold text-brand-600 transition-all hover:scale-[1.02] hover:bg-slate-100"
           >
             {f.submit}
           </button>
