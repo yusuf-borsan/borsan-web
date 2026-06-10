@@ -66,7 +66,7 @@ export function HeroCarousel({
           // hero-main.png: drill action is at ~45% from left → mirror horizontally
           // (scaleX -1) so it moves to ~55% (right half), safely away from text.
           const photoStyle: Record<string, { objectPosition: string; transform: string }> = {
-            "/hero/hero-main.png":     { objectPosition: "50% 50%", transform: "scale(-1.05, 1.05)" },
+            "/hero/hero-main.png":     { objectPosition: "50% 50%", transform: "scale(-1.3, 1.3) translateX(-10%)" },
             "/hero/swiss-type-v2.jpg": { objectPosition: "54% 50%", transform: "scale(1.08)" },
           };
           const ps = isPhoto
