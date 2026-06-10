@@ -2,7 +2,7 @@
 
 > Bu doküman, projeyi devralacak bir geliştirici için hazırlanmıştır. Projenin
 > mevcut durumunu, eksiklerini ve production yol haritasını eksiksiz anlatır.
-> Son güncelleme: 2026-06-10 · Sürüm: **v2.7.0** · Durum: **Prototip / MVP**
+> Son güncelleme: 2026-06-10 · Sürüm: **v2.8.0** · Durum: **Prototip / MVP**
 
 ---
 
@@ -48,7 +48,8 @@ borsan-web/
 ├─ public/
 │  ├─ branding/            logo.png (renkli), logo-white.png (koyu zemin)
 │  ├─ categories/          kategori görselleri (SVG blueprint placeholder)
-│  ├─ hero/                hero.svg + swiss-type-v2.jpg (slayt 4 gerçek foto)
+│  ├─ hero/                hero-main.png (slayt1 CNC delme), hero-main2.png (torna+kıvılcım),
+│  │                       hero-main3.png (dişli+mil stüdyo), hero-main4.png (JIANKE atölye)
 │  ├─ machines/            ürün görselleri (SVG placeholder)
 │  │  └─ swiss-type/       JIANKE gerçek fotoğrafları (ma25-6s-*, ma25-5ii-*, ma12-5ii-*, mr32-5ii-*)
 │  ├─ catalogs/swiss-type/ yer tutucu katalog PDF'leri (660 bayt, gerçek değil)
@@ -197,6 +198,10 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 - **Ana sayfa**: 4 slaytlı **hero carousel** (ok/nokta, otomatik geçiş, fade, her slayt
   kendi kategorisine link), ürün kategorileri, firma avantajları, **sonsuz akan referans
   şeridi** (hover'da yavaşlar), teklif CTA.
+  - **Hero fotoğraf yerleştirme**: height-fit + right-align (`h-full w-auto`, `right: -Npx`);
+    zoom yok, sol ~390px doğal koyu boşluk yazı alanı. `heightFitConfig` lookup tablosu
+    `mirror` / `rightOffset` / `leftFade` ayarlarını tutar. CSS `mask-image` ile Slayt 4
+    sol kenar gradyanla geçişli birleşir. Tüm 4 slayt gerçek CNC fotoğraflı.
 - **Sağdan açılan yan panel menü** (tüm ekranlarda; overlay + Esc + scroll kilidi).
 - **Ürünler / Kategori / Ürün Detay** sayfaları.
 - **Ürün detayında sekmeli yapı**: Teknik Özellikler ↔ Ürün Özellikleri (aktif sekme
@@ -214,7 +219,7 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 - **QuoteForm dark varyantı**: `bg-brand-600` arka plan, beyaz inputlar (ürün detayı + iletişim).
 - **Marka kimliği**: logodan örneklenen mavi (#1F4488) + gri (#606060), endüstriyel tasarım.
 - Tipografi: dengeli satır kırma (`text-wrap: balance`), teknik tabloda `whitespace-nowrap`.
-- **Sürümleme**: git tag + GitHub Release + CHANGELOG (v1.0.0 → v2.7.0).
+- **Sürümleme**: git tag + GitHub Release + CHANGELOG (v1.0.0 → v2.8.0).
 
 ---
 

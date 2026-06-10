@@ -6,7 +6,7 @@
 > kullanıcıdan **açık onay** al ve gerekçeni yaz.
 >
 > Bağlam için önce oku: `PROJECT_HANDOFF.md` (durum), `CHANGELOG.md` (geçmiş),
-> `README.md` (genel bakış). Sürüm: v2.4.0.
+> `README.md` (genel bakış). Sürüm: v2.8.0.
 
 ---
 
@@ -151,6 +151,64 @@ Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
   kopyalanır. Kullanıcı sohbete yüklediğinde bu klasörde ara.
   **PDF/docx içinden görsel çekmek YASAK** (düşük kalite, yanlış arka plan).
 - Görsel dosyasını değiştirdiysen Next/Image önbelleği için **`rm -rf .next`** + sert yenileme.
+
+---
+
+## 8. Hero Fotoğraf Ekleme Standardı
+
+### Yerleştirme Kuralı (height-fit + right-align) — DEĞİŞTİRME
+
+Hero slaytlarında **`next/image fill` KULLANMA**. Fill her zaman konteyner genişliğini
+tam doldurur; bu durumda `objectPosition X` sıfır etki yapar ve zoom şart olur.
+
+**Doğru yöntem** — `HeroCarousel.tsx` `heightFitConfig` lookup tablosu:
+
+```tsx
+const heightFitConfig: Record<string, { mirror: boolean; rightOffset?: number; leftFade?: boolean }> = {
+  "/hero/hero-main.png":  { mirror: true  },   // odak sol yarıda → çevir
+  "/hero/hero-main2.png": { mirror: false },
+  "/hero/hero-main3.png": { mirror: false },
+  "/hero/hero-main4.png": { mirror: false, rightOffset: 180, leftFade: true },
+};
+```
+
+```tsx
+// Render — zoom yok, scaling değişmez, sadece konum:
+<img
+  src={slide.image}
+  alt=""
+  className="absolute top-0 h-full w-auto"
+  style={{
+    right: rightOffset !== undefined ? `-${rightOffset}px` : "0",
+    transform: mirror ? "scaleX(-1)" : undefined,
+    WebkitMaskImage: leftFade ? "linear-gradient(to right, transparent 0%, black 28%)" : undefined,
+    maskImage:       leftFade ? "linear-gradient(to right, transparent 0%, black 28%)" : undefined,
+  }}
+/>
+```
+
+### Parametreler
+| Parametre | Açıklama |
+|-----------|----------|
+| `mirror: true` | `scaleX(-1)` — odak noktası sol yarıdaysa çevir (sağa taşır) |
+| `rightOffset: N` | CSS `right: -Npx` — fotoğrafı N px sağa kaydır (zoom yok, sağ N px kayar) |
+| `leftFade: true` | CSS `mask-image` gradyanı — fotoğrafın sol kenarı şeffaftan opağa (0→28%) geçişli |
+
+### Gradyan Overlay (global, tüm slaytlar — değiştirme)
+```
+linear-gradient(90deg, #0c0e13 0%, rgba(12,14,19,0.88) 42%, rgba(12,14,19,0.25) 100%)
+```
+
+### Yeni Slayt Fotoğrafı Eklerken
+1. Kaynak: masaüstündeki `publicmachinesswiss-type\` klasöründen kopyala → `public/hero/hero-mainN.png`
+2. Fotoğrafı incele: **odak noktası hangi yüzde**?
+   - Sağ yarıda (%50+): `mirror: false` (doğal yerleşim yeterli)
+   - Sol yarıda (<%45): `mirror: true` (çevirince sağa geçer)
+   - Hâlâ yazı altında: `rightOffset: 150–200` ekle
+   - Sol kenar görünür kesiliyor: `leftFade: true` ekle
+3. `tr.ts` ve `en.ts` ilgili slaytın `image` alanını güncelle
+4. `npx tsc --noEmit` temiz olmalı
+5. `eslint-disable-next-line @next/next/no-img-element` yorumu `<img>` satırının üstünde olmalı
 
 ---
 

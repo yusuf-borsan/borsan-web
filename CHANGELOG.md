@@ -11,6 +11,40 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v2.8.0 — Hero Carousel: 4 Gerçek CNC Fotoğrafı (2026-06-10)
+
+### Hero Carousel — Tüm Slaytlar Gerçek Fotoğrafla
+
+Tüm 4 hero slaytına profesyonel CNC makinesi fotoğrafları eklendi; SVG/placeholder
+görseller tamamen kaldırıldı.
+
+| Slayt | Fotoğraf | Kaynak / Özellik |
+|-------|----------|-----------------|
+| 1 | `hero-main.png` — CNC delme/frezeleme | `ana ekran 1..png` → `scaleX(-1)` mirror (odak sağa) |
+| 2 | `hero-main2.png` — CNC torna + kıvılcımlar | `ana ekran 2..png` → doğal yerleşim |
+| 3 | `hero-main3.png` — Dişli + mil stüdyo çekimi | `ana ekran resim 3..png` → doğal yerleşim |
+| 4 | `hero-main4.png` — JIANKE MA25-6S atölyesi | `ana ekran 4..png` → sağa kaydırma + sol kenar fade |
+
+### Yerleştirme Tekniği (Height-fit + Right-align)
+- **`<img className="h-full w-auto absolute top-0">`** + CSS `right` ile sağa yaslanmış.
+  `next/image fill` kullanılmaz (konteyner genişliğini zorlar, yatay kaydırma imkânsız).
+- 1456px masaüstünde ~977–1066px görüntü genişliği → sol ~390–480px doğal koyu boşluk (yazı alanı).
+- **`scaleX(-1)` mirror**: odak noktası sol yarıda olan fotoğraflar çevrilir (Slayt 1).
+- **`rightOffset`**: zoom olmadan CSS `right: -Npx` ile fotoğraf daha sağa itilir (Slayt 4: 180px).
+- **`leftFade`**: `mask-image: linear-gradient(to right, transparent 0%, black 28%)`
+  ile fotoğrafın sol kenarı arka planla geçişli birleşir, keskin kenar yok (Slayt 4).
+- **Gradyan overlay** (tüm slaytlar):
+  `linear-gradient(90deg, #0c0e13 0%, rgba(12,14,19,0.88) 42%, rgba(12,14,19,0.25) 100%)`
+- `heightFitConfig` lookup tablosu (`HeroCarousel.tsx`) her fotoğraf için `mirror`,
+  `rightOffset`, `leftFade` ayarlarını tutar.
+
+### Teknik
+- `@next/next/no-img-element` ESLint kuralı height-fit `<img>` için `eslint-disable-next-line` ile bastırıldı.
+- `npx tsc --noEmit` her adımda temiz.
+- `package.json` version: `0.1.0` → `2.8.0`.
+
+---
+
 ## v2.7.0 — Navbar yeniden tasarımı + MA25-5B + UI yenilemeleri (2026-06-10)
 
 ### Navbar (Header.tsx + LocaleSwitcher.tsx) — Tam Yeniden Tasarım
