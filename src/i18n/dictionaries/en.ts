@@ -80,7 +80,7 @@ const en: Dictionary = {
           "Machine-tool technologies delivering DIN-class precision and long-term stability across cylindrical, surface and gear-profile grinding applications.",
       },
       {
-        image: "/hero/swiss-type-v2.jpg",
+        image: "/hero/hero-main4.png",
         href: "/urunler/cnc-kayar-otomatlar",
         eyebrow: "CNC Swiss Type Lathes · Serial Production",
         titleLine1: "Maximum Speed on",

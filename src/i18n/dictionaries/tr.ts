@@ -78,7 +78,7 @@ const tr = {
           "Silindirik, satıh ve dişli profil taşlama uygulamalarında DIN sınıfı hassasiyet ve uzun vadeli kararlılık sunan tezgah teknolojileri.",
       },
       {
-        image: "/hero/swiss-type-v2.jpg",
+        image: "/hero/hero-main4.png",
         href: "/urunler/cnc-kayar-otomatlar",
         eyebrow: "CNC Kayar Otomatlar · Seri Üretim",
         titleLine1: "Küçük Çaplı Parçada",

@@ -68,6 +68,7 @@ export function HeroCarousel({
             "/hero/hero-main.png":  { mirror: true  }, // drill at ~48% → flip → 68%
             "/hero/hero-main2.png": { mirror: false }, // sparks already at ~65%
             "/hero/hero-main3.png": { mirror: false }, // gear+shaft right of centre, dark bg left
+            "/hero/hero-main4.png": { mirror: false }, // operator+JIANKE machines at 53-90%, wall left
           };
           const hfc = heightFitConfig[slide.image];
 
