@@ -551,6 +551,91 @@ export const categories: Category[] = [
         ],
       },
       {
+        slug: "ma25-5b",
+        model: "MA25-5B",
+        categorySlug: "cnc-kayar-otomatlar",
+        name: {
+          tr: "JIANKE - MA25-5B CNC Kayar Otomat",
+          en: "JIANKE - MA25-5B Swiss Type Lathe",
+        },
+        summary: {
+          tr: "Ø25 mm bar kapasiteli, 5+B eksenli, patentli JIANKE B-ekseni takım kafasına sahip yüksek hassasiyetli CNC kayar otomat. Modüler ve esnek konfigürasyonla tek bağlamada komple işleme.",
+          en: "Ø25 mm bar capacity, 5+B axis Swiss-type lathe with patented JIANKE B-axis tool head. Complete machining in a single setup with modular and flexible configuration.",
+        },
+        highlights: [
+          {
+            tr: "Patentli JIANKE B-ekseni takım kafası: modüler, hızlı değiştirilebilir, yüksek rijit — B1 ekseni rotasyonuyla esnek takım açılandırması",
+            en: "Patented JIANKE B-axis tool head: modular, quick-change, high-rigidity — flexible tool angling via B1-axis rotation",
+          },
+          {
+            tr: "Ana ve karşı iş milinde C-ekseni standart; çok yönlü frezeleme ve karmaşık form işleme tek bağlamada",
+            en: "C-axis standard on both main and sub spindle; multi-axis milling and complex form machining in one setup",
+          },
+          {
+            tr: "10.000 dev/dak ana iş mili; ER16 6.000 / ER11 10.000 dev/dak canlı takım desteği — yüksek hız ve verimlilik",
+            en: "10,000 rpm main spindle; ER16 6,000 / ER11 10,000 rpm live tooling support — high speed and productivity",
+          },
+          {
+            tr: "Guide bush ile veya guide bush'suz çalışma esnekliği; uzun-ince parçalarda titreşimsiz işleme, kısa parçalarda malzeme tasarrufu",
+            en: "Selectable guide bush or no-guide-bush operation; vibration-free machining of long slender parts and material savings on short parts",
+          },
+        ],
+        features: [
+          {
+            tr: "Patentli JIANKE B-ekseni takım kafası: tam modüler yapı, B1 rotasyon ekseniyle serbest açılandırma, hızlı konfigürasyon değişimi; geleneksel sabit takım kafalarının ötesinde işleme esnekliği",
+            en: "Patented JIANKE B-axis tool head: fully modular structure, free angling via B1 rotation axis, rapid configuration change; machining flexibility beyond conventional fixed tool heads",
+          },
+          {
+            tr: "Guide bush ile veya guide bush'suz çalışma seçeneği — guide bush modunda 200 mm strok ile uzun-ince parçalarda titreşimsiz işleme; guide bush'suz modda kısa parçalarda malzeme tasarrufu",
+            en: "Guide bush or no-guide-bush mode — 200 mm stroke in guide bush mode for vibration-free machining of long slender parts; material savings on short parts in bushing-free mode",
+          },
+          {
+            tr: "Ana ve karşı iş milinde C-ekseni (C1, C2) standart konfigürasyonda; frezeleme, delme ve poligon işleme dahil çok yönlü 5+B eksen işleme",
+            en: "C-axis (C1, C2) standard on both main and sub spindle; versatile 5+B axis machining including milling, drilling and polygon operations",
+          },
+          {
+            tr: "B-ekseni pozisyon modülleri: 正轴 yan canlı takım (2×ER11 + 2×ER16), B1 ekseni canlı takım kafası (4×ER16), arka iş mili 4×ER16 sabit delme — maksimum takım çeşitliliği",
+            en: "B-axis position modules: front side live tools (2×ER11 + 2×ER16), B1 axis driven head (4×ER16), sub spindle 4×ER16 fixed boring — maximum tool variety",
+          },
+          {
+            tr: "Karşı iş mili 265 mm strok, 4 pozisyon arka takım yuvası (4 sabit + 4 opsiyonel döner); kısa parçalar konveyör ile, uzun parçalar karşı iş milinden arka tahliye",
+            en: "Sub spindle 265 mm travel, 4-position rear tool station (4 fixed + 4 optional rotary); belt conveyor for short parts, rear ejection via sub spindle for long parts",
+          },
+          {
+            tr: "Ana iş mili motoru 2,2 kW (sürekli) / 3,7 kW (10 dak./25% ED) — ağır kesimde güçlü tork, hassas işlemede kararlılık",
+            en: "Main spindle motor 2.2 kW (continuous) / 3.7 kW (10 min./25% ED) — powerful torque for heavy cuts, stability for precision operations",
+          },
+          {
+            tr: "Premium bileşenler: Mitsubishi servo ve sürücü, THK kızak ve vida, NSK rulman — uzun vadeli hassasiyet ve kararlılık",
+            en: "Premium components: Mitsubishi servo and drives, THK guides and screws, NSK bearings — long-term accuracy and stability",
+          },
+        ],
+        image: "/machines/swiss-type/ma25-5b-1.jpg",
+        gallery: [
+          "/machines/swiss-type/ma25-5b-1.jpg",
+          "/machines/swiss-type/ma25-5b-2.png",
+          "/machines/swiss-type/ma25-5b-3.png",
+          "/machines/swiss-type/ma25-5b-4.png",
+        ],
+        specs: [
+          { label: L.control, value: { tr: "Syntec 210TB-A (Çift Kanal)", en: "Syntec 210TB-A (Dual Channel)" } },
+          { label: { tr: "Maks. İşleme Çapı", en: "Max. Machining Diameter" }, value: { tr: "Ø 25 mm", en: "Ø 25 mm" } },
+          { label: { tr: "Maks. Strok (Guide Bush ile)", en: "Max. Stroke (With Guide Bush)" }, value: { tr: "200 mm", en: "200 mm" } },
+          { label: L.axes, value: { tr: "5+B eksen (X1, Y1, Z1, X2, Z2 + B1 ekseni)", en: "5+B axes (X1, Y1, Z1, X2, Z2 + B1 axis)" } },
+          { label: { tr: "İş Mili C-Ekseni", en: "Spindle C-Axis" }, value: { tr: "Ana + Karşı iş mili, standart", en: "Main + Sub spindle, standard" } },
+          { label: { tr: "Ana / Karşı İş Mili Devri", en: "Main / Sub Spindle Speed" }, value: { tr: "10.000 / 10.000 dev/dak", en: "10,000 / 10,000 rpm" } },
+          { label: { tr: "Ana İş Mili Motoru", en: "Main Spindle Motor" }, value: { tr: "2,2 kW (sürekli) / 3,7 kW (10 dak. / 25% ED)", en: "2.2 kW (continuous) / 3.7 kW (10 min. / 25% ED)" } },
+          { label: { tr: "B-Ekseni Canlı Takım (ER16 / ER11)", en: "B-Axis Live Tool Speed (ER16 / ER11)" }, value: { tr: "6.000 / 10.000 dev/dak", en: "6,000 / 10,000 rpm" } },
+          { label: { tr: "Canlı Takım Motoru", en: "Live Tool Motor" }, value: { tr: "1,0 / 1,1 kW", en: "1.0 / 1.1 kW" } },
+          { label: { tr: "Ana İş Mili Maks. Delme / Diş", en: "Main Spindle Max. Drill / Tap" }, value: { tr: "Ø 10 mm / M8", en: "Ø 10 mm / M8" } },
+          { label: { tr: "Canlı Takım Maks. Delme / Diş", en: "Live Tool Max. Drill / Tap" }, value: { tr: "Ø 8 mm / M6", en: "Ø 8 mm / M6" } },
+          { label: L.rapid, value: { tr: "X1: 24 m/dak — Z1, Y1, X2, Z2: 32 m/dak", en: "X1: 24 m/min — Z1, Y1, X2, Z2: 32 m/min" } },
+          { label: { tr: "Karşı İş Mili Maks. Strok", en: "Sub Spindle Max. Travel" }, value: { tr: "265 mm", en: "265 mm" } },
+          { label: { tr: "Arka Takım Pozisyonu", en: "Rear Tool Position" }, value: { tr: "4 pozisyon (4 sabit + 4 opsiyonel döner)", en: "4 positions (4 fixed + 4 optional rotary)" } },
+          { label: L.weight, value: { tr: "3.200 kg", en: "3,200 kg" } },
+        ],
+      },
+      {
         slug: "ma12-5ii",
         model: "MA12-5 II",
         categorySlug: "cnc-kayar-otomatlar",
