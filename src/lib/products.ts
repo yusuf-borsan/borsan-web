@@ -610,9 +610,9 @@ export const categories: Category[] = [
             en: "Premium components: Mitsubishi servo and drives, THK guides and screws, NSK bearings — long-term accuracy and stability",
           },
         ],
-        image: "/machines/swiss-type/ma25-5b-1.jpg",
+        image: "/machines/swiss-type/ma25-5b-1.png",
         gallery: [
-          "/machines/swiss-type/ma25-5b-1.jpg",
+          "/machines/swiss-type/ma25-5b-1.png",
           "/machines/swiss-type/ma25-5b-2.png",
           "/machines/swiss-type/ma25-5b-3.png",
           "/machines/swiss-type/ma25-5b-4.png",
