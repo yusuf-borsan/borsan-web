@@ -53,33 +53,24 @@ export default async function ContactPage({
 
             {/* ── Left: contact info ── */}
             <div className="lg:col-span-5">
-              <div className="rounded-2xl bg-brand-600 p-8 shadow-2xl">
-                {cards.map((c, i) => {
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {cards.map((c) => {
                   const Icon = c.icon;
-                  const isLast = i === cards.length - 1;
                   return (
-                    <div
-                      key={c.title}
-                      className={`flex items-start gap-4 py-5 ${!isLast ? "border-b border-white/15" : ""}`}
-                    >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/15 text-white">
-                        <Icon className="h-5 w-5" />
+                    <div key={c.title} className="rounded-2xl bg-brand-600 p-6 shadow-md">
+                      <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-white/15 text-white">
+                        <Icon className="h-6 w-6" />
                       </span>
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-wider text-white/60">
-                          {c.title}
-                        </p>
-                        {c.href ? (
-                          <a
-                            href={c.href}
-                            className="mt-1 block whitespace-pre-line text-white transition-colors hover:text-white/80"
-                          >
-                            {c.value}
-                          </a>
-                        ) : (
-                          <p className="mt-1 whitespace-pre-line text-white">{c.value}</p>
-                        )}
-                      </div>
+                      <h3 className="mt-4 text-xs font-semibold uppercase tracking-wider text-white/60">
+                        {c.title}
+                      </h3>
+                      {c.href ? (
+                        <a href={c.href} className="mt-1 block whitespace-pre-line text-white transition-colors hover:text-white/80">
+                          {c.value}
+                        </a>
+                      ) : (
+                        <p className="mt-1 whitespace-pre-line text-white">{c.value}</p>
+                      )}
                     </div>
                   );
                 })}
