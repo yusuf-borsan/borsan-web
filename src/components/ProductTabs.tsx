@@ -5,6 +5,44 @@ import type { Locale, Localized } from "@/i18n/config";
 import type { Spec } from "@/lib/products";
 import { CheckIcon } from "./icons";
 
+function SpecNavigator({ parts }: { parts: string[] }) {
+  const [idx, setIdx] = useState(0);
+  return (
+    <div className="flex items-center justify-end gap-1">
+      <button
+        type="button"
+        onClick={() => setIdx((i) => Math.max(0, i - 1))}
+        disabled={idx === 0}
+        className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-lg leading-none text-ink-400 hover:bg-steel-300/30 hover:text-ink-700 disabled:opacity-25"
+        aria-label="Önceki"
+      >
+        ‹
+      </button>
+      <span className="min-w-0 truncate text-right text-xs font-semibold text-ink-900">
+        {parts[idx]}
+      </span>
+      <button
+        type="button"
+        onClick={() => setIdx((i) => Math.min(parts.length - 1, i + 1))}
+        disabled={idx === parts.length - 1}
+        className="flex h-6 w-6 shrink-0 items-center justify-center rounded text-lg leading-none text-ink-400 hover:bg-steel-300/30 hover:text-ink-700 disabled:opacity-25"
+        aria-label="Sonraki"
+      >
+        ›
+      </button>
+      <span className="shrink-0 tabular-nums text-[10px] text-ink-400">
+        {idx + 1}/{parts.length}
+      </span>
+    </div>
+  );
+}
+
+function SpecValue({ value }: { value: string }) {
+  const parts = value.split(" / ");
+  if (parts.length < 4) return <>{value}</>;
+  return <SpecNavigator parts={parts} />;
+}
+
 type TabKey = "specs" | "features";
 
 export function ProductTabs({
@@ -53,18 +91,22 @@ export function ProductTabs({
       {/* Panel: technical specifications */}
       {tab === "specs" && (
         <div>
-          <table className="w-full text-sm">
+          <table className="w-full table-fixed text-sm">
+            <colgroup>
+              <col className="w-[48%]" />
+              <col className="w-[52%]" />
+            </colgroup>
             <tbody>
               {specs.map((spec, i) => (
                 <tr key={spec.label[locale]} className={i % 2 === 1 ? "bg-steel-300/10" : "bg-white"}>
                   <th
                     scope="row"
-                    className="w-[45%] whitespace-nowrap px-4 py-3 text-left font-medium text-ink-500"
+                    className="px-4 py-3 text-left font-medium text-ink-500"
                   >
                     {spec.label[locale]}
                   </th>
                   <td className="px-4 py-3 text-right font-semibold text-ink-900">
-                    {spec.value[locale]}
+                    <SpecValue value={spec.value[locale]} />
                   </td>
                 </tr>
               ))}

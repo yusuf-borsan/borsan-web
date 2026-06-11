@@ -11,6 +11,67 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v2.9.0 — FALCO CNC Tornalar: Tam Veri + SpecNavigator + BT Temizliği (2026-06-11)
+
+### FALCO CNC Tornalar — 10 Ürün Tamamlandı
+
+Tüm FALCO CNC Yatay Torna ürünlerine resmi teknik veriler, gerçek fotoğraf galerileri ve 8 mühendis odaklı özellik maddesi eklendi.
+
+| Ürün | Kızak | Maks. Çap | Güncelleme |
+|------|-------|-----------|------------|
+| FALCO CK6152 | 440mm | Φ520mm | ✅ Tamamlandı |
+| FALCO CK6160 | 440mm | Φ600mm | ✅ Tamamlandı |
+| FALCO CAK63 | 550mm | Φ630mm | ✅ Tamamlandı |
+| FALCO CAK80 (550mm Kızak) | 550mm | Φ800mm | ✅ Tamamlandı |
+| FALCO CAK86 | 600mm | Φ860mm | ✅ Tamamlandı |
+| FALCO CAK110 (600mm Kızak) | 600mm | Φ1100mm | ✅ Tamamlandı |
+| FALCO CAK125 (600mm Kızak) | 600mm | Φ1250mm | ✅ Tamamlandı |
+| FALCO CAK80 (700mm Kızak) | 700mm | Φ800mm | ✅ Tamamlandı |
+| FALCO CAK110 (700mm Kızak) | 700mm | Φ1100mm | ✅ Tamamlandı |
+| FALCO CAK125 (700mm Kızak) | 700mm | Φ1250mm | ✅ Tamamlandı |
+
+Her üründe:
+- 20–23 satırlık eksiksiz teknik tablo (Gövde, İki Punta Arası Mesafe, X/Z hareket, Taret, Konumlama Hassasiyeti, Ağırlık, Ölçüler dahil)
+- 8 mühendis odaklı özellik maddesi (Ürün Özellikleri sekmesi)
+- Gerçek ürün fotoğrafı galerisi (1–2 fotoğraf)
+
+### SpecNavigator Bileşeni (`ProductTabs.tsx`)
+
+Birden fazla varyant barındıran spec değerleri için prev/next buton navigasyonu eklendi.
+
+- **Eşik**: 4+ değer (`" / "` ile ayrılmış) → `SpecNavigator`; 1–3 değer → düz metin
+- **Birim kuralı**: Her değer kendi birimini taşır (`890mm / 1390mm` ✅; `890 / 1390 mm` ❌)
+- **Tablo düzeni**: `table-fixed` + `colgroup` (48% / 52%) — navigatör diğer satırları kaydırmaz
+- **Truncate**: değer span'ı `truncate` — hiçbir zaman iki satıra bölünmez
+
+### BT Ürünleri Kaldırıldı
+
+`cnc-tornalar` kategorisinden gerçek teknik verisi ve fotoğrafı olmayan iki placeholder ürün tamamen silindi:
+- `bt-l250` (BT-L250 CNC Torna)
+- `bt-l400m` (BT-L400M Tahrikli Takımlı Torna)
+
+### Görsel Eklemeler (`public/machines/cnc-tornalar/`)
+
+| Dosya | Kullanılan Ürünler |
+|-------|-------------------|
+| `falco-cak550-series-1.png` | CAK63, CAK80 (550mm) |
+| `falco-cak600-series-1.png` | CAK86, CAK110 (600mm), CAK125 (600mm) |
+| `falco-cak600-series-2.png` | CAK86, CAK110 (600mm), CAK125 (600mm) |
+| `falco-cak700-series-1.png` | CAK80 (700mm), CAK110 (700mm), CAK125 (700mm) |
+| `falco-ck6152-ck6160-1.png` | CK6152, CK6160 |
+| `falco-ck6152-ck6160-2.png` | CK6152, CK6160 |
+
+### FALCO_PRODUCT_TERMS.md
+
+FALCO ürünleri için kalıcı terminoloji standardı oluşturuldu. Doğru/yanlış spec etiket ve değer örnekleri, `L` nesnesi kullanım notu (`L.xxx` FALCO ürünlerinde kullanılmaz — inline `{ tr, en }` zorunludur).
+
+### Teknik
+- Statik derleme: **65 → 61 sayfa** (2 BT ürünü kaldırıldı, TR+EN = −4 sayfa)
+- `npx tsc --noEmit` temiz
+- `package.json` version: `2.8.0` → `2.9.0`
+
+---
+
 ## v2.8.0 — Hero Carousel: 4 Gerçek CNC Fotoğrafı (2026-06-10)
 
 ### Hero Carousel — Tüm Slaytlar Gerçek Fotoğrafla

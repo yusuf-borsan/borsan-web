@@ -6,7 +6,7 @@
 > kullanıcıdan **açık onay** al ve gerekçeni yaz.
 >
 > Bağlam için önce oku: `PROJECT_HANDOFF.md` (durum), `CHANGELOG.md` (geçmiş),
-> `README.md` (genel bakış). Sürüm: v2.8.0.
+> `README.md` (genel bakış). Sürüm: v2.9.0.
 
 ---
 
@@ -102,7 +102,7 @@ tiplere sadık kal; her adımda derle + test et.
 
 ## 6. Ürün Ekleme Standardı
 
-Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
+Bu projede defalarca uygulanan, **değiştirilmeyecek** akış:
 
 1. **Veri kaynağı**: Resmi katalog **docx/PDF**'inden çek (`python-docx` / `pypdf` ile
    tabloları UTF-8 dosyaya yaz; cp1254 hatasından kaçınmak için stdout'a yazma).
@@ -127,6 +127,35 @@ Bu projede 2 kez uygulanan, **değiştirilmeyecek** akış:
 >
 > **Spec değerlerini KISA tut.** Uzun bileşik string YASAK (örn. `"3,5 / 3,5 kW (nom.) — 6,0 / 6,0 kW (maks.)"`).
 > Doğru form: `"3,5 / 6,0 kW"`. Uzun değer → `whitespace-nowrap` olsa bile tablo yatay kayar.
+
+---
+
+### 6b. FALCO Ürün Standardı (CNC Tornalar)
+
+FALCO ürünleri (`cnc-tornalar`, `dik-tornalar`) için ek kurallar — `FALCO_PRODUCT_TERMS.md` zorunlu referanstır.
+
+**Terminoloji**: Yanlış spec etiketlerini kullanma. `FALCO_PRODUCT_TERMS.md` tablosuna bak:
+- ✅ `Maks. Yatak Üzeri Çevirme Çapı` · ❌ `Yatak Çapı (maks.)`
+- ✅ `Kızak Genişliği` · ❌ `Ray Genişliği`
+- ✅ `İş Mili Devir Aralığı` · ❌ `İş Mili Devri`
+- ✅ `Z Ekseni Hareket Mesafesi` · ❌ `Z Ekseni Strok`
+
+**`L` nesnesi**: FALCO ürünlerinde `L.spindleSpeed`, `L.spindlePower`, `L.control` gibi paylaşılan etiket
+kısayollarını KULLANMA. Tümünü inline `{ tr: "...", en: "..." }` yaz (JIANKE ile karışmayı önler).
+
+**SpecNavigator eşiği**: `SpecValue` bileşeni `parts.length < 4` kontrolü yapar:
+- 1–3 parça → düz metin
+- 4+ parça → prev/next butonlu `SpecNavigator`
+Bu eşiği değiştirme; Z ekseni, makine ağırlığı, makine ölçüleri gibi 4 varyantlı satırlar
+navigatörle gösterilmesi gerekir.
+
+**Birim kuralı** (SpecNavigator ile çalışırken): `" / "` ile ayrılan her değere birimini ekle.
+- ✅ `"890mm / 1390mm / 1890mm / 2890mm"` — her elemanda mm
+- ✅ `"2.400 kg (1000mm) / 2.700 kg (1500mm)"` — her elemanda kg
+- ❌ `"890 / 1390 / 1890 / 2890 mm"` — birim sadece sonda
+
+**Highlight sayısı**: FALCO ürünlerin en az 8 özellik maddesi (`highlights`) olmalı.
+Her madde `"özellik — gerekçe/fayda"` formatında yazılır.
 
 ---
 

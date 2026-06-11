@@ -2,7 +2,7 @@
 
 > Bu doküman, projeyi devralacak bir geliştirici için hazırlanmıştır. Projenin
 > mevcut durumunu, eksiklerini ve production yol haritasını eksiksiz anlatır.
-> Son güncelleme: 2026-06-10 · Sürüm: **v2.8.0** · Durum: **Prototip / MVP**
+> Son güncelleme: 2026-06-11 · Sürüm: **v2.9.0** · Durum: **Prototip / MVP**
 
 ---
 
@@ -32,7 +32,7 @@ UX tamamlandı; gerçek içerik ve backend entegrasyonları henüz eksiktir.
 
 - **Bağımlılıklar minimal**: yalnızca `next`, `react`, `react-dom`. Harici UI/form/auth/DB
   kütüphanesi YOK.
-- **Render**: Tamamen statik (SSG). Son derlemede **57 sayfa** prerender ediliyor
+- **Render**: Tamamen statik (SSG). Son derlemede **61 sayfa** prerender ediliyor
   (`generateStaticParams` ile her locale + her ürün/kategori).
 - **Çoklu dil**: Harici i18n kütüphanesi yok; **kendi sözlük tabanlı (custom dictionary)**
   altyapısı kullanılıyor (aşağıda).
@@ -51,7 +51,8 @@ borsan-web/
 │  ├─ hero/                hero-main.png (slayt1 CNC delme), hero-main2.png (torna+kıvılcım),
 │  │                       hero-main3.png (dişli+mil stüdyo), hero-main4.png (JIANKE atölye)
 │  ├─ machines/            ürün görselleri (SVG placeholder)
-│  │  └─ swiss-type/       JIANKE gerçek fotoğrafları (ma25-6s-*, ma25-5ii-*, ma12-5ii-*, mr32-5ii-*)
+│  │  │  └─ swiss-type/       JIANKE gerçek fotoğrafları (ma25-6s-*, ma25-5ii-*, ma12-5ii-*, mr32-5ii-*)
+  │  └─ cnc-tornalar/     FALCO CNC Torna görselleri (falco-cak550/600/700-series-*, falco-ck6152-ck6160-*)
 │  ├─ catalogs/swiss-type/ yer tutucu katalog PDF'leri (660 bayt, gerçek değil)
 │  ├─ company/  references/ (boş — gelecekte gerçek görseller)
 ├─ scripts/
@@ -72,8 +73,8 @@ borsan-web/
 │  │        ├─ [category]/page.tsx            kategori → model listesi
 │  │        └─ [category]/[product]/page.tsx  ürün detayı (galeri, tab, teklif formu)
 │  ├─ components/   Header (navbar+mega menu), Footer, HeroCarousel, ReferenceMarquee,
-│  │               ProductTabs, Gallery, QuoteForm (dark varyant), ProductCard,
-│  │               LocaleSwitcher (TR▼ dropdown), ui, icons, sections
+│  │               ProductTabs (SpecNavigator dahil), Gallery, QuoteForm (dark varyant),
+│  │               ProductCard, LocaleSwitcher (TR▼ dropdown), ui, icons, sections
 │  ├─ i18n/
 │  │  ├─ config.ts          locale tanımları (tr/en, default tr)
 │  │  ├─ dictionaries/tr.ts, en.ts, index.ts   TÜM arayüz metinleri
@@ -112,11 +113,15 @@ type Category = { slug, icon, name, tagline, description, image, products };
 ### Mevcut içerik
 - **7 kategori**: CNC Tornalar, CNC Dik/Yatay İşleme Merkezleri, Dik Tornalar, Taşlama,
   Dişli Profil Taşlama, **CNC Kayar Otomatlar**.
-- **19 ürün** — bunların **8'i GERÇEK** (resmi katalogdan, gerçek fotoğraflarla):
-  `JIANKE MA25-6S`, `MA25-5 II`, `MA12-5 II`, `MR32-5 II`, `DT38-5 II`, `DT38-6S`,
-  `ZR20-5 II`, `MA25-5B`. Diğer 11'i **placeholder/uydurma** (`BT-*` kodlu, blueprint SVG görselli).
-- Gerçek ürünlerin tümü `cnc-kayar-otomatlar` kategorisindedir; her biri tam teknik tablo,
-  özellikler sekmesi, galeri (3–4 fotoğraf) ve placeholder PDF kataloğa sahiptir.
+- **17 ürün** — bunların **19'u GERÇEK** (resmi katalogdan, gerçek fotoğraflarla):
+  - **JIANKE** (8 ürün, `cnc-kayar-otomatlar`): `MA25-6S`, `MA25-5 II`, `MA12-5 II`,
+    `MR32-5 II`, `DT38-5 II`, `DT38-6S`, `ZR20-5 II`, `MA25-5B`
+  - **FALCO** (11 ürün): `CK6152`, `CK6160` (440mm kızak), `CAK63`, `CAK80-550` (550mm),
+    `CAK86`, `CAK110-600`, `CAK125-600` (600mm), `CAK80-700`, `CAK110-700`, `CAK125-700` (700mm),
+    `CK518` (dik torna)
+  - Her FALCO CNC torna: 20–23 satır teknik tablo, 8 özellik maddesi, gerçek galeri fotoğrafları
+- Kalan placeholder ürünler: `bt-vl1600` (dik-tornalar) ve diğer kategorilerdeki `BT-*` ürünler
+  (blueprint SVG görselli, uydurma veri).
 
 ### Supabase'e geçiş notu
 - `Localized` alanlar → ya `*_tr`/`*_en` sütunlar ya da `jsonb`.
@@ -210,8 +215,10 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 - **Öne Çıkanlar** (mühendis odaklı 4 madde) bölümü.
 - **Teklif formu** (ürün adı otomatik dolar) + **iletişim formu** — UI tamam.
 - **Hakkımızda / Servis / İletişim** sayfaları.
-- **8 gerçek ürün** (JIANKE MA25-6S, MA25-5 II, MA12-5 II, MR32-5 II, DT38-5 II, DT38-6S,
-  ZR20-5 II, MA25-5B) tam teknik veriyle, gerçek fotoğraf galerileri ve kaymaz teknik tablolarla.
+- **19 gerçek ürün**: 8 JIANKE (CNC Kayar Otomat) + 11 FALCO (CNC Tornalar) — tam teknik
+  tablo, gerçek fotoğraf galerileri, 8 özellik maddesi.
+- **SpecNavigator** (`ProductTabs.tsx`): 4+ değerli spec satırlarında prev/next buton
+  navigasyonu — Z ekseni, makine ağırlığı, makine ölçüleri gibi çok varyantlı değerler için.
 - **Navbar**: 70px yükseklik, frosted-glass (`bg-white/90 backdrop-blur-md`), hover alt çizgi
   animasyonu, link hiyerarşisi, "TR ▼" dropdown, Ürünler mega menüsü (7 kategori).
 - **Ürün detayı teklif bölümü**: 2 sütunlu layout, Opsiyonel Donanımlar kartları, dark form.
@@ -219,7 +226,7 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 - **QuoteForm dark varyantı**: `bg-brand-600` arka plan, beyaz inputlar (ürün detayı + iletişim).
 - **Marka kimliği**: logodan örneklenen mavi (#1F4488) + gri (#606060), endüstriyel tasarım.
 - Tipografi: dengeli satır kırma (`text-wrap: balance`), teknik tabloda `whitespace-nowrap`.
-- **Sürümleme**: git tag + GitHub Release + CHANGELOG (v1.0.0 → v2.8.0).
+- **Sürümleme**: git tag + GitHub Release + CHANGELOG (v1.0.0 → v2.9.0).
 
 ---
 
@@ -227,8 +234,8 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 
 - **Form backend'i** — teklif/iletişim formları HİÇBİR YERE veri göndermez (sadece
   ekranda "teşekkürler" gösterir). Lead/talep kaybı var.
-- **Gerçek içerik** — 16 üründen 12'si uydurma placeholder (BT-*); gerçek iletişim
-  bilgileri (adres, telefon, e-posta) yok (örnek/dummy).
+- **Gerçek içerik** — FALCO ve JIANKE ürünleri tamamlandı; diğer kategorilerde placeholder
+  ürünler (BT-* kodlu) hâlâ var; gerçek iletişim bilgileri (adres, telefon, e-posta) yok.
 - **Gerçek görseller** — çoğu ürün ve tüm referans logoları placeholder.
 - **Gerçek katalog PDF'leri** — şu an 660 baytlık yer tutucular.
 - **Admin panel / CMS** — içerik yönetimi yok.
@@ -257,8 +264,8 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
    değil, SEO/UX'te küçük tutarsızlık.
 4. **Form doğrulaması zayıf** — sadece HTML `required`; e-posta format/spam koruması yok
    (zaten backend olmadığı için kritik değil, ama eklenmeli).
-5. **Karışık veri** — 4 gerçek JIANKE ürünü (CNC Kayar Otomatlar kategorisinde) ve 12
-   uydurma BT-* ürünü aynı sistemde; yayına çıkmadan tüm placeholder'lar temizlenmeli.
+5. **Karışık veri** — 19 gerçek ürün (FALCO + JIANKE) ve diğer kategorilerdeki placeholder
+   BT-* ürünleri aynı sistemde; yayına çıkmadan kalan placeholder'lar temizlenmeli.
 6. Not: Geliştirme sırasında "preview" aracının bazı ekran görüntüleri/scroll'ları
    tutarsızdı — bu bir **kod hatası değil**, araç kaynaklı; site tarayıcıda düzgün çalışır.
 
