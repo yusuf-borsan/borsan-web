@@ -2,7 +2,7 @@
 
 > Bu doküman, projeyi devralacak bir geliştirici için hazırlanmıştır. Projenin
 > mevcut durumunu, eksiklerini ve production yol haritasını eksiksiz anlatır.
-> Son güncelleme: 2026-06-11 · Sürüm: **v2.9.0** · Durum: **Prototip / MVP**
+> Son güncelleme: 2026-06-12 · Sürüm: **v3.0.0** · Durum: **Prototip / MVP**
 
 ---
 
@@ -32,7 +32,7 @@ UX tamamlandı; gerçek içerik ve backend entegrasyonları henüz eksiktir.
 
 - **Bağımlılıklar minimal**: yalnızca `next`, `react`, `react-dom`. Harici UI/form/auth/DB
   kütüphanesi YOK.
-- **Render**: Tamamen statik (SSG). Son derlemede **61 sayfa** prerender ediliyor
+- **Render**: Tamamen statik (SSG). Son derlemede **89 sayfa** prerender ediliyor
   (`generateStaticParams` ile her locale + her ürün/kategori).
 - **Çoklu dil**: Harici i18n kütüphanesi yok; **kendi sözlük tabanlı (custom dictionary)**
   altyapısı kullanılıyor (aşağıda).
@@ -111,15 +111,18 @@ type Category = { slug, icon, name, tagline, description, image, products };
 ```
 
 ### Mevcut içerik
-- **7 kategori**: CNC Tornalar, CNC Dik/Yatay İşleme Merkezleri, Dik Tornalar, Taşlama,
+- **8 kategori**: CNC Tornalar, Universal Tornalar, CNC Dik/Yatay İşleme Merkezleri, Dik Tornalar, Taşlama,
   Dişli Profil Taşlama, **CNC Kayar Otomatlar**.
-- **17 ürün** — bunların **19'u GERÇEK** (resmi katalogdan, gerçek fotoğraflarla):
+- **32 gerçek ürün** (resmi katalogdan, gerçek fotoğraflarla):
   - **JIANKE** (8 ürün, `cnc-kayar-otomatlar`): `MA25-6S`, `MA25-5 II`, `MA12-5 II`,
     `MR32-5 II`, `DT38-5 II`, `DT38-6S`, `ZR20-5 II`, `MA25-5B`
-  - **FALCO** (11 ürün): `CK6152`, `CK6160` (440mm kızak), `CAK63`, `CAK80-550` (550mm),
+  - **FALCO CNC Tornalar** (16 ürün): `CK6152`, `CK6160` (440mm), `CAK63`, `CAK80-550`,
     `CAK86`, `CAK110-600`, `CAK125-600` (600mm), `CAK80-700`, `CAK110-700`, `CAK125-700` (700mm),
-    `CK518` (dik torna)
-  - Her FALCO CNC torna: 20–23 satır teknik tablo, 8 özellik maddesi, gerçek galeri fotoğrafları
+    `CK61125B`, `CK61160B` (755mm), `CK61160`, `CK61180`, `CK61200` (1100mm)
+  - **FALCO Universal Tornalar** (8 ürün): `CW6180B`, `CW61110Q`, `CW61125Q` (600mm),
+    `CW61125B`, `CW61160B` (755mm), `CW61160`, `CW61180`, `CW61200` (1100mm)
+  - **FALCO Dik Tornalar** (1 ürün): `CK518`
+  - Her FALCO torna: 20–25 satır teknik tablo, 8 özellik maddesi, gerçek galeri fotoğrafları
 - Kalan placeholder ürünler: `bt-vl1600` (dik-tornalar) ve diğer kategorilerdeki `BT-*` ürünler
   (blueprint SVG görselli, uydurma veri).
 
@@ -215,12 +218,12 @@ için sürdürülemez — Roadmap'te yüksek öncelikli.
 - **Öne Çıkanlar** (mühendis odaklı 4 madde) bölümü.
 - **Teklif formu** (ürün adı otomatik dolar) + **iletişim formu** — UI tamam.
 - **Hakkımızda / Servis / İletişim** sayfaları.
-- **19 gerçek ürün**: 8 JIANKE (CNC Kayar Otomat) + 11 FALCO (CNC Tornalar) — tam teknik
-  tablo, gerçek fotoğraf galerileri, 8 özellik maddesi.
+- **32 gerçek ürün**: 8 JIANKE (CNC Kayar Otomat) + 16 FALCO CNC Torna + 8 FALCO Universal
+  Torna + 1 FALCO Dik Torna — tam teknik tablo, gerçek fotoğraf galerileri, 8 özellik maddesi.
 - **SpecNavigator** (`ProductTabs.tsx`): 4+ değerli spec satırlarında prev/next buton
   navigasyonu — Z ekseni, makine ağırlığı, makine ölçüleri gibi çok varyantlı değerler için.
 - **Navbar**: 70px yükseklik, frosted-glass (`bg-white/90 backdrop-blur-md`), hover alt çizgi
-  animasyonu, link hiyerarşisi, "TR ▼" dropdown, Ürünler mega menüsü (7 kategori).
+  animasyonu, link hiyerarşisi, "TR ▼" dropdown, Ürünler mega menüsü (8 kategori).
 - **Ürün detayı teklif bölümü**: 2 sütunlu layout, Opsiyonel Donanımlar kartları, dark form.
 - **İletişim sayfası**: 2×2 beyaz kart + hover efekti + dark blue form.
 - **QuoteForm dark varyantı**: `bg-brand-600` arka plan, beyaz inputlar (ürün detayı + iletişim).

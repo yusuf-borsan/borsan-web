@@ -11,6 +11,47 @@ seç; "Source code (zip)" ile o anki halini indirebilirsin.
 
 ---
 
+## v3.0.0 — FALCO CNC + Universal Tornalar: Ağır Tip Serileri Tamamlandı (2026-06-12)
+
+### Yeni Kategori: Universal Tornalar
+
+Siteye yeni bir ürün kategorisi eklendi: **Universal Tornalar** (konvansiyonel/manuel yatay torna).
+Kategori, 8 FALCO CW61xx modeliyle başlıyor; mega menü ve ürünler listesine otomatik eklendi.
+
+### FALCO CNC Tornalar — Ağır Tip + Süper Ağır Tip (5 yeni ürün)
+
+| Ürün | Kızak | Maks. Çap | Tip |
+|------|-------|-----------|-----|
+| FALCO CK61125B | 755mm | Φ1250mm | Ağır Tip CNC |
+| FALCO CK61160B | 755mm | Φ1600mm | Ağır Tip CNC |
+| FALCO CK61160 | 1100mm | Φ1600mm | Süper Ağır Tip CNC |
+| FALCO CK61180 | 1100mm | Φ1800mm | Süper Ağır Tip CNC |
+| FALCO CK61200 | 1100mm | Φ2000mm | Süper Ağır Tip CNC |
+
+### FALCO Universal Tornalar — 3 Seri, 8 Ürün
+
+| Ürün | Kızak | Maks. Çap | Tip |
+|------|-------|-----------|-----|
+| FALCO CW6180B | 600mm | Φ800mm | Standart Universal |
+| FALCO CW61110Q | 600mm | Φ1100mm | Standart Universal |
+| FALCO CW61125Q | 600mm | Φ1250mm | Standart Universal |
+| FALCO CW61125B | 755mm | Φ1250mm | Ağır Tip Universal |
+| FALCO CW61160B | 755mm | Φ1600mm | Ağır Tip Universal |
+| FALCO CW61160 | 1100mm | Φ1600mm | Süper Ağır Tip Universal |
+| FALCO CW61180 | 1100mm | Φ1800mm | Süper Ağır Tip Universal |
+| FALCO CW61200 | 1100mm | Φ2000mm | Süper Ağır Tip Universal |
+
+Her ürün: eksiksiz teknik tablo (vida açma seçenekleri metrik/inç/modül/DP, ilerleme
+kademeleri, ileri/geri devir, kuyrukluk tipi dahil), 8 özellik maddesi, gerçek galeri.
+
+### Özet
+
+- Toplam kategori: 7 → **8** (+Universal Tornalar)
+- Toplam gerçek ürün: 19 → **32** (+13 FALCO)
+- Prerender edilen sayfa: ~61 → **~89** (+28 sayfa)
+
+---
+
 ## v2.9.0 — FALCO CNC Tornalar: Tam Veri + SpecNavigator + BT Temizliği (2026-06-11)
 
 ### FALCO CNC Tornalar — 10 Ürün Tamamlandı

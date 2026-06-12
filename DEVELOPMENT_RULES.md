@@ -6,7 +6,7 @@
 > kullanıcıdan **açık onay** al ve gerekçeni yaz.
 >
 > Bağlam için önce oku: `PROJECT_HANDOFF.md` (durum), `CHANGELOG.md` (geçmiş),
-> `README.md` (genel bakış). Sürüm: v2.9.0.
+> `README.md` (genel bakış). Sürüm: v3.0.0.
 
 ---
 
