@@ -92,6 +92,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const allLinks = [
     { href: productsHref, label: dict.nav.products },
     { href: localePath(locale, routes.service), label: dict.nav.service },
+    { href: localePath(locale, routes.investment), label: dict.nav.investment },
     { href: localePath(locale, routes.about), label: dict.nav.about },
     { href: localePath(locale, routes.contact), label: dict.nav.contact },
   ];
@@ -142,6 +143,16 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 className={navLinkCls(localePath(locale, routes.service), true)}
               >
                 {dict.nav.service}
+              </Link>
+            </div>
+
+            {/* Primary: Yatırım Çözümleri */}
+            <div className="flex items-center px-3">
+              <Link
+                href={localePath(locale, routes.investment)}
+                className={navLinkCls(localePath(locale, routes.investment), true)}
+              >
+                {dict.nav.investment}
               </Link>
             </div>
 

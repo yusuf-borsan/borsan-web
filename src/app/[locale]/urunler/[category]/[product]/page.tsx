@@ -8,17 +8,11 @@ import { localePath, routes } from "@/lib/routes";
 import { Container, ButtonLink } from "@/components/ui";
 import { Breadcrumb } from "@/components/sections";
 import { Gallery } from "@/components/Gallery";
-import { ProductTabs } from "@/components/ProductTabs";
-import { QuoteForm } from "@/components/QuoteForm";
+import { ProductDetailTabs } from "@/components/ProductTabs";
+import { VideoCard } from "@/components/VideoCard";
+import { ProductQuoteSection } from "@/components/ProductQuoteSection";
 import { ProductCard } from "@/components/ProductCard";
-import { CheckIcon, DocIcon, BarFeederIcon, CoolantIcon, OilMistIcon, PartsIcon } from "@/components/icons";
-
-const equipmentIcons: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-  barfeeder: BarFeederIcon,
-  coolant: CoolantIcon,
-  oilmist: OilMistIcon,
-  partscatcher: PartsIcon,
-};
+import { CheckIcon, DocIcon } from "@/components/icons";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -53,75 +47,87 @@ export default async function ProductPage({
   if (!cat || !p) notFound();
 
   const related = cat.products.filter((x) => x.slug !== p.slug).slice(0, 3);
+  const highlights = p.highlights.slice(0, 4);
+  const videoLabel = locale === "tr" ? "Ürün Videosu" : "Product Video";
 
   return (
     <>
-      {/* Header band */}
-      <section className="relative overflow-hidden bg-ink-950 text-white">
-        <div className="absolute inset-0 bg-grid opacity-60" aria-hidden />
-        <Container className="relative py-10 lg:py-14">
-          <Breadcrumb
-            items={[
-              { label: dict.common.home, href: localePath(locale) },
-              { label: dict.common.products, href: localePath(locale, routes.products) },
-              { label: cat.name[locale], href: localePath(locale, routes.category(cat.slug)) },
-              { label: p.model },
-            ]}
-          />
-          <div className="mt-6 flex flex-col gap-3">
-            <span className="inline-flex w-fit items-center rounded-sm bg-brand-600 px-3 py-1 text-sm font-bold tracking-wide">
-              {p.model}
-            </span>
-            <h1 className="font-display text-balance text-3xl leading-tight sm:text-4xl lg:text-5xl">{p.name[locale]}</h1>
-            <p className="max-w-2xl text-lg text-steel-300">{p.summary[locale]}</p>
-          </div>
-        </Container>
-      </section>
-
-      {/* Main */}
+      {/* ── Product hero (white) ── */}
       <section className="bg-white">
-        <Container className="py-14 lg:py-20">
-          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-            {/* Left: gallery + highlights */}
-            <div className="lg:col-span-6">
-              <Gallery images={p.gallery} alt={p.name[locale]} />
 
-              <div className="mt-10">
-                <h2 className="font-display text-xl text-ink-900">{dict.common.highlights}</h2>
-                <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  {p.highlights.map((h) => (
-                    <li key={h[locale]} className="flex items-start gap-3 rounded-md border border-ink-100 bg-steel-300/5 p-4">
-                      <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
-                        <CheckIcon className="h-4 w-4" />
-                      </span>
-                      <span className="text-sm leading-relaxed text-ink-700">{h[locale]}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {/* Compact breadcrumb bar */}
+        <div className="border-b border-ink-100">
+          <Container className="py-3">
+            <Breadcrumb
+              variant="light"
+              items={[
+                { label: dict.common.home, href: localePath(locale) },
+                { label: dict.common.products, href: localePath(locale, routes.products) },
+                { label: cat.name[locale], href: localePath(locale, routes.category(cat.slug)) },
+                { label: p.model },
+              ]}
+            />
+          </Container>
+        </div>
+
+        {/* 2-column product intro */}
+        <Container className="py-10 lg:py-14">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+
+            {/* Left: Gallery */}
+            <div className="lg:col-span-7">
+              <Gallery images={p.gallery} alt={p.name[locale]} />
             </div>
 
-            {/* Right: specs + catalog + quote CTA */}
-            <div className="lg:col-span-6">
-              <div className="lg:sticky lg:top-24">
-                <ProductTabs
-                  specs={p.specs}
-                  features={p.features ?? p.highlights}
-                  locale={locale}
-                  labels={{
-                    specs: dict.common.technicalSpecs,
-                    features: dict.common.productFeatures,
-                    specsNote: dict.productPage.specsNote,
-                  }}
-                />
+            {/* Right: product info */}
+            <div className="lg:col-span-5">
+              <div className="flex flex-col gap-4 lg:sticky lg:top-24">
 
-                {/* Catalog */}
-                <div className="mt-6 flex items-center gap-4 rounded-md border border-ink-100 bg-steel-300/5 p-5">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-brand-600/10 text-brand-600">
-                    <DocIcon className="h-7 w-7" />
+                {/* Category + model badge */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <Link
+                    href={localePath(locale, routes.category(cat.slug))}
+                    className="text-xs font-medium text-ink-500 transition-colors hover:text-brand-600"
+                  >
+                    {cat.name[locale]}
+                  </Link>
+                  <span className="text-ink-300">/</span>
+                  <span className="inline-flex items-center rounded-sm bg-brand-600 px-2.5 py-0.5 text-xs font-bold tracking-wide text-white">
+                    {p.model}
                   </span>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-ink-900">{dict.productPage.catalogTitle}</h3>
+                </div>
+
+                {/* Product title — brand navy, medium weight */}
+                <h1 className="font-display text-2xl font-medium leading-tight text-brand-700 sm:text-[1.75rem]">
+                  {p.name[locale]}
+                </h1>
+
+                {/* Summary */}
+                <p className="text-sm leading-relaxed text-ink-500">{p.summary[locale]}</p>
+
+                {/* Top 4 highlights */}
+                {highlights.length > 0 && (
+                  <ul className="mt-1 flex flex-col gap-2">
+                    {highlights.map((h) => (
+                      <li key={h[locale]} className="flex items-start gap-2.5">
+                        <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
+                          <CheckIcon className="h-3.5 w-3.5" />
+                        </span>
+                        <span className="text-sm leading-relaxed text-ink-700">{h[locale]}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div className="mt-1 h-px bg-ink-100" />
+
+                {/* Catalog download */}
+                <div className="flex items-center gap-4 rounded-md border border-ink-100 bg-white p-4 shadow-sm">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-brand-600/10 text-brand-600">
+                    <DocIcon className="h-5 w-5" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-sm font-semibold text-ink-900">{dict.productPage.catalogTitle}</h3>
                     <p className="text-xs text-ink-500">{dict.productPage.catalogText}</p>
                   </div>
                   <ButtonLink href={p.catalog ?? "#"} variant="ghost" size="md" className="shrink-0">
@@ -129,74 +135,58 @@ export default async function ProductPage({
                   </ButtonLink>
                 </div>
 
-                <ButtonLink
-                  href="#teklif"
-                  variant="primary"
-                  size="lg"
-                  withArrow
-                  className="mt-6 w-full"
-                >
+                {/* Video card */}
+                <VideoCard
+                  url={p.videoUrl}
+                  title={videoLabel}
+                  subtitle={locale === "tr" ? "İzlemek için tıklayın" : "Click to watch"}
+                />
+
+                {/* Quote CTA */}
+                <ButtonLink href="#teklif" variant="primary" size="lg" withArrow className="w-full">
                   {dict.common.requestQuote}
                 </ButtonLink>
+
               </div>
             </div>
           </div>
         </Container>
       </section>
 
-      {/* Quote + Optional Equipment */}
-      <section id="teklif" className="scroll-mt-24 bg-slate-50">
+      {/* ── Tabbed specs section ── */}
+      <section id="teknik-ozellikler" className="bg-[#f5f7fa]">
+        <Container className="py-12 lg:py-16">
+          <ProductDetailTabs
+            specs={p.specs}
+            features={p.features ?? p.highlights}
+            locale={locale}
+            labels={{
+              specs: dict.common.technicalSpecs,
+              features: dict.common.productFeatures,
+              specsNote: dict.productPage.specsNote,
+            }}
+          />
+        </Container>
+      </section>
+
+      {/* ── Full-width dark quote section ── */}
+      <section
+        id="teklif"
+        className="scroll-mt-24 bg-ink-950"
+        style={{ background: "linear-gradient(135deg, #0b1a2e 0%, #1F4488 100%)" }}
+      >
         <Container className="py-16 lg:py-20">
-          <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
-
-            {/* ── Left: Optional Equipment ── */}
-            <div>
-              <h3 className="font-display text-xl font-bold text-brand-700">
-                {dict.productPage.optionalEquipmentTitle}
-              </h3>
-              <div className="mt-6 grid grid-cols-2 gap-4">
-                {dict.productPage.optionalEquipment.map((item) => {
-                  const Icon = equipmentIcons[item.icon] ?? BarFeederIcon;
-                  return (
-                    <div
-                      key={item.icon}
-                      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-                    >
-                      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-slate-50 p-2 flex items-center justify-center">
-                        <Icon className="h-16 w-16 text-brand-600" />
-                      </div>
-                      <p className="mt-3 text-sm font-semibold text-slate-800">
-                        {item.name}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* ── Right: Quote Form (dark blue) ── */}
-            <div className="rounded-2xl bg-brand-600 p-8 shadow-2xl sm:p-10">
-              <h2 className="font-display text-2xl text-white sm:text-3xl">
-                {dict.productPage.requestQuoteTitle}
-              </h2>
-              <p className="mt-3 text-sm leading-relaxed text-white/70">
-                {dict.productPage.requestQuoteText}
-              </p>
-              <div className="mt-8">
-                <QuoteForm
-                  dict={dict}
-                  defaultProduct={p.name[locale]}
-                  productOptions={cat.products.map((x) => x.name[locale])}
-                  dark
-                />
-              </div>
-            </div>
-
-          </div>
+          <ProductQuoteSection
+            optionalEquipment={dict.productPage.optionalEquipment}
+            dict={dict}
+            defaultProduct={p.name[locale]}
+            productOptions={cat.products.map((x) => x.name[locale])}
+            locale={locale}
+          />
         </Container>
       </section>
 
-      {/* Related */}
+      {/* ── Related products ── */}
       {related.length > 0 && (
         <section className="bg-white">
           <Container className="py-16 lg:py-20">

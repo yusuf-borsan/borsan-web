@@ -124,8 +124,7 @@ export function HeroCarousel({
         })}
       </div>
 
-      {/* Engineered grid + directional gradient (same tones as before) */}
-      <div className="absolute inset-0 bg-grid opacity-60" aria-hidden />
+      {/* Directional gradient */}
       <div
         className="absolute inset-0"
         style={{

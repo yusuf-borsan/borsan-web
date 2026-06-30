@@ -5,8 +5,8 @@ import { getDictionary } from "@/i18n/dictionaries";
 import { categories, getCategory } from "@/lib/products";
 import { localePath, routes } from "@/lib/routes";
 import { Container } from "@/components/ui";
-import { PageHero, CtaSection } from "@/components/sections";
-import { ProductCard } from "@/components/ProductCard";
+import { Breadcrumb, CtaSection } from "@/components/sections";
+import { FilterableProductGrid } from "@/components/FilterableProductGrid";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -39,43 +39,49 @@ export default async function CategoryPage({
 
   return (
     <>
-      <PageHero
-        eyebrow={cat.tagline[locale]}
-        title={cat.name[locale]}
-        subtitle={cat.description[locale]}
-        breadcrumb={[
-          { label: dict.common.home, href: localePath(locale) },
-          { label: dict.common.products, href: localePath(locale, routes.products) },
-          { label: cat.name[locale] },
-        ]}
-      />
+      <section className="bg-[#f4f6f9]">
+        <Container className="pb-14 pt-10 lg:pb-20 lg:pt-14">
 
-      <section className="bg-[#f5f7fa]">
-        <Container className="py-16 lg:py-24">
-
-          {/* Premium section heading */}
-          <div className="mb-10 lg:mb-14">
-            <span className="eyebrow mb-3 block text-brand-600">
-              {dict.categoryPage.modelsEyebrow}
-            </span>
-            <h2 className="font-display text-balance text-3xl text-ink-900 sm:text-4xl">
-              {cat.name[locale]}{dict.categoryPage.modelsTitleSuffix}
-            </h2>
-            <p className="mt-3 max-w-xl text-base leading-relaxed text-ink-500">
-              {dict.categoryPage.modelsSubtitle}
-            </p>
-            <div className="mt-6 h-0.5 w-12 rounded-full bg-brand-600" />
+          {/* Breadcrumb */}
+          <div className="mb-8 lg:mb-10">
+            <Breadcrumb
+              variant="light"
+              items={[
+                { label: dict.common.home, href: localePath(locale) },
+                { label: dict.common.products, href: localePath(locale, routes.products) },
+                { label: cat.name[locale] },
+              ]}
+            />
           </div>
 
-          {cat.products.length > 0 ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {cat.products.map((product) => (
-                <ProductCard key={product.slug} product={product} locale={locale} dict={dict} />
-              ))}
-            </div>
-          ) : (
-            <p className="mt-6 max-w-xl text-ink-500">{dict.categoryPage.noProducts}</p>
-          )}
+          {/* Premium category intro */}
+          <div className="mb-10 lg:mb-14">
+
+            {/* Eyebrow label */}
+            <p className="mb-3 text-[10.5px] font-medium uppercase tracking-[0.18em] text-[#1F4488]/60">
+              {dict.categoryPage.modelsEyebrow}
+            </p>
+
+            {/* Title */}
+            <h1 className="text-[1.875rem] font-semibold leading-[1.15] tracking-[-0.01em] text-[#1F4488] sm:text-[2.25rem] lg:text-[2.625rem]">
+              {cat.name[locale]}
+            </h1>
+
+            {/* Description */}
+            <p className="mt-4 max-w-2xl text-[15px] leading-[1.75] text-ink-600">
+              {cat.description[locale]}
+            </p>
+
+            {/* Accent line */}
+            <div className="mt-6 h-[1.5px] w-32 bg-gradient-to-r from-[#1F4488]/65 to-transparent" />
+          </div>
+
+          <FilterableProductGrid
+            products={cat.products}
+            locale={locale}
+            dict={dict}
+            noProductsLabel={dict.categoryPage.noProducts}
+          />
         </Container>
       </section>
 

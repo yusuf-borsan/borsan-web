@@ -8,6 +8,7 @@ import { localePath, routes } from "@/lib/routes";
 import { Container, Arrow } from "@/components/ui";
 import { CategoryIcon } from "@/components/icons";
 import { PageHero, CtaSection } from "@/components/sections";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
 
 export async function generateMetadata({
   params,
@@ -44,8 +45,8 @@ export default async function ProductsPage({
         <Container className="py-16 lg:py-24">
           <div className="flex flex-col gap-10">
             {categories.map((cat, i) => (
+              <RevealOnScroll key={cat.slug}>
               <Link
-                key={cat.slug}
                 id={cat.slug}
                 href={localePath(locale, routes.category(cat.slug))}
                 className="group grid scroll-mt-28 grid-cols-1 overflow-hidden rounded-md border border-ink-100 bg-white transition-all duration-300 hover:border-brand-200 hover:shadow-[0_24px_50px_-30px_rgba(20,23,29,0.45)] lg:grid-cols-12"
@@ -90,6 +91,7 @@ export default async function ProductsPage({
                   </span>
                 </div>
               </Link>
+              </RevealOnScroll>
             ))}
           </div>
         </Container>

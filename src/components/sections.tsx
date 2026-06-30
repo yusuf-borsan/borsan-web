@@ -6,19 +6,39 @@ import { localePath, routes } from "@/lib/routes";
 import { Container, Eyebrow, ButtonLink } from "./ui";
 import { ReferenceMarquee } from "./ReferenceMarquee";
 
-export function Breadcrumb({ items }: { items: { label: string; href?: string }[] }) {
+export function Breadcrumb({
+  items,
+  variant = "dark",
+}: {
+  items: { label: string; href?: string }[];
+  variant?: "dark" | "light";
+}) {
+  const isDark = variant === "dark";
   return (
     <nav aria-label="Breadcrumb" className="text-sm">
-      <ol className="flex flex-wrap items-center gap-2 text-steel-400">
+      <ol className={`flex flex-wrap items-center gap-1.5 ${isDark ? "text-steel-400" : "text-ink-400"}`}>
         {items.map((item, i) => (
-          <li key={i} className="flex items-center gap-2">
-            {i > 0 && <span className="text-steel-600" aria-hidden>/</span>}
+          <li key={i} className="flex items-center gap-1.5">
+            {i > 0 && (
+              <span className={isDark ? "text-steel-600" : "text-ink-300"} aria-hidden>
+                /
+              </span>
+            )}
             {item.href ? (
-              <Link href={item.href} className="transition-colors hover:text-white">
+              <Link
+                href={item.href}
+                className={
+                  isDark
+                    ? "transition-colors hover:text-white"
+                    : "relative font-medium text-ink-500 transition-colors hover:text-brand-700 after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-0 after:bg-brand-600 after:transition-[width] after:duration-200 hover:after:w-full"
+                }
+              >
                 {item.label}
               </Link>
             ) : (
-              <span className="text-steel-300">{item.label}</span>
+              <span className={isDark ? "text-steel-300" : "font-medium text-ink-800"}>
+                {item.label}
+              </span>
             )}
           </li>
         ))}
@@ -40,7 +60,6 @@ export function PageHero({
 }) {
   return (
     <section className="relative overflow-hidden bg-ink-950 text-white">
-      <div className="absolute inset-0 bg-grid opacity-70" aria-hidden />
       <div
         className="absolute -right-32 top-0 h-full w-[40rem] opacity-60"
         style={{
@@ -72,7 +91,6 @@ export function PageHero({
 export function CtaSection({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
     <section className="relative overflow-hidden bg-brand-600">
-      <div className="absolute inset-0 bg-grid opacity-40" aria-hidden />
       <div
         className="absolute inset-0"
         style={{

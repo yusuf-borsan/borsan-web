@@ -8,6 +8,7 @@ import { Container, ButtonLink, SectionHeading, Arrow } from "@/components/ui";
 import { CategoryIcon, FeatureIcon } from "@/components/icons";
 import { ReferencesSection, CtaSection } from "@/components/sections";
 import { HeroCarousel } from "@/components/HeroCarousel";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
 
 export default async function HomePage({
   params,
@@ -52,29 +53,31 @@ export default async function HomePage({
       {/* ---------------- CATEGORIES ---------------- */}
       <section className="bg-white">
         <Container className="py-20 lg:py-28">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-            <SectionHeading
-              eyebrow={dict.categories.eyebrow}
-              title={dict.categories.title}
-              subtitle={dict.categories.subtitle}
-              className="lg:max-w-3xl"
-            />
-            <ButtonLink
-              href={localePath(locale, routes.products)}
-              variant="ghost"
-              withArrow
-              className="hidden shrink-0 lg:inline-flex"
-            >
-              {dict.common.viewAllProducts}
-            </ButtonLink>
-          </div>
+          <RevealOnScroll>
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <SectionHeading
+                eyebrow={dict.categories.eyebrow}
+                title={dict.categories.title}
+                subtitle={dict.categories.subtitle}
+                className="lg:max-w-3xl"
+              />
+              <ButtonLink
+                href={localePath(locale, routes.products)}
+                variant="ghost"
+                withArrow
+                className="hidden shrink-0 lg:inline-flex"
+              >
+                {dict.common.viewAllProducts}
+              </ButtonLink>
+            </div>
+          </RevealOnScroll>
 
           <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((cat) => (
+            {categories.map((cat, catIdx) => (
+              <RevealOnScroll key={cat.slug} delay={catIdx * 80}>
               <Link
-                key={cat.slug}
                 href={localePath(locale, routes.category(cat.slug))}
-                className="group relative flex flex-col overflow-hidden rounded-md border border-ink-100 bg-ink-950 transition-all duration-300 hover:border-brand-500/60 hover:shadow-[0_24px_50px_-28px_rgba(20,23,29,0.6)]"
+                className="group relative flex h-full flex-col overflow-hidden rounded-md border border-ink-100 bg-ink-950 transition-all duration-300 hover:border-brand-500/60 hover:shadow-[0_24px_50px_-28px_rgba(20,23,29,0.6)]"
               >
                 <div className="relative aspect-[16/10] overflow-hidden">
                   <Image
@@ -98,6 +101,7 @@ export default async function HomePage({
                   </span>
                 </div>
               </Link>
+              </RevealOnScroll>
             ))}
           </div>
         </Container>
@@ -105,14 +109,16 @@ export default async function HomePage({
 
       {/* ---------------- ADVANTAGES ---------------- */}
       <section className="relative overflow-hidden bg-ink-900 text-white">
-        <div className="absolute inset-0 bg-grid opacity-70" aria-hidden />
         <Container className="relative py-20 lg:py-28">
-          <SectionHeading
-            eyebrow={dict.advantages.eyebrow}
-            title={dict.advantages.title}
-            subtitle={dict.advantages.subtitle}
-            tone="light"
-          />
+          <RevealOnScroll>
+            <SectionHeading
+              eyebrow={dict.advantages.eyebrow}
+              title={dict.advantages.title}
+              subtitle={dict.advantages.subtitle}
+              tone="light"
+            />
+          </RevealOnScroll>
+          <RevealOnScroll delay={150}>
           <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-md border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
             {dict.advantages.items.map((item, i) => (
               <div key={item.title} className="flex flex-col gap-5 bg-ink-900 p-8">
@@ -124,6 +130,40 @@ export default async function HomePage({
               </div>
             ))}
           </div>
+          </RevealOnScroll>
+        </Container>
+      </section>
+
+      {/* ---------------- INVESTMENT SOLUTIONS ---------------- */}
+      <section className="border-b border-ink-100 bg-white">
+        <Container className="py-20 lg:py-24">
+          <RevealOnScroll>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+            <div className="lg:max-w-2xl">
+              <SectionHeading
+                eyebrow={dict.investment.homeEyebrow}
+                title={dict.investment.homeTitle}
+                subtitle={dict.investment.homeSubtitle}
+              />
+              <ul className="mt-6 flex flex-col gap-2">
+                {dict.investment.homeBullets.map((bullet) => (
+                  <li key={bullet} className="flex items-center gap-2.5 text-sm text-ink-500">
+                    <span className="h-px w-4 bg-brand-500/50" aria-hidden />
+                    {bullet}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <ButtonLink
+              href={localePath(locale, routes.investment)}
+              variant="ghost"
+              withArrow
+              className="shrink-0 lg:mt-2"
+            >
+              {dict.investment.homeCta}
+            </ButtonLink>
+          </div>
+          </RevealOnScroll>
         </Container>
       </section>
 

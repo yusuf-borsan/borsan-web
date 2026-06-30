@@ -6,6 +6,7 @@ import { Container } from "@/components/ui";
 import { PageHero } from "@/components/sections";
 import { QuoteForm } from "@/components/QuoteForm";
 import { PinIcon, PhoneIcon, MailIcon, ClockIcon } from "@/components/icons";
+import { RevealOnScroll } from "@/components/RevealOnScroll";
 
 export async function generateMetadata({
   params,
@@ -52,7 +53,7 @@ export default async function ContactPage({
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
 
             {/* ── Left: contact info ── */}
-            <div className="lg:col-span-5">
+            <RevealOnScroll className="lg:col-span-5">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 {cards.map((c) => {
                   const Icon = c.icon;
@@ -77,13 +78,13 @@ export default async function ContactPage({
               </div>
 
               {/* Map placeholder */}
-              <div className="mt-6 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-ink-950 bg-grid shadow-sm">
+              <div className="mt-6 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-ink-950 shadow-sm">
                 <span className="eyebrow text-steel-500">{dict.contact.mapPlaceholder}</span>
               </div>
-            </div>
+            </RevealOnScroll>
 
             {/* ── Right: contact form ── */}
-            <div className="lg:col-span-7">
+            <RevealOnScroll delay={100} className="lg:col-span-7">
               <div className="rounded-2xl bg-brand-600 p-8 shadow-2xl sm:p-10">
                 <h2 className="font-display text-2xl text-white sm:text-3xl">
                   {dict.contact.formTitle}
@@ -95,7 +96,7 @@ export default async function ContactPage({
                   <QuoteForm dict={dict} dark />
                 </div>
               </div>
-            </div>
+            </RevealOnScroll>
 
           </div>
         </Container>

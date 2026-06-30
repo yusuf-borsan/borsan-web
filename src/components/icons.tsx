@@ -103,6 +103,17 @@ export function SwissIcon(props: IconProps) {
   );
 }
 
+export function RotaryIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <circle cx="24" cy="24" r="15" />
+      <circle cx="24" cy="24" r="5" />
+      <path d="M24 9v5M24 34v5M9 24h5M34 24h5" />
+      <path d="M14.1 14.1l3.5 3.5M29.9 29.9l3.5 3.5M33.9 14.1l-3.5 3.5M17.6 29.9l-3.5 3.5" />
+    </svg>
+  );
+}
+
 const categoryIcons: Record<string, (p: IconProps) => React.ReactElement> = {
   lathe: LatheIcon,
   vmc: VmcIcon,
@@ -111,6 +122,7 @@ const categoryIcons: Record<string, (p: IconProps) => React.ReactElement> = {
   grinder: GrinderIcon,
   gear: GearIcon,
   swiss: SwissIcon,
+  rotary: RotaryIcon,
 };
 
 export function CategoryIcon({ name, ...props }: { name: string } & IconProps) {

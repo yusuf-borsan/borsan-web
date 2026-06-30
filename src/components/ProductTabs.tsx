@@ -3,8 +3,11 @@
 import { useState } from "react";
 import type { Locale, Localized } from "@/i18n/config";
 import type { Spec } from "@/lib/products";
-import { CheckIcon } from "./icons";
+import { CheckIcon } from "@/components/icons";
 
+/* ══════════════════════════════════════════════════════════════
+   SpecNavigator — prev/next for 4+ "/" separated values
+   ══════════════════════════════════════════════════════════════ */
 function SpecNavigator({ parts }: { parts: string[] }) {
   const [idx, setIdx] = useState(0);
   return (
@@ -43,9 +46,175 @@ function SpecValue({ value }: { value: string }) {
   return <SpecNavigator parts={parts} />;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   Display-only label fixes (products.ts NOT touched)
+   ══════════════════════════════════════════════════════════════ */
+function fixSpecLabel(label: string): string {
+  return label
+    .replace("Kuyrukluk Hareketi", "Punta Gövdesi Hareketi")
+    .replace("Kuyrukluk Konik", "Punta Koniği")
+    .replace("Kuyrukluk Punta Çapı", "Punta Çapı")
+    .replace("Kuyruk Mili Koniği", "Punta Koniği")
+    .replace("Kuyruk Mili Kilitleme", "Punta Mili Kilitleme")
+    .replace("Kuyruk Mili", "Punta Mili")
+    .replace("Kuyrukluk", "Punta Grubu");
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Spec grouping
+   ══════════════════════════════════════════════════════════════ */
+type GroupDef = { tr: string; en: string; keywords: string[] };
+
+const GROUPS: GroupDef[] = [
+  {
+    tr: "İşleme Kapasitesi",
+    en: "Machining Capacity",
+    keywords: ["Çevirme", "Kesme", "İş Parçası", "Bar", "Ayna"],
+  },
+  {
+    tr: "Gövde ve Kızak Yapısı",
+    en: "Bed & Guideway",
+    keywords: ["Gövde", "Kızak", "Merkez", "Punta"],
+  },
+  {
+    tr: "İş Mili",
+    en: "Spindle",
+    keywords: ["İş Mili"],
+  },
+  {
+    tr: "İlerleme ve Hareketler",
+    en: "Feed & Motion",
+    keywords: ["Eksen", "Hareket", "Hızlı", "Vida Mili", "İlerleme"],
+  },
+  {
+    tr: "Vida Açma Özellikleri",
+    en: "Threading",
+    keywords: ["Vida Açma", "Metrik", "İnç", "Modül", "Diametral", "Ana Vida"],
+  },
+  {
+    tr: "Punta Grubu",
+    en: "Tailstock",
+    keywords: ["Kuyruk"],
+  },
+  {
+    tr: "Taret ve Kalemlik",
+    en: "Turret & Tool Post",
+    keywords: ["Taret", "Kalem"],
+  },
+  {
+    tr: "Hassasiyet",
+    en: "Precision",
+    keywords: ["Hassasiyet", "Yuvarlaklık", "Silindiriklik"],
+  },
+  {
+    tr: "Ölçüler, Ağırlık ve Enerji",
+    en: "Dimensions, Weight & Power",
+    keywords: ["Ağırlık", "Ölçü", "Elektrik", "Kapasite"],
+  },
+];
+
+function getGroupIndex(labelTr: string): number {
+  for (let i = 0; i < GROUPS.length; i++) {
+    if (GROUPS[i].keywords.some((kw) => labelTr.includes(kw))) return i;
+  }
+  return GROUPS.length;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Tab content components
+   ══════════════════════════════════════════════════════════════ */
+function SpecsTab({
+  specs,
+  locale,
+  specsNote,
+}: {
+  specs: Spec[];
+  locale: Locale;
+  specsNote: string;
+}) {
+  const buckets: Spec[][] = Array.from({ length: GROUPS.length + 1 }, () => []);
+  for (const spec of specs) {
+    buckets[getGroupIndex(spec.label.tr)].push(spec);
+  }
+
+  const allGroups = [
+    ...GROUPS.map((g, i) => ({
+      title: locale === "tr" ? g.tr : g.en,
+      specs: buckets[i],
+    })),
+    {
+      title: locale === "tr" ? "Diğer Teknik Bilgiler" : "Other Technical Information",
+      specs: buckets[GROUPS.length],
+    },
+  ].filter((g) => g.specs.length > 0);
+
+  return (
+    <div className="space-y-8">
+      {allGroups.map((group) => (
+        <div key={group.title}>
+          {/* Group header with trailing rule */}
+          <div className="mb-2 flex items-center gap-3">
+            <span className="shrink-0 text-[10px] font-bold uppercase tracking-widest text-brand-600">
+              {group.title}
+            </span>
+            <div className="h-px flex-1 bg-brand-600/15" />
+          </div>
+          {/* Spec rows — no outer border, only inner dividers */}
+          <table className="w-full table-fixed text-sm">
+            <colgroup>
+              <col className="w-[55%]" />
+              <col className="w-[45%]" />
+            </colgroup>
+            <tbody className="divide-y divide-ink-100/60">
+              {group.specs.map((spec) => (
+                <tr key={spec.label.tr} className="even:bg-ink-50/40">
+                  <th
+                    scope="row"
+                    className="py-2 pr-3 text-left text-sm font-normal text-ink-500"
+                  >
+                    {fixSpecLabel(spec.label[locale])}
+                  </th>
+                  <td className="py-2 text-right text-sm font-semibold text-ink-800">
+                    <SpecValue value={spec.value[locale]} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ))}
+      {specsNote && <p className="text-xs text-ink-400">{specsNote}</p>}
+    </div>
+  );
+}
+
+function FeaturesTab({
+  features,
+  locale,
+}: {
+  features: Localized[];
+  locale: Locale;
+}) {
+  return (
+    <ul className="divide-y divide-ink-100/60">
+      {features.map((f, i) => (
+        <li key={i} className="flex items-start gap-3 py-3 even:bg-ink-50/40">
+          <span className="mt-0.5 shrink-0 text-brand-600">
+            <CheckIcon className="h-3.5 w-3.5" />
+          </span>
+          <span className="text-[15px] leading-relaxed text-ink-700">{f[locale]}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ProductDetailTabs — main exported component
+   ══════════════════════════════════════════════════════════════ */
 type TabKey = "specs" | "features";
 
-export function ProductTabs({
+export function ProductDetailTabs({
   specs,
   features,
   locale,
@@ -54,7 +223,11 @@ export function ProductTabs({
   specs: Spec[];
   features: Localized[];
   locale: Locale;
-  labels: { specs: string; features: string; specsNote: string };
+  labels: {
+    specs: string;
+    features: string;
+    specsNote: string;
+  };
 }) {
   const [tab, setTab] = useState<TabKey>("specs");
 
@@ -64,9 +237,12 @@ export function ProductTabs({
   ];
 
   return (
-    <div className="overflow-hidden rounded-md border border-ink-100">
-      {/* Tab bar */}
-      <div className="grid grid-cols-2" role="tablist">
+    <div>
+      {/* Underline tab strip — scrollbar hidden on all browsers */}
+      <div
+        className="flex overflow-x-auto border-b border-ink-200 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        role="tablist"
+      >
         {tabs.map((t) => {
           const active = tab === t.key;
           return (
@@ -76,10 +252,10 @@ export function ProductTabs({
               role="tab"
               aria-selected={active}
               onClick={() => setTab(t.key)}
-              className={`px-4 py-4 text-sm font-semibold transition-colors ${
+              className={`-mb-px shrink-0 border-b-2 px-6 py-3.5 text-sm font-semibold transition-colors ${
                 active
-                  ? "bg-brand-600 text-white"
-                  : "bg-steel-300/10 text-ink-500 hover:bg-steel-300/20 hover:text-ink-700"
+                  ? "border-brand-600 text-brand-600"
+                  : "border-transparent text-ink-500 hover:border-ink-300 hover:text-ink-900"
               }`}
             >
               {t.label}
@@ -88,49 +264,13 @@ export function ProductTabs({
         })}
       </div>
 
-      {/* Panel: technical specifications */}
-      {tab === "specs" && (
-        <div>
-          <table className="w-full table-fixed text-sm">
-            <colgroup>
-              <col className="w-[48%]" />
-              <col className="w-[52%]" />
-            </colgroup>
-            <tbody>
-              {specs.map((spec, i) => (
-                <tr key={spec.label[locale]} className={i % 2 === 1 ? "bg-steel-300/10" : "bg-white"}>
-                  <th
-                    scope="row"
-                    className="px-4 py-3 text-left font-medium text-ink-500"
-                  >
-                    {spec.label[locale]}
-                  </th>
-                  <td className="px-4 py-3 text-right font-semibold text-ink-900">
-                    <SpecValue value={spec.value[locale]} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="border-t border-ink-100 bg-white px-4 py-3 text-xs text-ink-400">
-            {labels.specsNote}
-          </p>
-        </div>
-      )}
-
-      {/* Panel: product features */}
-      {tab === "features" && (
-        <ul className="divide-y divide-ink-100 bg-white">
-          {features.map((f, i) => (
-            <li key={i} className="flex items-start gap-3 px-6 py-3.5">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-600/10 text-brand-600">
-                <CheckIcon className="h-3.5 w-3.5" />
-              </span>
-              <span className="text-sm leading-relaxed text-ink-700">{f[locale]}</span>
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Tab content */}
+      <div className="mt-8">
+        {tab === "specs" && (
+          <SpecsTab specs={specs} locale={locale} specsNote={labels.specsNote} />
+        )}
+        {tab === "features" && <FeaturesTab features={features} locale={locale} />}
+      </div>
     </div>
   );
 }

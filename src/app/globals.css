@@ -112,3 +112,135 @@ body {
 .animate-fade-up {
   animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* Scroll reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transition: opacity 0.6s ease-out,
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal-on-scroll.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Europe route map */
+.europe-map .route-line {
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+.europe-map.map-visible .route-line {
+  stroke-dashoffset: 0;
+}
+.europe-map .route-dot { opacity: 0; }
+.europe-map.map-visible .route-dot { opacity: 0.8; }
+
+.europe-map .pulse-ring {
+  animation: none;
+}
+.europe-map.map-visible .pulse-ring {
+  animation: mapPulse 2.8s ease-out infinite;
+}
+.europe-map .pulse-ring-tr {
+  animation: none;
+}
+.europe-map.map-visible .pulse-ring-tr {
+  animation: mapPulseTr 3.2s ease-out infinite;
+}
+
+@keyframes mapPulse {
+  0% { r: 4; opacity: 0.5; }
+  70% { r: 14; opacity: 0; }
+  100% { r: 14; opacity: 0; }
+}
+@keyframes mapPulseTr {
+  0% { r: 7; opacity: 0.35; }
+  70% { r: 22; opacity: 0; }
+  100% { r: 22; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .europe-map .route-line { stroke-dashoffset: 0 !important; transition: none; }
+  .europe-map .route-dot { opacity: 0.8; }
+  .europe-map .route-dot animateMotion { dur: 0s; }
+  .europe-map .pulse-ring,
+  .europe-map .pulse-ring-tr,
+  .europe-map.map-visible .pulse-ring,
+  .europe-map.map-visible .pulse-ring-tr { animation: none; }
+}
+
+/* Gear-driven mechanical rows */
+.mechanical-row {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.mechanical-row.is-visible {
+  opacity: 1;
+}
+
+.gear-main {
+  transform: rotate(-120deg);
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.is-visible .gear-main { transform: rotate(0deg); }
+
+.mechanical-panel {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.08s;
+}
+.is-visible .mechanical-panel {
+  transform: scaleX(1);
+}
+
+.panel-content {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.45s ease 0.5s,
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.5s;
+}
+.is-visible .panel-content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Process arrows — fade in sequentially with parent reveal */
+.process-arrow {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.4s ease 0.3s, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s;
+}
+.reveal-visible .process-arrow,
+.reveal-on-scroll.reveal-visible .process-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-arrow { opacity: 1; transform: none; transition: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mechanical-row { opacity: 1; }
+  .gear-main {
+    transform: none !important;
+    transition: none;
+  }
+  .mechanical-panel {
+    transform: none !important;
+    transition: none;
+  }
+  .panel-content {
+    opacity: 1;
+    transform: none !important;
+    transition: none;
+  }
+}

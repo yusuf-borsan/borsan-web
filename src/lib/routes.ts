@@ -12,6 +12,7 @@ export const routes = {
   about: "/hakkimizda",
   service: "/servis",
   contact: "/iletisim",
+  investment: "/makine-yatirim-cozumleri",
   category: (slug: string) => `/urunler/${slug}`,
   product: (categorySlug: string, productSlug: string) =>
     `/urunler/${categorySlug}/${productSlug}`,
