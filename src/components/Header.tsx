@@ -21,7 +21,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
   /* ── Scroll detection ── */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -71,19 +71,23 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const isActive = (href: string) =>
     pathname === href || (href !== localePath(locale) && pathname.startsWith(href));
 
+  /* ── Transparent mode: all pages except /urunler and its sub-pages ── */
+  const isProductsSection = pathname.includes("/urunler");
+  const showTransparent = !isProductsSection && !scrolled;
+
   /* ── Nav link class helper ── */
   const navLinkCls = (href: string, primary: boolean) => {
-    const base =
-      "relative pb-0.5 text-[0.875rem] tracking-wide transition-colors duration-200 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 after:bg-brand-600 after:transition-[width] after:duration-200";
-    const weight = primary
-      ? "font-semibold"
-      : "font-medium";
+    const afterColor = showTransparent ? "after:bg-white" : "after:bg-brand-600";
+    const base = `relative pb-0.5 text-[0.875rem] tracking-wide transition-colors duration-200 after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5 ${afterColor} after:transition-[width] after:duration-200`;
+    const weight = primary ? "font-semibold" : "font-medium";
     if (isActive(href)) {
-      return `${base} ${weight} text-brand-600 after:w-full`;
+      const activeColor = showTransparent ? "text-white" : "text-brand-600";
+      return `${base} ${weight} ${activeColor} after:w-full`;
     }
-    return `${base} ${weight} ${
-      primary ? "text-ink-800 hover:text-ink-900" : "text-ink-800 hover:text-ink-900"
-    } after:w-0 hover:after:w-full`;
+    const inactiveColor = showTransparent
+      ? "text-white/85 hover:text-white"
+      : "text-ink-800 hover:text-ink-900";
+    return `${base} ${weight} ${inactiveColor} after:w-0 hover:after:w-full`;
   };
 
   const productsHref = localePath(locale, routes.products);
@@ -100,11 +104,15 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 border-b bg-white/90 backdrop-blur-md transition-all duration-300 ${
-          scrolled ? "border-ink-200/60 shadow-sm" : "border-transparent"
+        className={`z-50 transition-all duration-300 ${
+          !isProductsSection ? "fixed top-0 left-0 right-0 w-full" : "sticky top-0"
+        } ${
+          showTransparent
+            ? "bg-ink-950/20"
+            : "border-b border-ink-200/60 bg-white/95 shadow-sm backdrop-blur-md"
         }`}
       >
-        <div className="mx-auto flex h-[70px] w-full max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
+        <div className="mx-auto flex h-[var(--header-height)] w-full max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
 
           {/* ── Logo ── */}
           <Link
@@ -113,7 +121,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             aria-label={dict.meta.siteName}
           >
             <Image
-              src="/branding/logo.png"
+              src={showTransparent ? "/branding/logo-white.png" : "/branding/logo.png"}
               alt={dict.meta.siteName}
               width={1939}
               height={423}
@@ -129,7 +137,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <div
               onMouseEnter={openMega}
               onMouseLeave={closeMega}
-              className="flex h-[70px] items-center px-3"
+              className="flex h-[var(--header-height)] items-center px-3"
             >
               <Link href={productsHref} className={navLinkCls(productsHref, true)}>
                 {dict.nav.products}
@@ -157,7 +165,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             </div>
 
             {/* Visual separator */}
-            <span className="mx-2 h-4 w-px bg-ink-200" aria-hidden />
+            <span className={`mx-2 h-4 w-px ${showTransparent ? "bg-white/30" : "bg-ink-200"}`} aria-hidden />
 
             {/* Secondary: Hakkımızda */}
             <div className="flex items-center px-3">
@@ -184,7 +192,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           {/* ── Right side actions ── */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:block">
-              <LocaleSwitcher locale={locale} />
+              <LocaleSwitcher locale={locale} tone={showTransparent ? "light" : "dark"} />
             </div>
             <div className="hidden sm:block">
               <ButtonLink
@@ -204,7 +212,9 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
               onClick={() => setOpen((v) => !v)}
               aria-label="Menu"
               aria-expanded={open}
-              className="flex h-10 w-10 items-center justify-center rounded-sm text-ink-900 transition-colors hover:bg-ink-50 lg:hidden"
+              className={`flex h-10 w-10 items-center justify-center rounded-sm transition-colors lg:hidden ${
+                showTransparent ? "text-white hover:bg-white/10" : "text-ink-900 hover:bg-ink-50"
+              }`}
             >
               <span className="relative flex h-3.5 w-5 flex-col justify-between">
                 <span
@@ -231,7 +241,11 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         <div
           onMouseEnter={openMega}
           onMouseLeave={closeMega}
-          className={`absolute left-0 right-0 top-full z-40 border-b border-ink-100/80 bg-white/95 shadow-xl backdrop-blur-sm transition-all duration-200 ${
+          className={`absolute left-0 right-0 top-full z-40 border-b transition-all duration-200 ${
+            showTransparent
+              ? "border-white/10 bg-ink-950/20 shadow-lg backdrop-blur-md"
+              : "border-ink-100/80 bg-white/95 shadow-xl backdrop-blur-sm"
+          } ${
             megaOpen
               ? "pointer-events-auto translate-y-0 opacity-100"
               : "pointer-events-none -translate-y-2 opacity-0"
@@ -240,14 +254,14 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           <div className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
 
             {/* Header row */}
-            <div className="mb-5 flex items-center justify-between border-b border-ink-100 pb-4">
-              <span className="text-xs font-semibold uppercase tracking-wider text-ink-400">
+            <div className={`mb-5 flex items-center justify-between border-b pb-4 ${showTransparent ? "border-white/15" : "border-ink-100"}`}>
+              <span className={`text-xs font-semibold uppercase tracking-wider ${showTransparent ? "text-white/60" : "text-ink-400"}`}>
                 {locale === "tr" ? "Ürün Kategorileri" : "Product Categories"}
               </span>
               <Link
                 href={productsHref}
                 onClick={() => setMegaOpen(false)}
-                className="group flex items-center gap-1.5 text-xs font-semibold text-brand-600 transition-colors duration-200 hover:text-brand-700"
+                className={`group flex items-center gap-1.5 text-xs font-semibold transition-colors duration-200 ${showTransparent ? "text-white/80 hover:text-white" : "text-brand-600 hover:text-brand-700"}`}
               >
                 {dict.common.viewAllProducts}
                 <svg
@@ -274,16 +288,16 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                   key={cat.slug}
                   href={localePath(locale, routes.category(cat.slug))}
                   onClick={() => setMegaOpen(false)}
-                  className="group flex items-center gap-3 rounded-xl p-3 transition-colors duration-200 hover:bg-brand-50"
+                  className={`group flex items-center gap-3 rounded-xl p-3 transition-colors duration-200 ${showTransparent ? "hover:bg-white/10" : "hover:bg-brand-50"}`}
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600 transition-all duration-200 group-hover:bg-brand-600 group-hover:text-white">
+                  <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition-all duration-200 ${showTransparent ? "bg-white/15 text-white group-hover:bg-white/25" : "bg-brand-600/10 text-brand-600 group-hover:bg-brand-600 group-hover:text-white"}`}>
                     <CategoryIcon name={cat.icon} className="h-5 w-5" />
                   </span>
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold leading-tight text-ink-900 transition-colors duration-200 group-hover:text-brand-700">
+                    <div className={`text-sm font-semibold leading-tight transition-colors duration-200 ${showTransparent ? "text-white" : "text-ink-900 group-hover:text-brand-700"}`}>
                       {cat.name[locale]}
                     </div>
-                    <div className="mt-0.5 line-clamp-2 text-xs leading-snug text-ink-400">
+                    <div className={`mt-0.5 line-clamp-2 text-xs leading-snug ${showTransparent ? "text-white/55" : "text-ink-400"}`}>
                       {cat.tagline[locale]}
                     </div>
                   </div>
@@ -314,7 +328,7 @@ export function Header({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         }`}
       >
         {/* Drawer header */}
-        <div className="flex h-[70px] shrink-0 items-center justify-between border-b border-ink-100 px-6">
+        <div className="flex h-[var(--header-height)] shrink-0 items-center justify-between border-b border-ink-100 px-6">
           <Image
             src="/branding/logo.png"
             alt={dict.meta.siteName}

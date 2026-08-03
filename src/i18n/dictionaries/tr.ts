@@ -46,10 +46,10 @@ const tr = {
     ctaSecondary: "Teklif Alın",
     stat1Value: "30+",
     stat1Label: "Yıllık sektör tecrübesi",
-    stat2Value: "7",
-    stat2Label: "Tezgah kategorisi",
+    stat2Value: "7+",
+    stat2Label: "Ana ürün grubu",
     stat3Value: "%100",
-    stat3Label: "Satış sonrası servis",
+    stat3Label: "Satış sonrası teknik destek yaklaşımı",
     slides: [
       {
         image: "/hero/hero-main.png",
@@ -71,8 +71,8 @@ const tr = {
       },
       {
         image: "/hero/hero-main3.png",
-        href: "/urunler/disli-profil-taslama",
-        eyebrow: "Taşlama · Dişli Profil Taşlama",
+        href: "/urunler/cnc-disli-taslama-tezgahlari",
+        eyebrow: "Taşlama · CNC Dişli Taşlama",
         titleLine1: "Kusursuz Yüzey,",
         titleLine2: "Tekrarlanabilir Kalite",
         subtitle:
@@ -100,30 +100,71 @@ const tr = {
     title: "Makineyi Değil, Üretim Çözümünü Sunuyoruz",
     subtitle:
       "Tezgah seçiminden devreye almaya, operatör eğitiminden yedek parçaya kadar tüm süreçte yanınızdayız.",
+    cta: "Makine Yatırım Çözümlerini İncele",
+    ctaTag: "Makine Yatırımı Planlıyorsanız",
+    ctaText: "Proje, şartname ve teknik seçim desteğimizi detaylı inceleyin.",
     items: [
       {
         title: "Mühendislik Danışmanlığı",
-        text: "Parçanızı ve üretim hedefinizi analiz eder, en doğru tezgah ve konfigürasyonu öneririz.",
+        text: "Parça ölçüsü, tolerans, üretim hacmi ve proses ihtiyacınızı değerlendirerek uygun tezgah ve konfigürasyon alternatiflerini birlikte belirliyoruz.",
       },
       {
-        title: "Hassasiyet ve Tekrarlanabilirlik",
-        text: "Mikron seviyesinde tolerans ve uzun vadeli kararlılık sağlayan rijit tezgah yapıları.",
+        title: "Teknik Seçim ve Karşılaştırma",
+        text: "İş mili gücü, eksen yapısı, rijitlik, hassasiyet ve kapasite değerlerini üretim hedefinize göre teknik olarak karşılaştırıyoruz.",
       },
       {
         title: "Devreye Alma ve Eğitim",
-        text: "Kurulum, kalibrasyon ve operatör eğitimi ile makineniz ilk günden tam kapasite çalışır.",
+        text: "Kurulum, ilk çalıştırma, temel operatör eğitimi ve üretime geçiş sürecinde makinenin doğru kullanılmasına destek sağlıyoruz.",
       },
       {
-        title: "Garantili Satış Sonrası Servis",
-        text: "Firmamızdan makine satın alan müşterilerimize kesintisiz teknik servis ve yedek parça desteği.",
+        title: "Satış Sonrası Teknik Destek",
+        text: "Yedek parça, servis koordinasyonu ve teknik destek süreçlerinde müşterilerimizin üretim sürekliliğini korumaya odaklanıyoruz.",
+      },
+    ],
+  },
+  featured: {
+    eyebrow: "Öne Çıkan Başlıklar",
+    title: "Borsan Teknoloji'de Yolunuzu Seçin",
+    subtitle: "Ürün portföyümüzü inceleyin, servis ve yatırım çözümlerimizi keşfedin veya projeniz için doğrudan bizimle iletişime geçin.",
+    cards: [
+      {
+        tag: "MAKİNE PORTFÖYÜ",
+        title: "Ürünler",
+        text: "CNC dik işleme, yatay torna, dişli taşlama ve universal torna gruplarında farklı üretim ihtiyaçlarına yönelik tezgah alternatiflerini inceleyin.",
+        cta: "Ürünleri İncele",
+      },
+      {
+        tag: "TEKNİK YATIRIM DOSYASI",
+        title: "Yatırım Çözümleri",
+        text: "Tek makine ihtiyacından atölye kurulumuna kadar; teknik seçim, şartname, ekipman listesi ve teklif dosyası hazırlığı için destek alın.",
+        cta: "Çözümleri İncele",
+      },
+      {
+        tag: "TEKNİK DESTEK",
+        title: "Servis",
+        text: "Kurulum, devreye alma, operatör eğitimi, servis koordinasyonu ve yedek parça süreçlerinde teknik destek alın.",
+        cta: "Servis Detayları",
+      },
+      {
+        tag: "BORSAN TEKNOLOJİ",
+        title: "Hakkımızda",
+        text: "Makine tedariği, teknik değerlendirme ve üretim odaklı çözüm yaklaşımımız hakkında daha fazla bilgi alın.",
+        cta: "Borsan'ı Tanıyın",
+      },
+      {
+        tag: "PROJENİZİ GÖRÜŞELİM",
+        title: "İletişim",
+        text: "Makine ihtiyacınız, teknik şartnameniz veya yatırım projeniz için bizimle iletişime geçin.",
+        cta: "İletişime Geç",
       },
     ],
   },
   references: {
     eyebrow: "Güven",
-    title: "Sanayinin Tercih Ettiği Çözüm Ortağı",
+    title: "Sanayinin Güvendiği",
+    titleHighlight: "Çözüm Ortağı",
     subtitle:
-      "Otomotiv, savunma, enerji ve genel imalat sektörlerinde üretim yapan firmalarla uzun soluklu iş birlikleri kuruyoruz.",
+      "Sektörün önde gelen sanayi kuruluşlarıyla kurduğumuz iş birliklerinde, yalnızca makine tedarik etmiyor; doğru yatırımın planlanmasından satış sonrası teknik desteğe kadar sürecin her adımında çözüm ortağı olarak yer alıyoruz.",
     placeholder: "Referans logosu",
   },
   cta: {
@@ -145,6 +186,8 @@ const tr = {
     modelsTitleSuffix: "",
     modelsSubtitle: "Teknik özellikleri inceleyin ve üretim ihtiyaçlarınıza en uygun modeli seçin.",
     noProducts: "Bu kategoriye ait modeller yakında eklenecektir. Bilgi için bizimle iletişime geçin.",
+    comingSoon: "Yeni tezgahlarımız çok yakında sizlerle.",
+    comingSoonDetail: "Bu kategoriye ait yeni tezgahlar çok yakında listelenecek. Bilgi almak için bizimle iletişime geçebilirsiniz.",
   },
   productPage: {
     requestQuoteTitle: "Bu Model İçin Teklif İsteyin",
@@ -170,12 +213,36 @@ const tr = {
     email: "E-posta",
     phone: "Telefon",
     product: "İlgilenilen Ürün",
+    topic: "İlgilenilen Konu",
+    topicOptions: [
+      { value: "quote", label: "Teklif Talebi" },
+      { value: "consulting", label: "Teknik Danışmanlık" },
+      { value: "project", label: "Proje Değerlendirmesi" },
+      { value: "service", label: "Servis Talebi" },
+      { value: "other", label: "Diğer" },
+    ],
+    topicOtherLabel: "Konu Açıklaması",
+    topicOtherPlaceholder: "Lütfen konuyu açıklayın...",
+    serviceTopic: "Servis Konusu",
+    serviceTopicOptions: [
+      { value: "installation", label: "Kurulum ve Devreye Alma" },
+      { value: "maintenance", label: "Periyodik Bakım" },
+      { value: "spare-parts", label: "Yedek Parça Talebi" },
+      { value: "fault", label: "Arıza Bildirimi" },
+      { value: "training", label: "Operatör Eğitimi" },
+      { value: "remote", label: "Uzaktan Destek" },
+      { value: "other", label: "Diğer" },
+    ],
+    productCategory: "Makine Kategorisi",
+    productModel: "İlgilenilen Ürün",
     message: "Mesajınız",
     messagePlaceholder: "Parça, malzeme, üretim hacmi ve beklentilerinizi kısaca yazın.",
     submit: "Teklif Talebini Gönder",
-    consent: "Bu formu göndererek bilgilerimin teklif amacıyla işlenmesini kabul ediyorum.",
+    consent: "Bu formu göndererek kişisel verilerimin 6698 sayılı KVKK kapsamında teklif amacıyla işlenmesini kabul ediyorum.",
     successTitle: "Talebiniz alındı",
-    successText: "En kısa sürede sizinle iletişime geçeceğiz. (Bu bir prototip formudur; veri gönderilmez.)",
+    successText: "Ekibimiz en kısa sürede sizinle iletişime geçecektir.",
+    errorText: "Bir hata oluştu. Lütfen tekrar deneyin.",
+    sending: "Gönderiliyor...",
     required: "Zorunlu alan",
     requestType: "Talep Türü",
     requestTypeOptions: [
@@ -196,6 +263,15 @@ const tr = {
     title: "Mühendislikle Şekillenen Üretim Gücü",
     intro:
       "Borsan Teknoloji, CNC takım tezgahları alanında firmalara uçtan uca çözümler sunan bir mühendislik ve satış kuruluşudur. Yalnızca makine satmıyor; üretim süreçlerinizi daha verimli, hassas ve sürdürülebilir hale getiren çözümler kuruyoruz.",
+    pageTitle: "Borsan Teknoloji'ye Yakından Bakın",
+    welcome: "Hoşgeldiniz",
+    body: [
+      "BORSAN TEKNOLOJİ VE MAKİNA TİCARETİ A.Ş., takım tezgahları alanında Türkiye'de ve Avrupa'da satış, kurulum, devreye alma ve teknik servis hizmetleri sunan bir firmadır.",
+      "CNC torna tezgahları, CNC işleme merkezleri, 5 eksenli işleme merkezleri, dişli profil taşlama tezgahları, azdırma tezgahları, freze tezgahları, matkap tezgahları ve farklı talaşlı imalat makineleri firmamızın faaliyet alanları arasında yer almaktadır.",
+      "Borsan Teknoloji, makine tedarik ve servis süreçlerini teknik uygunluk, sürdürülebilir kullanım ve satış sonrası destek anlayışıyla yürütür. Satış öncesi teknik değerlendirme, tekliflendirme, kurulum, devreye alma, operatör bilgilendirmesi, bakım yönlendirmesi ve yedek parça temini süreçlerinde müşterilerine hizmet verir.",
+      "Türkiye'deki çalışmalarının yanı sıra Avrupa pazarına yönelik projelerde de yer alan firmamız; otomotiv, savunma, enerji, tersane, havacılık, genel imalat ve ağır sanayi sektörlerinde faaliyet gösteren kurum ve işletmelere yönelik makine çözümleri sunmaktadır.",
+      "Kurumsal hizmet anlayışı, teknik bilgi birikimi ve uzun vadeli iş birliği yaklaşımıyla Borsan Teknoloji, sanayinin ihtiyaç duyduğu takım tezgahı çözümlerinde güvenilir bir çözüm ortağı olarak faaliyetlerini sürdürmektedir.",
+    ],
     missionTitle: "Misyonumuz",
     missionText:
       "Türk sanayisine, dünya standartlarında tezgah teknolojilerini güçlü mühendislik ve servis desteğiyle birlikte ulaştırmak; müşterilerimizin rekabet gücünü artırmak.",
@@ -219,53 +295,72 @@ const tr = {
   },
   service: {
     eyebrow: "Servis",
-    title: "Satış Sonrası Tam Destek",
+    title: "Teknik Servis ve Destek",
     intro:
-      "Servis hizmetimiz, firmamızdan makine satın alan müşterilerimize özeldir. Amacımız, sattığımız her tezgahın ömrü boyunca en yüksek verimle çalışmasını sağlamaktır.",
-    note: "Önemli: Servis hizmeti yalnızca Borsan Teknoloji'den makine satın alan müşterilere sunulmaktadır.",
+      "Kurulumdan yedek parça süreçlerine kadar, makinelerinizin verimli ve kesintisiz çalışması için hızlı ve çözüm odaklı teknik destek sunuyoruz.",
+    note: "Servis süreçlerinde Borsan Teknoloji'den temin edilen makineler öncelikli ve doğrudan destek kapsamındadır. Borsan dışı makineler için talepler teknik inceleme sonrasında değerlendirilir; uygunluk, kapsam ve ücretlendirme ayrıca belirlenir.",
     items: [
       {
         title: "Kurulum ve Devreye Alma",
-        text: "Tezgahın yerleşimi, kalibrasyonu ve üretime hazır hale getirilmesi.",
+        summary:
+          "Makinenizin sahaya doğru şekilde yerleşmesi ve üretime güvenli biçimde başlaması için süreci baştan sona takip ederiz.",
+        text: "Borsan Teknoloji'den temin edilen makinelerde kurulum ve devreye alma sürecini yalnızca teknik bir başlangıç adımı olarak değil, verimli üretimin temeli olarak ele alıyoruz. Tezgahın sahadaki yerleşimi, temel bağlantı kontrolleri, ilk çalıştırma adımları ve üretime hazırlık süreci teknik ekibimiz tarafından kontrollü şekilde değerlendirilir. Amacımız, makinenin ilk günden doğru koşullarda çalışmasını sağlamak ve müşterimizin üretime geçiş sürecini güvenle tamamlamaktır.",
       },
       {
         title: "Periyodik Bakım",
-        text: "Planlı bakım programları ile arıza riskini en aza indirin.",
+        summary:
+          "Planlı bakım yaklaşımıyla makinenizin hassasiyetini, performansını ve uzun vadeli çalışma kararlılığını korumaya yardımcı oluruz.",
+        text: "Periyodik bakım sürecinde hedefimiz, makinenin yalnızca çalışır durumda kalması değil, üretim performansını uzun vadede korumasıdır. Kullanım şartları, temel kontrol noktaları, bakım ihtiyaçları ve kritik aşınma alanları değerlendirilerek müşteriye doğru yönlendirme sağlanır. Düzenli bakım yaklaşımıyla beklenmeyen duruşların azaltılması, parça kalitesinin korunması ve üretim sürekliliğinin desteklenmesi amaçlanır.",
       },
       {
-        title: "Yedek Parça Tedariki",
-        text: "Orijinal yedek parça ve sarf malzemelerine hızlı erişim.",
+        title: "Yedek Parça Tedariği",
+        summary:
+          "Makineniz için doğru yedek parça ve sarf malzemelerine hızlı, uyumlu ve güvenilir şekilde ulaşmanız için destek sağlarız.",
+        text: "Borsan Teknoloji'den alınan makinelerde yedek parça sürecini doğru ürün seçimi ve makine uyumluluğu açısından dikkatle yönetiyoruz. Sarf malzemeleri, kritik yedek parçalar ve ekipman ihtiyaçlarında müşterinin makine modeli ve kullanım şartları dikkate alınarak yönlendirme yapılır. Doğru parçanın doğru zamanda temin edilmesi, arıza sürelerinin kısalmasına ve üretim akışının daha güvenli şekilde devam etmesine katkı sağlar.",
       },
       {
         title: "Operatör Eğitimi",
-        text: "Ekibinizin tezgahı güvenli ve verimli kullanması için eğitim.",
+        summary:
+          "Operatörlerin makineyi daha güvenli, bilinçli ve verimli kullanabilmesi için temel kullanım ve dikkat noktalarını aktarırız.",
+        text: "Makinenin performansı yalnızca teknik özelliklerine değil, doğru kullanım alışkanlıklarına da bağlıdır. Bu nedenle operatör bilgilendirme sürecinde temel kullanım adımları, kontrol ünitesiyle ilgili dikkat edilmesi gereken noktalar, güvenli çalışma prensipleri ve günlük kullanımda takip edilmesi gereken temel kontroller aktarılır. Amacımız, makinenin potansiyelinden daha verimli yararlanılmasını ve kullanıcı kaynaklı sorunların azaltılmasını sağlamaktır.",
       },
       {
         title: "Arıza Müdahalesi",
-        text: "Uzman teknik ekiple hızlı teşhis ve çözüm.",
+        summary:
+          "Arıza durumlarında hızlı ön değerlendirme, doğru yönlendirme ve çözüm odaklı teknik destek yaklaşımıyla süreci yönetiriz.",
+        text: "Üretimde yaşanan her duruşun zaman ve maliyet anlamına geldiğini biliyoruz. Arıza durumlarında teknik ekibimiz ön teşhis, sorun analizi ve çözüm yönlendirmesiyle süreci hızlıca değerlendirmeye odaklanır. Gerekli durumlarda servis planlaması, yedek parça ihtiyacı ve müdahale adımları birlikte ele alınır. Hedefimiz, makinenin en kısa sürede güvenli ve verimli şekilde tekrar üretime kazandırılmasıdır.",
       },
       {
         title: "Uzaktan Destek",
-        text: "Kontrol ünitesi ve yazılım kaynaklı sorunlarda uzaktan müdahale.",
+        summary:
+          "Kontrol ünitesi, parametre, kullanım veya yazılım kaynaklı konularda hızlı ön değerlendirme için uzaktan destek sunarız.",
+        text: "Her teknik konu sahaya müdahale gerektirmeyebilir. Uygun durumlarda kontrol ünitesi, parametre, kullanım adımları veya yazılım kaynaklı sorunlar uzaktan değerlendirilerek müşteriye hızlı yönlendirme sağlanır. Bu yaklaşım, çözüm süresini kısaltmaya, gereksiz beklemeleri azaltmaya ve üretim akışının daha hızlı normale dönmesine yardımcı olur. Uzaktan destek süreci, gerektiğinde saha müdahalesiyle birlikte tamamlayıcı şekilde planlanır.",
       },
     ],
     ctaTitle: "Makineniz Borsan'dan mı?",
-    ctaText: "Servis talebiniz için bizimle iletişime geçin; teknik ekibimiz size yardımcı olsun.",
+    ctaText: "Servis talebiniz için makine modeli, seri numarası ve ihtiyaç detayınızı paylaşarak ekibimizle iletişime geçebilirsiniz.",
+    ctaCta: "Servis Talebi İçin İletişime Geç",
   },
   contact: {
     eyebrow: "İletişim",
     title: "Bizimle İletişime Geçin",
     intro:
-      "Teklif, teknik danışmanlık veya servis talepleriniz için aşağıdaki kanallardan bize ulaşabilirsiniz.",
+      "Teklif, teknik danışmanlık, proje değerlendirmesi veya servis talepleriniz için ekibimizle doğrudan iletişime geçebilirsiniz. İhtiyacınıza en uygun çözümü birlikte değerlendirmekten memnuniyet duyarız.",
     addressTitle: "Adres",
-    address: "Organize Sanayi Bölgesi, Örnek Cad. No: 1\nTürkiye",
+    addressLabel: "Ana Adres",
+    address: "Topçular Mah. Maltepe Cd. No:4/1 D:18 Eyüpsultan / İstanbul",
+    address2Title: "Yönetim Ofisi",
+    address2:
+      "Bahçeşehir 1. Kısım Teknik Yapı Residence Inn Deluxia Sakarya Caddesi, Mevlüt Pehlivan Sk. No:5, Başakşehir / İstanbul",
     phoneTitle: "Telefon",
-    phone: "+90 (000) 000 00 00",
-    emailTitle: "E-posta",
+    phone: "+90 533 350 02 64\n+90 545 144 91 10\n+90 535 748 77 43",
+    emailTitle: "E-Posta",
     email: "info@borsanteknoloji.com",
     hoursTitle: "Çalışma Saatleri",
-    hours: "Pazartesi – Cuma: 08:30 – 18:00",
+    hours: "Pazartesi – Cuma\n09:00 – 18:00",
     formTitle: "Mesaj Gönderin",
+    formDesc:
+      "Teklif, teknik danışmanlık, proje değerlendirmesi veya servis talepleriniz için formu doldurarak bize ulaşabilirsiniz. Talebiniz ekibimiz tarafından değerlendirilerek en kısa sürede tarafınıza dönüş sağlanacaktır.",
     mapPlaceholder: "Harita alanı",
   },
   investment: {

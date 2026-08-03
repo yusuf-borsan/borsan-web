@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePath } from "@/lib/routes";
+import { categories } from "@/lib/products";
 import { Container } from "@/components/ui";
 import { PageHero } from "@/components/sections";
 import { QuoteForm } from "@/components/QuoteForm";
-import { PinIcon, PhoneIcon, MailIcon, ClockIcon } from "@/components/icons";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
 
 export async function generateMetadata({
@@ -27,14 +27,17 @@ export default async function ContactPage({
   const locale: Locale = isLocale(raw) ? raw : "tr";
   const dict = getDictionary(locale);
 
-  const phoneHref = `tel:${dict.contact.phone.replace(/\s|\(|\)/g, "")}`;
+  const phones = dict.contact.phone.split("\n");
+  const hoursLines = dict.contact.hours.split("\n");
 
-  const cards = [
-    { icon: PinIcon,   title: dict.contact.addressTitle, value: dict.contact.address },
-    { icon: PhoneIcon, title: dict.contact.phoneTitle,   value: dict.contact.phone,  href: phoneHref },
-    { icon: MailIcon,  title: dict.contact.emailTitle,   value: dict.contact.email,  href: `mailto:${dict.contact.email}` },
-    { icon: ClockIcon, title: dict.contact.hoursTitle,   value: dict.contact.hours },
-  ];
+  const categoryOptions = categories.map((cat) => ({
+    value: cat.slug,
+    label: cat.name[locale],
+    products: cat.products.map((p) => ({
+      value: p.slug,
+      label: p.name[locale],
+    })),
+  }));
 
   return (
     <>
@@ -48,57 +51,134 @@ export default async function ContactPage({
         ]}
       />
 
-      <section className="bg-slate-50">
-        <Container className="py-16 lg:py-24">
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+      {/* ── Main dark content ── */}
+      <section className="relative bg-ink-950">
+
+        <Container className="relative py-16 lg:py-24">
+          <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
 
             {/* ── Left: contact info ── */}
             <RevealOnScroll className="lg:col-span-5">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                {cards.map((c) => {
-                  const Icon = c.icon;
-                  return (
-                    <div key={c.title} className="group rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:border-brand-300/60 hover:shadow-md">
-                      <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-brand-600/10 text-brand-600 transition-all duration-200 group-hover:bg-brand-600 group-hover:text-white">
-                        <Icon className="h-6 w-6" />
-                      </span>
-                      <h3 className="mt-4 text-xs font-semibold uppercase tracking-wider text-ink-400">
-                        {c.title}
-                      </h3>
-                      {c.href ? (
-                        <a href={c.href} className="mt-1 block whitespace-pre-line text-ink-900 transition-colors hover:text-brand-600">
-                          {c.value}
-                        </a>
-                      ) : (
-                        <p className="mt-1 whitespace-pre-line text-ink-900">{c.value}</p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+              <div className="space-y-7 lg:pr-6">
 
-              {/* Map placeholder */}
-              <div className="mt-6 flex aspect-[16/10] items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-ink-950 shadow-sm">
-                <span className="eyebrow text-steel-500">{dict.contact.mapPlaceholder}</span>
+                {/* Addresses */}
+                <div>
+                  <p className="mb-4 text-[10.5px] font-semibold uppercase tracking-widest text-brand-400">
+                    {dict.contact.addressTitle}
+                  </p>
+                  <div className="space-y-5">
+                    <div>
+                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-steel-500">
+                        {dict.contact.addressLabel}
+                      </p>
+                      <p className="text-[13.5px] leading-relaxed text-steel-300">
+                        {dict.contact.address}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-steel-500">
+                        {dict.contact.address2Title}
+                      </p>
+                      <p className="text-[13.5px] leading-relaxed text-steel-300">
+                        {dict.contact.address2}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-px bg-white/[0.06]" />
+
+                {/* Phone */}
+                <div>
+                  <p className="mb-4 text-[10.5px] font-semibold uppercase tracking-widest text-brand-400">
+                    {dict.contact.phoneTitle}
+                  </p>
+                  <div className="space-y-2">
+                    {phones.map((phone) => (
+                      <a
+                        key={phone}
+                        href={`tel:${phone.replace(/\s/g, "")}`}
+                        className="block text-[13.5px] text-steel-300 transition-colors hover:text-white"
+                      >
+                        {phone}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="h-px bg-white/[0.06]" />
+
+                {/* Email */}
+                <div>
+                  <p className="mb-4 text-[10.5px] font-semibold uppercase tracking-widest text-brand-400">
+                    {dict.contact.emailTitle}
+                  </p>
+                  <a
+                    href={`mailto:${dict.contact.email}`}
+                    className="text-[13.5px] text-steel-300 transition-colors hover:text-white"
+                  >
+                    {dict.contact.email}
+                  </a>
+                </div>
+
+                <div className="h-px bg-white/[0.06]" />
+
+                {/* Hours */}
+                <div>
+                  <p className="mb-4 text-[10.5px] font-semibold uppercase tracking-widest text-brand-400">
+                    {dict.contact.hoursTitle}
+                  </p>
+                  <div className="space-y-0.5">
+                    {hoursLines.map((line, idx) => (
+                      <p key={idx} className="text-[13.5px] text-steel-300">
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                </div>
+
               </div>
             </RevealOnScroll>
 
-            {/* ── Right: contact form ── */}
+            {/* ── Right: form ── */}
             <RevealOnScroll delay={100} className="lg:col-span-7">
-              <div className="rounded-2xl bg-brand-600 p-8 shadow-2xl sm:p-10">
-                <h2 className="font-display text-2xl text-white sm:text-3xl">
-                  {dict.contact.formTitle}
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-white/70">
-                  {dict.contact.intro}
-                </p>
-                <div className="mt-8">
-                  <QuoteForm dict={dict} dark />
-                </div>
+              <h2 className="font-display text-2xl text-white sm:text-[1.75rem]">
+                {dict.contact.formTitle}
+              </h2>
+              <p className="mt-3 text-[13.5px] leading-relaxed text-steel-400">
+                {dict.contact.formDesc}
+              </p>
+              <div className="mt-8">
+                <QuoteForm
+                  dict={dict}
+                  dark
+                  showContactTopics
+                  categoryOptions={categoryOptions}
+                />
               </div>
             </RevealOnScroll>
 
           </div>
+        </Container>
+      </section>
+
+      {/* ── Map ── */}
+      <section className="relative bg-ink-950">
+        <Container className="pb-16 lg:pb-24">
+          <RevealOnScroll>
+            <div
+              className="overflow-hidden rounded-xl"
+              style={{ aspectRatio: "21/9" }}
+            >
+              <iframe
+                src="https://maps.google.com/maps?q=Teknik+Yap%C4%B1+Residence+Inn+Deluxia+Ba%C5%9Fakehir+%C4%B0stanbul&hl=tr&z=18&output=embed"
+                className="h-full w-full border-0"
+                loading="lazy"
+                allowFullScreen
+                title={dict.contact.address2Title}
+              />
+            </div>
+          </RevealOnScroll>
         </Container>
       </section>
     </>

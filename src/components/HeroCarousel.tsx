@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import type { Locale } from "@/i18n/config";
 import { localePath } from "@/lib/routes";
-import { Container, Eyebrow, ButtonLink } from "./ui";
+import { Container, ButtonLink, HeroContentBlock } from "./ui";
 
 export type HeroSlide = {
   image: string;
@@ -22,6 +22,7 @@ type Props = {
   ctaPrimary: string;
   ctaSecondary: string;
   contactHref: string;
+  className?: string;
 };
 
 const AUTOPLAY_MS = 6500;
@@ -32,6 +33,7 @@ export function HeroCarousel({
   ctaPrimary,
   ctaSecondary,
   contactHref,
+  className = "",
 }: Props) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -49,7 +51,7 @@ export function HeroCarousel({
 
   return (
     <div
-      className="relative overflow-hidden"
+      className={`relative flex flex-col overflow-hidden ${className}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
@@ -134,22 +136,30 @@ export function HeroCarousel({
         aria-hidden
       />
 
-      {/* Slide content */}
-      <Container className="relative">
-        <div className="grid min-h-[78vh] grid-cols-1 items-center py-20 lg:grid-cols-12 lg:py-28">
-          <div className="lg:col-span-12">
-            {/* key forces the fade-up animation to replay on slide change */}
-            <div key={active} className="animate-fade-up">
-              <Eyebrow tone="light">{slides[active].eyebrow}</Eyebrow>
-              <h1 className="font-display mt-6 text-balance text-5xl leading-[0.98] sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
-                {slides[active].titleLine1}
-                <br />
-                <span className="text-brand-400">{slides[active].titleLine2}</span>
-              </h1>
-              <p className="mt-7 max-w-xl text-pretty text-lg leading-relaxed text-steel-300">
-                {slides[active].subtitle}
-              </p>
-              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+      {/* Slide content — fills the carousel, content vertically centered.
+          No fixed height math: the flex chain (section → carousel → container)
+          gives this its height, so the stats bar always sits flush below. */}
+      <Container className="relative flex flex-1 flex-col">
+        <div className="flex min-h-0 flex-1 flex-col justify-center pt-16 pb-14 lg:pt-20 lg:pb-12">
+          <div>
+            {/* key forces the fade-up animation to replay on slide change.
+                Shared HeroContentBlock — the single source the inner-page heroes
+                (Servis, Yatırım, Hakkımızda) also render, so the typography and
+                rhythm are guaranteed identical. */}
+            <HeroContentBlock
+              key={active}
+              className="animate-fade-up"
+              eyebrow={slides[active].eyebrow}
+              title={
+                <>
+                  {slides[active].titleLine1}
+                  <br />
+                  <span className="text-brand-400">{slides[active].titleLine2}</span>
+                </>
+              }
+              subtitle={slides[active].subtitle}
+            >
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <ButtonLink href={localePath(locale, slides[active].href)} variant="primary" size="lg" withArrow>
                   {ctaPrimary}
                 </ButtonLink>
@@ -161,7 +171,7 @@ export function HeroCarousel({
                   {ctaSecondary}
                 </ButtonLink>
               </div>
-            </div>
+            </HeroContentBlock>
           </div>
         </div>
       </Container>

@@ -33,6 +33,42 @@ export function Eyebrow({
   );
 }
 
+/**
+ * The one hero text block used by the home slider AND the corporate page heroes
+ * (Servis, Yatırım Çözümleri, Hakkımızda). Single source for eyebrow, title
+ * typography (font-display → Manrope, weight 600, -0.015em tracking, the home
+ * hero's responsive size scale + line-height), subtitle width/colour and the
+ * vertical rhythm (mt-6 / mt-7 / mt-9). Callers control the wrapping container
+ * (max-width, padding, vertical placement) — those already match via Container.
+ * `title` is a node so the home slider can pass its two-line coloured headline.
+ */
+export function HeroContentBlock({
+  eyebrow,
+  title,
+  subtitle,
+  children,
+  className = "",
+}: {
+  eyebrow?: ReactNode;
+  title: ReactNode;
+  subtitle?: ReactNode;
+  children?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      {eyebrow && <Eyebrow tone="light">{eyebrow}</Eyebrow>}
+      <h1 className="font-display mt-6 text-balance text-5xl leading-[1.10] text-white sm:text-6xl lg:text-7xl xl:text-[5rem]">
+        {title}
+      </h1>
+      {subtitle && (
+        <p className="mt-7 max-w-xl text-pretty text-lg leading-relaxed text-steel-300">{subtitle}</p>
+      )}
+      {children && <div className="mt-9">{children}</div>}
+    </div>
+  );
+}
+
 export function SectionHeading({
   eyebrow,
   title,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { Button } from "./ui";
 import { CheckIcon } from "./icons";
@@ -16,6 +16,12 @@ const COUNTRY_CODES = [
   { code: "+7",   abbr: "RU" },
   { code: "+971", abbr: "AE" },
 ] as const;
+
+type CategoryOption = {
+  value: string;
+  label: string;
+  products: { value: string; label: string }[];
+};
 
 function ChevDown({ className }: { className?: string }) {
   return (
@@ -142,12 +148,14 @@ function CustomSelect({
   options,
   defaultValue,
   dark,
+  onChange,
 }: {
   id: string;
   name: string;
   options: { value: string; label: string }[];
   defaultValue?: string;
   dark?: boolean;
+  onChange?: (value: string) => void;
 }) {
   const [value, setValue] = useState(defaultValue ?? options[0]?.value ?? "");
   const [open, setOpen] = useState(false);
@@ -189,7 +197,11 @@ function CustomSelect({
                 key={opt.value}
                 role="option"
                 aria-selected={opt.value === value}
-                onClick={() => { setValue(opt.value); setOpen(false); }}
+                onClick={() => {
+                  setValue(opt.value);
+                  setOpen(false);
+                  onChange?.(opt.value);
+                }}
                 className={`cursor-pointer px-3 py-2 text-sm ${opt.value === value ? optionActive : optionHover}`}
               >
                 {opt.label}
@@ -272,6 +284,28 @@ function PhoneField({ dark, label }: { dark?: boolean; label: string }) {
   );
 }
 
+/* Fade wrapper for conditional fields.
+   overflow switches to visible when shown so custom-select dropdowns
+   (position:absolute, z-20) are not clipped by the container. */
+function FadeField({ show, children }: { show: boolean; children: React.ReactNode }) {
+  return (
+    <div
+      className="sm:col-span-2"
+      style={{
+        opacity: show ? 1 : 0,
+        maxHeight: show ? "600px" : "0px",
+        overflow: show ? "visible" : "hidden",
+        transition: show
+          ? "opacity 0.55s ease 0.08s, max-height 0.45s ease"
+          : "opacity 0.18s ease, max-height 0.28s ease",
+        pointerEvents: show ? "auto" : "none",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
 /* ── Main QuoteForm ── */
 type Props = {
   dict: Dictionary;
@@ -282,6 +316,9 @@ type Props = {
   dark?: boolean;
   showInvestmentFields?: boolean;
   defaultRequestType?: string;
+  showContactTopics?: boolean;
+  showServiceTopics?: boolean;
+  categoryOptions?: CategoryOption[];
 };
 
 export function QuoteForm({
@@ -293,9 +330,28 @@ export function QuoteForm({
   dark = false,
   showInvestmentFields = false,
   defaultRequestType,
+  showContactTopics = false,
+  showServiceTopics = false,
+  categoryOptions = [],
 }: Props) {
   const f = dict.quoteForm;
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState(
+    showContactTopics ? (f.topicOptions[0]?.value ?? "") : ""
+  );
+  const [selectedCategorySlug, setSelectedCategorySlug] = useState(
+    categoryOptions[0]?.value ?? ""
+  );
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const autoGrow = () => {
+    const el = textareaRef.current;
+    if (!el) return;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  };
 
   if (submitted) {
     return dark ? (
@@ -321,11 +377,47 @@ export function QuoteForm({
     ? "w-full rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 focus:border-white/50 focus:bg-white/15"
     : "w-full rounded-sm border border-ink-200 bg-white px-3 py-2.5 text-sm text-ink-900 outline-none focus:border-brand-500";
 
+  const catProducts =
+    categoryOptions.find((c) => c.value === selectedCategorySlug)?.products ?? [];
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(false);
+    const data: Record<string, string> = {};
+    new FormData(e.currentTarget).forEach((v, k) => { data[k] = v.toString(); });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <form
-      onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
+      onSubmit={handleSubmit}
       className="grid grid-cols-1 gap-4 sm:grid-cols-2"
     >
+      {/* Honeypot — hidden from users, bots fill it automatically */}
+      <input
+        type="text"
+        name="_honey"
+        tabIndex={-1}
+        aria-hidden="true"
+        autoComplete="off"
+        style={{ position: "absolute", opacity: 0, height: 0, width: 0, pointerEvents: "none" }}
+      />
       {/* Name */}
       <div>
         <FieldLabel htmlFor="name" dark={dark}>{f.name} <Req dark={dark} /></FieldLabel>
@@ -380,8 +472,78 @@ export function QuoteForm({
         </>
       )}
 
-      {/* Product — only shown in standard mode */}
-      {!showInvestmentFields && (
+      {/* Contact page topic select */}
+      {!showInvestmentFields && showContactTopics && (
+        <>
+          <div className="sm:col-span-2">
+            <FieldLabel htmlFor="topic" dark={dark}>{f.topic}</FieldLabel>
+            <CustomSelect
+              id="topic"
+              name="topic"
+              options={f.topicOptions}
+              dark={dark}
+              onChange={(val) => {
+                setSelectedTopic(val);
+                setSelectedCategorySlug(categoryOptions[0]?.value ?? "");
+              }}
+            />
+          </div>
+
+          {/* "Diğer" açıklama alanı */}
+          <FadeField show={selectedTopic === "other"}>
+            <FieldLabel htmlFor="topic_other" dark={dark}>{f.topicOtherLabel}</FieldLabel>
+            <input
+              id="topic_other"
+              name="topic_other"
+              type="text"
+              placeholder={f.topicOtherPlaceholder}
+              className={inputCls}
+            />
+          </FadeField>
+
+          {/* Teklif Talebi — kategori seçimi */}
+          <FadeField show={selectedTopic === "quote"}>
+            <FieldLabel htmlFor="product_category" dark={dark}>{f.productCategory}</FieldLabel>
+            <CustomSelect
+              key={`cat-${selectedTopic}`}
+              id="product_category"
+              name="product_category"
+              options={categoryOptions.map((c) => ({ value: c.value, label: c.label }))}
+              defaultValue={selectedCategorySlug}
+              dark={dark}
+              onChange={(val) => setSelectedCategorySlug(val)}
+            />
+          </FadeField>
+
+          {/* Teklif Talebi — ürün seçimi */}
+          <FadeField show={selectedTopic === "quote" && catProducts.length > 0}>
+            <FieldLabel htmlFor="product_model" dark={dark}>{f.productModel}</FieldLabel>
+            <CustomSelect
+              key={`prod-${selectedCategorySlug}`}
+              id="product_model"
+              name="product_model"
+              options={catProducts}
+              dark={dark}
+            />
+          </FadeField>
+        </>
+      )}
+
+      {/* Service topic dropdown */}
+      {showServiceTopics && (
+        <div className="sm:col-span-2">
+          <FieldLabel htmlFor="service_topic" dark={dark}>{f.serviceTopic}</FieldLabel>
+          <CustomSelect
+            id="service_topic"
+            name="service_topic"
+            options={f.serviceTopicOptions}
+            dark={dark}
+          />
+        </div>
+      )}
+
+      {/* Standard product field */}
+      {!showInvestmentFields && !showContactTopics && !showServiceTopics && (
         <div className="sm:col-span-2">
           <FieldLabel htmlFor="product" dark={dark}>{f.product}</FieldLabel>
           {productOptions && productOptions.length > 0 ? (
@@ -420,10 +582,19 @@ export function QuoteForm({
         </div>
       )}
 
-      {/* Message */}
+      {/* Message — auto-growing textarea */}
       <div className="sm:col-span-2">
         <FieldLabel htmlFor="message" dark={dark}>{f.message}</FieldLabel>
-        <textarea id="message" name="message" rows={3} placeholder={f.messagePlaceholder} className={inputCls} />
+        <textarea
+          ref={textareaRef}
+          id="message"
+          name="message"
+          rows={3}
+          placeholder={f.messagePlaceholder}
+          className={inputCls}
+          style={{ resize: "none", overflow: "hidden", minHeight: "80px" }}
+          onInput={autoGrow}
+        />
       </div>
 
       {/* Consent */}
@@ -432,15 +603,26 @@ export function QuoteForm({
         <span>{f.consent}</span>
       </label>
 
+      {/* Error message */}
+      {error && (
+        <p className={`sm:col-span-2 text-sm ${dark ? "text-red-300" : "text-red-600"}`}>
+          {f.errorText}
+        </p>
+      )}
+
       {/* Submit */}
       <div className="sm:col-span-2">
         {dark ? (
-          <button type="submit" className="w-full rounded-xl bg-white py-3.5 text-sm font-bold text-brand-700 transition-all hover:bg-slate-100">
-            {f.submit}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-xl bg-white py-3.5 text-sm font-bold text-brand-700 transition-all hover:bg-slate-100 disabled:opacity-60"
+          >
+            {loading ? f.sending : f.submit}
           </button>
         ) : (
-          <Button type="submit" variant="primary" size="lg" withArrow className="w-full sm:w-auto">
-            {f.submit}
+          <Button type="submit" variant="primary" size="lg" withArrow disabled={loading} className="w-full sm:w-auto">
+            {loading ? f.sending : f.submit}
           </Button>
         )}
       </div>

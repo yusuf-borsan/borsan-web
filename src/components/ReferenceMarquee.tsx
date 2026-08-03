@@ -1,20 +1,21 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 
 /** px per millisecond */
-const NORMAL_SPEED = 0.05; // ~50 px/s
-const SLOW_SPEED = 0.009; // ~9 px/s — slow but still flowing
-/** ms time-constant for easing speed toward its target (smaller = snappier) */
+const NORMAL_SPEED = 0.045; // ~45 px/s — calm, readable
+const SLOW_SPEED = 0.008;   // ~8 px/s — near-pause on hover
+/** ms time-constant for easing speed toward its target */
 const EASE_TAU = 260;
 
-export function ReferenceMarquee({
-  items,
-  placeholder,
-}: {
-  items: string[];
-  placeholder: string;
-}) {
+export type ReferenceItem = {
+  name: string;
+  /** Public path to logo image, or null for text-only display */
+  logo: string | null;
+};
+
+export function ReferenceMarquee({ items }: { items: ReferenceItem[] }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const offset = useRef(0);
   const speed = useRef(NORMAL_SPEED);
@@ -35,10 +36,9 @@ export function ReferenceMarquee({
       const dt = Math.min(now - last, 64); // clamp after tab-switch stalls
       last = now;
 
-      // Smoothly ease the current speed toward the target (no jumps).
       speed.current += (target.current - speed.current) * Math.min(1, dt / EASE_TAU);
-
       offset.current += speed.current * dt;
+
       const half = track.scrollWidth / 2;
       if (half > 0 && offset.current >= half) offset.current -= half;
 
@@ -52,25 +52,37 @@ export function ReferenceMarquee({
 
   return (
     <div
-      className="relative mt-4 overflow-hidden py-6"
-      onMouseEnter={() => {
-        target.current = SLOW_SPEED;
-      }}
-      onMouseLeave={() => {
-        target.current = NORMAL_SPEED;
-      }}
+      className="relative mt-4 overflow-hidden py-7"
+      onMouseEnter={() => { target.current = SLOW_SPEED; }}
+      onMouseLeave={() => { target.current = NORMAL_SPEED; }}
     >
       {/* Soft fade at both edges */}
       <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-28" />
       <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-28" />
 
       <div ref={trackRef} className="flex w-max items-center" style={{ willChange: "transform" }}>
-        {loop.map((name, i) => (
-          <div key={i} className="flex items-center" title={placeholder}>
-            <span className="whitespace-nowrap px-8 font-display text-lg tracking-[0.18em] text-ink-400 transition-colors hover:text-brand-600 sm:px-12 sm:text-xl">
-              {name}
-            </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-steel-400/50" aria-hidden />
+        {loop.map((item, i) => (
+          <div key={i} className="flex items-center">
+            {/* Logo card — fixed 168×64 wrapper, logo only */}
+            <div className="mx-6 flex h-[80px] w-[200px] flex-shrink-0 items-center justify-center opacity-60 transition-opacity duration-300 hover:opacity-100">
+              {item.logo ? (
+                <div className="relative h-full w-full">
+                  <Image
+                    src={item.logo}
+                    alt={item.name}
+                    fill
+                    className="object-contain"
+                    sizes="200px"
+                  />
+                </div>
+              ) : (
+                <span className="mb-3 text-center text-[14px] font-bold uppercase leading-tight tracking-[0.14em] text-ink-500">
+                  {item.name}
+                </span>
+              )}
+            </div>
+            {/* Subtle vertical separator */}
+            <span className="h-6 w-px flex-shrink-0 bg-ink-200/50" aria-hidden />
           </div>
         ))}
       </div>

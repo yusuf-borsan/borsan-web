@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Suspense } from "react";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 import { localePath, routes } from "@/lib/routes";
-import { Container, ButtonLink, Eyebrow } from "@/components/ui";
+import { Container, ButtonLink, Eyebrow, HeroContentBlock } from "@/components/ui";
 import { Breadcrumb } from "@/components/sections";
 import { CheckIcon } from "@/components/icons";
 import { EuropePartnershipMap } from "@/components/EuropePartnershipMap";
@@ -43,20 +44,58 @@ export default async function InvestmentPage({
   const dict = getDictionary(locale);
   const inv = dict.investment;
 
+  // Colour the "Atölye Yatırım Çözümleri" / "Workshop Investment Solutions"
+  // part of the hero title blue (like "Endüstriyel Gücü" on the home hero).
+  const connector = locale === "tr" ? " ve " : " and ";
+  const connIdx = inv.heroTitle.indexOf(connector);
+  const heroTitle =
+    connIdx === -1 ? (
+      inv.heroTitle
+    ) : (
+      <>
+        {inv.heroTitle.slice(0, connIdx + connector.length)}
+        <span className="text-brand-400">{inv.heroTitle.slice(connIdx + connector.length)}</span>
+      </>
+    );
+
   return (
     <>
       {/* ── A. Hero — two-layer image: blurred bg + masked sharp ── */}
-      <section className="relative overflow-hidden bg-[#040911] text-white">
-        {/* Layer 1: blurred background fill — seamless base */}
-        <Image
-          src="/hero/investment-hero.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="scale-[1.06] object-cover object-[65%_center] opacity-[0.45] blur-[12px]"
-        />
-        <div className="absolute inset-0 bg-[#040911]/55" aria-hidden />
+      <section className="relative overflow-hidden bg-[#040911] text-white min-h-[70dvh] lg:min-h-dvh">
+
+        {/* Mobile: sharp image + bottom-to-top gradient */}
+        <div className="absolute inset-0 lg:hidden">
+          <Image
+            src="/hero/investment-hero.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+            style={{ objectPosition: "65% 20%" }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(180deg, rgba(4,9,17,0.90) 0%, rgba(4,9,17,0.60) 14%, rgba(4,9,17,0.22) 30%, rgba(4,9,17,0.70) 52%, rgba(4,9,17,0.96) 70%, rgba(4,9,17,0.99) 88%)",
+            }}
+            aria-hidden
+          />
+        </div>
+
+        {/* Desktop: blurred background fill — seamless base */}
+        <div className="absolute inset-0 hidden lg:block">
+          <Image
+            src="/hero/investment-hero.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="scale-[1.06] object-cover object-[65%_center] opacity-[0.45] blur-[12px]"
+          />
+          <div className="absolute inset-0 bg-[#040911]/55" aria-hidden />
+        </div>
 
         {/* Layer 2 (desktop): sharp image, wide mask for invisible seam */}
         <div
@@ -74,7 +113,7 @@ export default async function InvestmentPage({
               height={1080}
               priority
               sizes="72vw"
-              className="h-full w-auto max-w-[74%] object-contain object-right"
+              className="h-full w-auto object-contain object-right"
             />
           </div>
         </div>
@@ -89,7 +128,7 @@ export default async function InvestmentPage({
           }}
           aria-hidden
         />
-        {/* Extra bottom-half seam softener — the lower portion of the edge is brighter */}
+        {/* Extra bottom-half seam softener */}
         <div
           className="pointer-events-none absolute bottom-0 left-[24%] hidden h-[55%] w-[28%] lg:block"
           style={{
@@ -100,17 +139,18 @@ export default async function InvestmentPage({
           aria-hidden
         />
 
-        {/* Main gradient overlay — very wide left-to-right fade */}
+        {/* Main gradient overlay — desktop only (horizontal). Darkened through
+            the mid-right zone where the hero title overlaps the machine photo,
+            so the text stays readable; still tapers off at the far right to
+            keep the image visible. */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 hidden lg:block"
           style={{
             background:
-              "linear-gradient(90deg, rgba(4,9,17,0.98) 0%, rgba(4,9,17,0.96) 16%, rgba(4,9,17,0.90) 30%, rgba(4,9,17,0.74) 42%, rgba(4,9,17,0.50) 56%, rgba(4,9,17,0.24) 72%, rgba(4,9,17,0.08) 88%, rgba(4,9,17,0.02) 100%)",
+              "linear-gradient(90deg, rgba(4,9,17,0.98) 0%, rgba(4,9,17,0.97) 16%, rgba(4,9,17,0.93) 30%, rgba(4,9,17,0.86) 42%, rgba(4,9,17,0.70) 56%, rgba(4,9,17,0.46) 72%, rgba(4,9,17,0.22) 88%, rgba(4,9,17,0.10) 100%)",
           }}
           aria-hidden
         />
-        {/* Mobile overlay */}
-        <div className="absolute inset-0 bg-[#040911]/55 lg:hidden" aria-hidden />
 
         <Container className="relative py-16 sm:py-20 lg:py-28">
           <div className="mb-6">
@@ -122,25 +162,20 @@ export default async function InvestmentPage({
             />
           </div>
 
-          <div className="max-w-2xl">
-            <Eyebrow tone="light">{inv.eyebrow}</Eyebrow>
-            <h1 className="font-display mt-4 text-balance text-4xl leading-[1.04] sm:text-5xl lg:text-[3.25rem]">
-              {inv.heroTitle}
-            </h1>
-            <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-steel-300">
-              {inv.heroSubtitle}
-            </p>
-            <div className="mt-10">
-              <ButtonLink
-                href="#yatirim-formu"
-                variant="primary"
-                size="lg"
-                withArrow
-              >
-                {inv.ctaPrimary}
-              </ButtonLink>
-            </div>
-          </div>
+          <HeroContentBlock
+            eyebrow={inv.eyebrow}
+            title={heroTitle}
+            subtitle={inv.heroSubtitle}
+          >
+            <ButtonLink
+              href="#yatirim-formu"
+              variant="primary"
+              size="lg"
+              withArrow
+            >
+              {inv.ctaPrimary}
+            </ButtonLink>
+          </HeroContentBlock>
         </Container>
       </section>
 
@@ -150,7 +185,7 @@ export default async function InvestmentPage({
           <RevealOnScroll>
             <div className="mb-16 max-w-2xl">
               <Eyebrow>{inv.packagesEyebrow}</Eyebrow>
-              <h2 className="mt-4 text-[1.875rem] font-semibold leading-[1.15] tracking-[-0.01em] text-[#1F4488] sm:text-[2.25rem] lg:text-[2.625rem]">
+              <h2 className="font-display mt-4 text-[1.875rem] leading-[1.15] text-[#1F4488] sm:text-[2.25rem] lg:text-[2.625rem]">
                 {inv.packagesTitle}
               </h2>
               <p className="mt-4 text-pretty text-base leading-relaxed text-ink-500 sm:text-lg">
@@ -200,7 +235,7 @@ export default async function InvestmentPage({
             <RevealOnScroll>
               <div className="lg:py-4">
                 <Eyebrow tone="light">{locale === "tr" ? "Teknik Dosya" : "Technical File"}</Eyebrow>
-                <h2 className="mt-4 text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.01em] text-white sm:text-[2rem] lg:text-[2.25rem]">
+                <h2 className="font-display mt-4 text-[1.75rem] leading-[1.15] text-white sm:text-[2rem] lg:text-[2.25rem]">
                   {inv.dossierTitle}
                 </h2>
                 <p className="mt-4 max-w-lg text-[15px] leading-[1.7] text-steel-300">
@@ -237,14 +272,15 @@ export default async function InvestmentPage({
           <RevealOnScroll>
             <div className="mb-14 max-w-2xl">
               <Eyebrow>{inv.processTitle}</Eyebrow>
-              <h2 className="mt-4 text-[1.875rem] font-semibold leading-[1.15] tracking-[-0.01em] text-[#1F4488] sm:text-[2.25rem] lg:text-[2.625rem]">
+              <h2 className="font-display mt-4 text-[1.875rem] leading-[1.15] text-[#1F4488] sm:text-[2.25rem] lg:text-[2.625rem]">
                 {inv.processTitle}
               </h2>
             </div>
           </RevealOnScroll>
 
-          {/* Desktop: horizontal with arrows */}
-          <div className="hidden sm:flex sm:items-start sm:justify-between">
+          {/* Desktop: horizontal with arrows — only at xl, where 5 fixed-width
+              columns + arrows fit the container without horizontal overflow */}
+          <div className="hidden xl:flex xl:items-start xl:justify-between">
             {inv.processSteps.map((step, i) => (
               <RevealOnScroll key={step.label} delay={i * 140} className="flex items-start">
                 {/* Step */}
@@ -271,8 +307,8 @@ export default async function InvestmentPage({
             ))}
           </div>
 
-          {/* Mobile: vertical with down arrows */}
-          <ol className="flex flex-col items-center gap-0 sm:hidden">
+          {/* Below xl: vertical stepper with down arrows (no h-overflow) */}
+          <ol className="flex flex-col items-center gap-0 xl:hidden">
             {inv.processSteps.map((step, i) => (
               <RevealOnScroll key={step.label} delay={i * 100}>
                 <li className="flex flex-col items-center text-center">
@@ -307,9 +343,9 @@ export default async function InvestmentPage({
           alt=""
           fill
           sizes="100vw"
-          className="scale-[1.06] object-cover object-[65%_center] opacity-[0.4] blur-[12px]"
+          className="scale-[1.18] object-cover object-[65%_center] opacity-[0.3] blur-[32px]"
         />
-        <div className="absolute inset-0 bg-[#040911]/55" aria-hidden />
+        <div className="absolute inset-0 bg-[#040911]/70" aria-hidden />
 
         {/* Sharp image layer (desktop) */}
         <div
@@ -326,7 +362,7 @@ export default async function InvestmentPage({
               width={1920}
               height={1080}
               sizes="72vw"
-              className="h-full w-auto max-w-[74%] object-contain object-right"
+              className="h-full w-auto object-contain object-right"
             />
           </div>
         </div>
@@ -355,7 +391,7 @@ export default async function InvestmentPage({
           <RevealOnScroll>
             <div className="max-w-2xl">
               <Eyebrow tone="light">{locale === "tr" ? "Proje Desteği" : "Project Support"}</Eyebrow>
-              <h2 className="mt-4 text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.01em] text-white sm:text-[2rem] lg:text-[2.25rem]">
+              <h2 className="font-display mt-4 text-[1.75rem] leading-[1.15] text-white sm:text-[2rem] lg:text-[2.25rem]">
                 {inv.grantTitle}
               </h2>
               <p className="mt-4 text-[15px] leading-[1.7] text-steel-300">
@@ -382,18 +418,12 @@ export default async function InvestmentPage({
 
       {/* ── G. Europe Partnerships ── */}
       <section className="relative overflow-hidden bg-[#0a0f1a] text-white">
-        {/* Subtle ambient glow behind map area */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 55% 65% at 70% 50%, rgba(30,68,136,0.14), transparent 70%)" }}
-          aria-hidden
-        />
         <Container className="relative py-16 lg:py-24">
           <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-[34%_1fr] lg:gap-10">
             <RevealOnScroll>
               <div>
                 <Eyebrow tone="light">{locale === "tr" ? "Avrupa İş Birlikleri" : "European Partnerships"}</Eyebrow>
-                <h2 className="mt-4 text-[1.75rem] font-semibold leading-[1.15] tracking-[-0.01em] text-white sm:text-[2rem] lg:text-[2.25rem]">
+                <h2 className="font-display mt-4 text-[1.75rem] leading-[1.15] text-white sm:text-[2rem] lg:text-[2.25rem]">
                   {inv.partnerTitle}
                 </h2>
                 <p className="mt-4 text-[15px] leading-[1.7] text-steel-300">{inv.partnerText}</p>
@@ -430,7 +460,7 @@ export default async function InvestmentPage({
       </section>
 
       {/* ── H. Form ── */}
-      <section id="yatirim-formu" className="relative scroll-mt-[70px] overflow-hidden bg-[#0b1e38]">
+      <section id="yatirim-formu" className="relative scroll-mt-[var(--header-height)] overflow-hidden bg-[#0a0f1a]">
         <Container className="relative py-16 lg:py-24">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <RevealOnScroll>
@@ -448,7 +478,9 @@ export default async function InvestmentPage({
               </div>
             </RevealOnScroll>
             <RevealOnScroll delay={100}>
-              <InvestmentForm dict={dict} />
+              <Suspense>
+                <InvestmentForm dict={dict} />
+              </Suspense>
             </RevealOnScroll>
           </div>
         </Container>

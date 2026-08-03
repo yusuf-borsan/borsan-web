@@ -82,12 +82,6 @@ export function EuropePartnershipMap() {
         className="absolute inset-0 h-full w-full"
         fill="none"
       >
-        {/* Country highlights — rectangles approximating country areas for subtle glow */}
-        <circle cx={NODES.RO.x} cy={NODES.RO.y} r="38" fill={BLUE_GLOW} opacity="0.08" />
-        <circle cx={NODES.PL.x} cy={NODES.PL.y} r="42" fill={BLUE_GLOW} opacity="0.08" />
-        <circle cx={NODES.BG.x} cy={NODES.BG.y} r="30" fill={BLUE_GLOW} opacity="0.08" />
-        <circle cx={NODES.CZ.x} cy={NODES.CZ.y} r="28" fill={BLUE_GLOW} opacity="0.08" />
-        <circle cx={tr.x} cy={tr.y} r="50" fill={BLUE} opacity="0.1" />
 
         {/* Routes from Istanbul */}
         {TARGETS.map((key, idx) => {
@@ -144,7 +138,7 @@ export function EuropePartnershipMap() {
         })}
 
         {/* TR / Istanbul node — prominent */}
-        <circle cx={tr.x} cy={tr.y} r="18" fill={BLUE} fillOpacity="0.2" className="pulse-ring-tr" />
+        <circle cx={tr.x} cy={tr.y} r="18" fill="none" stroke={BLUE_LIGHT} strokeWidth="1" strokeOpacity="0.4" className="pulse-ring-tr" />
         <circle cx={tr.x} cy={tr.y} r="9" fill={BLUE} opacity="0.9" />
         <circle cx={tr.x} cy={tr.y} r="4" fill="white" fillOpacity="0.9" />
         <text x={tr.x + 16} y={tr.y + 5} fontSize="15" fontWeight="700" fill="white" fillOpacity="0.85">

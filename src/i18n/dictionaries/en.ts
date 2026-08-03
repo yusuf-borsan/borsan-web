@@ -48,10 +48,10 @@ const en: Dictionary = {
     ctaSecondary: "Get a Quote",
     stat1Value: "30+",
     stat1Label: "Years of industry experience",
-    stat2Value: "7",
+    stat2Value: "7+",
     stat2Label: "Machine categories",
     stat3Value: "100%",
-    stat3Label: "After-sales service",
+    stat3Label: "After-sales technical support approach",
     slides: [
       {
         image: "/hero/hero-main.png",
@@ -73,8 +73,8 @@ const en: Dictionary = {
       },
       {
         image: "/hero/hero-main3.png",
-        href: "/urunler/disli-profil-taslama",
-        eyebrow: "Grinding · Gear Profile Grinding",
+        href: "/urunler/cnc-disli-taslama-tezgahlari",
+        eyebrow: "Grinding · CNC Gear Grinding",
         titleLine1: "Flawless Surfaces,",
         titleLine2: "Repeatable Quality",
         subtitle:
@@ -102,30 +102,71 @@ const en: Dictionary = {
     title: "We Deliver a Production Solution, Not Just a Machine",
     subtitle:
       "From machine selection to commissioning, operator training to spare parts — we are with you across the entire process.",
+    cta: "Explore Machine Investment Solutions",
+    ctaTag: "Planning a Machine Investment?",
+    ctaText: "Explore our project, specification and technical selection support in detail.",
     items: [
       {
         title: "Engineering Consultancy",
-        text: "We analyze your part and production goals, then recommend the right machine and configuration.",
+        text: "We assess your part dimensions, tolerances, production volume and process needs, then define the right machine and configuration options together.",
       },
       {
-        title: "Precision & Repeatability",
-        text: "Rigid machine structures delivering micron-level tolerances and long-term stability.",
+        title: "Technical Selection & Comparison",
+        text: "We technically compare spindle power, axis configuration, rigidity, accuracy and capacity values against your production targets.",
       },
       {
         title: "Commissioning & Training",
-        text: "Installation, calibration and operator training so your machine runs at full capacity from day one.",
+        text: "We support correct machine use throughout installation, first run, basic operator training and the transition to production.",
       },
       {
-        title: "Guaranteed After-Sales Service",
-        text: "Uninterrupted technical service and spare-part support for customers who buy machines from us.",
+        title: "After-Sales Technical Support",
+        text: "We focus on preserving our customers' production continuity through spare parts, service coordination and technical support processes.",
+      },
+    ],
+  },
+  featured: {
+    eyebrow: "Featured Topics",
+    title: "Find Your Way at Borsan Teknoloji",
+    subtitle: "Explore our product portfolio, discover our service and investment solutions, or contact us directly for your project.",
+    cards: [
+      {
+        tag: "MACHINE PORTFOLIO",
+        title: "Products",
+        text: "Explore CNC machining centers, horizontal lathes, gear grinding and universal lathe groups — machine alternatives for a wide range of production needs.",
+        cta: "Explore Products",
+      },
+      {
+        tag: "TECHNICAL INVESTMENT FILE",
+        title: "Investment Solutions",
+        text: "From a single machine to full workshop setup — get support for technical selection, specification, equipment lists and quotation file preparation.",
+        cta: "See Solutions",
+      },
+      {
+        tag: "TECHNICAL SUPPORT",
+        title: "Service",
+        text: "Get technical support for installation, commissioning, operator training, service coordination and spare parts processes.",
+        cta: "Service Details",
+      },
+      {
+        tag: "BORSAN TEKNOLOJİ",
+        title: "About Us",
+        text: "Learn more about our approach to machine procurement, technical evaluation and production-focused solutions.",
+        cta: "About Borsan",
+      },
+      {
+        tag: "LET'S DISCUSS YOUR PROJECT",
+        title: "Contact",
+        text: "Get in touch with us for your machine needs, technical specifications or investment project.",
+        cta: "Get in Touch",
       },
     ],
   },
   references: {
     eyebrow: "Trust",
-    title: "A Solution Partner the Industry Relies On",
+    title: "Industry's Trusted",
+    titleHighlight: "Solution Partner",
     subtitle:
-      "We build long-lasting partnerships with manufacturers across automotive, defense, energy and general production.",
+      "In our partnerships with the industry's leading organizations, we don't just supply machinery — we act as a solution partner at every stage, from investment planning to after-sales technical support.",
     placeholder: "Reference logo",
   },
   cta: {
@@ -147,6 +188,8 @@ const en: Dictionary = {
     modelsTitleSuffix: "",
     modelsSubtitle: "Explore technical specifications and find the model best suited to your production requirements.",
     noProducts: "Models for this category are coming soon. Please contact us for details.",
+    comingSoon: "Our new machines are coming soon.",
+    comingSoonDetail: "New machines for this category will be listed soon. Feel free to contact us for more information.",
   },
   productPage: {
     requestQuoteTitle: "Request a Quote for This Model",
@@ -172,12 +215,36 @@ const en: Dictionary = {
     email: "Email",
     phone: "Phone",
     product: "Product of Interest",
+    topic: "Topic of Interest",
+    topicOptions: [
+      { value: "quote", label: "Quote Request" },
+      { value: "consulting", label: "Technical Consultancy" },
+      { value: "project", label: "Project Assessment" },
+      { value: "service", label: "Service Request" },
+      { value: "other", label: "Other" },
+    ],
+    topicOtherLabel: "Topic Description",
+    topicOtherPlaceholder: "Please describe the topic...",
+    serviceTopic: "Service Topic",
+    serviceTopicOptions: [
+      { value: "installation", label: "Installation & Commissioning" },
+      { value: "maintenance", label: "Periodic Maintenance" },
+      { value: "spare-parts", label: "Spare Parts Request" },
+      { value: "fault", label: "Fault Report" },
+      { value: "training", label: "Operator Training" },
+      { value: "remote", label: "Remote Support" },
+      { value: "other", label: "Other" },
+    ],
+    productCategory: "Machine Category",
+    productModel: "Product of Interest",
     message: "Your Message",
     messagePlaceholder: "Briefly describe your part, material, production volume and expectations.",
     submit: "Send Quote Request",
-    consent: "By submitting this form, I agree to my information being processed for quotation purposes.",
+    consent: "By submitting this form, I agree to my information being processed for quotation purposes in accordance with applicable data protection regulations.",
     successTitle: "Your request has been received",
-    successText: "We will contact you shortly. (This is a prototype form; no data is sent.)",
+    successText: "Our team will contact you as soon as possible.",
+    errorText: "Something went wrong. Please try again.",
+    sending: "Sending...",
     required: "Required field",
     requestType: "Request Type",
     requestTypeOptions: [
@@ -198,6 +265,15 @@ const en: Dictionary = {
     title: "Production Power Shaped by Engineering",
     intro:
       "Borsan Teknoloji is an engineering and sales organization providing end-to-end CNC machine-tool solutions. We don't just sell machines; we build solutions that make your production more efficient, precise and sustainable.",
+    pageTitle: "A Closer Look at Borsan Teknoloji",
+    welcome: "Welcome",
+    body: [
+      "BORSAN TEKNOLOJİ VE MAKİNA TİCARETİ A.Ş. is a company providing sales, installation, commissioning and technical service for machine tools in Turkey and across Europe.",
+      "CNC lathes, CNC machining centers, 5-axis machining centers, gear profile grinding machines, gear hobbing machines, milling machines, drilling machines and various other metal-cutting manufacturing machines are among our company's fields of activity.",
+      "Borsan Teknoloji manages its machine supply and service processes with an approach grounded in technical suitability, sustainable use and after-sales support. It serves its customers throughout pre-sales technical assessment, quotation, installation, commissioning, operator briefing, maintenance guidance and spare-parts supply.",
+      "Alongside its work in Turkey, our company also takes part in projects for the European market, offering machine solutions to organizations and businesses operating in the automotive, defense, energy, shipyard, aviation, general manufacturing and heavy-industry sectors.",
+      "With its corporate service approach, technical know-how and long-term partnership mindset, Borsan Teknoloji continues to operate as a reliable solution partner for the machine-tool solutions that industry needs.",
+    ],
     missionTitle: "Our Mission",
     missionText:
       "To bring world-class machine-tool technologies to industry, supported by strong engineering and service, and to increase our customers' competitiveness.",
@@ -221,53 +297,72 @@ const en: Dictionary = {
   },
   service: {
     eyebrow: "Service",
-    title: "Full After-Sales Support",
+    title: "Technical Service & Support",
     intro:
-      "Our service is exclusive to customers who purchase machines from us. Our goal is to keep every machine we sell running at peak efficiency throughout its lifetime.",
-    note: "Important: Service is offered only to customers who purchase machines from Borsan Teknoloji.",
+      "From installation to spare parts — fast, solution-focused technical support to keep your machines running efficiently and without interruption.",
+    note: "Machines procured from Borsan Teknoloji are covered under priority and direct support. Requests for non-Borsan machines are assessed following technical review; eligibility, scope and pricing are determined separately.",
     items: [
       {
         title: "Installation & Commissioning",
-        text: "Machine placement, calibration and getting it production-ready.",
+        summary:
+          "We follow the entire process to ensure your machine is correctly positioned on site and production begins safely.",
+        text: "At Borsan Teknoloji, we treat the installation and commissioning process for the machines we supply not merely as a technical starting point, but as the foundation of productive output. Machine placement at the site, basic connection checks, initial startup steps and production readiness are evaluated in a controlled manner by our technical team. Our goal is to ensure the machine operates under the right conditions from day one and that our customer completes the transition to production with confidence.",
       },
       {
         title: "Periodic Maintenance",
-        text: "Minimize breakdown risk with planned maintenance programs.",
+        summary:
+          "We help preserve your machine's precision, performance and long-term operating stability through a planned maintenance approach.",
+        text: "In periodic maintenance, our goal is not just to keep the machine running, but to sustain its production performance over the long term. Operating conditions, key checkpoints, maintenance needs and critical wear areas are assessed, and the customer is provided with correct guidance. A regular maintenance approach aims to reduce unexpected downtime, preserve part quality and support production continuity.",
       },
       {
         title: "Spare Parts Supply",
-        text: "Fast access to original spare parts and consumables.",
+        summary:
+          "We provide support to help you quickly, compatibly and reliably access the correct spare parts and consumables for your machine.",
+        text: "For machines procured from Borsan Teknoloji, we carefully manage the spare parts process in terms of correct product selection and machine compatibility. For consumables, critical spare parts and equipment needs, guidance is provided taking the customer's machine model and operating conditions into account. Sourcing the right part at the right time contributes to shortening downtime and allowing production flow to continue more safely.",
       },
       {
         title: "Operator Training",
-        text: "Training so your team uses the machine safely and efficiently.",
+        summary:
+          "We convey the key operating steps and points of attention so operators can use the machine more safely, knowledgeably and efficiently.",
+        text: "Machine performance depends not only on technical specifications but also on correct operating habits. For this reason, the operator briefing process covers basic operating steps, points of attention regarding the control unit, safe working principles and basic checks to monitor during daily use. Our goal is to ensure the machine's potential is utilised more effectively and to reduce user-caused issues.",
       },
       {
         title: "Breakdown Response",
-        text: "Fast diagnosis and resolution with an expert technical team.",
+        summary:
+          "We manage the process with rapid preliminary assessment, correct guidance and a solution-focused technical support approach in the event of breakdowns.",
+        text: "We know that every production stoppage means time and cost. In the event of a breakdown, our technical team focuses on rapidly assessing the situation through preliminary diagnosis, problem analysis and resolution guidance. Where necessary, service scheduling, spare parts needs and intervention steps are addressed together. Our goal is to return the machine to safe and efficient production in the shortest possible time.",
       },
       {
         title: "Remote Support",
-        text: "Remote intervention for control-unit and software-related issues.",
+        summary:
+          "We provide remote support for rapid preliminary assessment of control unit, parameter, usage or software-related issues.",
+        text: "Not every technical issue requires an on-site visit. Where appropriate, control unit, parameter, usage or software-related problems are assessed remotely and the customer is provided with rapid guidance. This approach helps shorten resolution times, reduce unnecessary waiting and allow production flow to return to normal more quickly. The remote support process is complementarily planned together with on-site intervention where needed.",
       },
     ],
     ctaTitle: "Is your machine from Borsan?",
-    ctaText: "Contact us for your service request; our technical team is here to help.",
+    ctaText: "For service requests, you can reach our team by sharing the machine model, serial number and details of your needs.",
+    ctaCta: "Contact Us for Service Request",
   },
   contact: {
     eyebrow: "Contact",
     title: "Get in Touch",
     intro:
-      "Reach us through the channels below for quotes, technical consultancy or service requests.",
+      "You can contact our team directly for quotes, technical consultancy, project assessment or service requests. We would be pleased to evaluate the most suitable solution for your needs.",
     addressTitle: "Address",
-    address: "Organized Industrial Zone, Sample St. No: 1\nTürkiye",
+    addressLabel: "Main Address",
+    address: "Topçular Mah. Maltepe Cd. No:4/1 D:18 Eyüpsultan / Istanbul",
+    address2Title: "Management Office",
+    address2:
+      "Bahçeşehir 1st District Teknik Yapı Residence Inn Deluxia, Sakarya St., Mevlüt Pehlivan Sk. No:5, Başakşehir / Istanbul",
     phoneTitle: "Phone",
-    phone: "+90 (000) 000 00 00",
+    phone: "+90 533 350 02 64\n+90 545 144 91 10\n+90 535 748 77 43",
     emailTitle: "Email",
     email: "info@borsanteknoloji.com",
     hoursTitle: "Working Hours",
-    hours: "Monday – Friday: 08:30 – 18:00",
+    hours: "Monday – Friday\n09:00 – 18:00",
     formTitle: "Send a Message",
+    formDesc:
+      "Fill in the form to reach us for quotes, technical consultancy, project assessment or service requests. Your request will be reviewed by our team and we will get back to you as soon as possible.",
     mapPlaceholder: "Map area",
   },
   investment: {

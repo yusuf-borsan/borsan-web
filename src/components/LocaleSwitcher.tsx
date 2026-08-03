@@ -117,11 +117,7 @@ export function LocaleSwitcher({
             role="option"
             aria-selected={loc === locale}
             onClick={() => setOpen(false)}
-            className={`flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-semibold transition-colors duration-150 ${
-              tone === "light"
-                ? "text-white/80 hover:text-white"
-                : "text-ink-700 hover:text-brand-600"
-            }`}
+            className="flex items-center justify-center gap-1.5 px-3 py-2 text-sm font-semibold text-ink-700 transition-colors duration-150 hover:text-brand-600"
           >
             <LocaleFlagIcon locale={loc} />
             {localeShort[loc]}

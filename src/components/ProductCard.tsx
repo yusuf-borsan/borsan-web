@@ -105,45 +105,47 @@ export function ProductCard({
   const href = localePath(locale, routes.product(product.categorySlug, product.slug));
   const chips = getKeySpecs(product, locale);
 
+  const isFVASeries = product.model?.startsWith("FV-A");
+
   return (
     <Link
       href={href}
-      className="group flex flex-col overflow-hidden rounded-md border border-ink-100 bg-white shadow-[0_2px_14px_-4px_rgba(20,23,29,0.09)] transition-all duration-300 hover:-translate-y-2 hover:border-brand-300/50 hover:shadow-[0_22px_52px_-10px_rgba(20,23,29,0.22)]"
+      className="group flex flex-col overflow-hidden rounded-[3px] border border-[#E5E7EB] bg-white shadow-[0_1px_4px_rgba(20,23,29,0.06),0_0_0_1px_rgba(20,23,29,0.02)] transition-all duration-300 hover:-translate-y-1 hover:border-brand-200 hover:shadow-[0_6px_24px_-4px_rgba(20,23,29,0.13)]"
     >
       {/* ── Image area ── */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-white">
+      <div className={`relative aspect-[16/11] overflow-hidden ${isFVASeries ? "bg-[#f5f5f5]" : "bg-white"}`}>
         <Image
           src={product.image}
           alt={product.name[locale]}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-contain transition-transform duration-500 group-hover:scale-[1.05]"
+          className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.04]"
         />
 
-        {/* Model badge — kurumsal mavi, beyaz yazı */}
-        <span className="absolute left-4 top-4 rounded-sm bg-brand-700 px-2.5 py-1 text-xs font-bold tracking-wide text-white shadow-[0_2px_10px_-2px_rgba(15,35,90,0.40)]">
+        {/* Model badge — refined, less heavy */}
+        <span className="absolute left-3 top-3 rounded-[2px] bg-brand-700/90 px-2 py-[4px] text-[10px] font-semibold tracking-[0.08em] text-white/95">
           {product.model}
         </span>
       </div>
 
       {/* ── Content area — goes deep navy on hover ── */}
-      <div className="flex flex-1 flex-col p-6 transition-colors duration-300 group-hover:bg-[#0B2F66]">
+      <div className="flex flex-1 flex-col px-5 pb-5 pt-4 transition-colors duration-300 group-hover:bg-[#0B2F66]">
 
-        <h3 className="font-display text-lg leading-tight text-ink-900 transition-colors duration-300 group-hover:text-white">
+        <h3 className="font-display text-[0.9375rem] font-semibold leading-snug text-brand-600 transition-colors duration-300 group-hover:text-white">
           {product.name[locale]}
         </h3>
 
-        <p className="mt-2 flex-1 text-sm leading-relaxed text-ink-500 transition-colors duration-300 group-hover:text-white/65">
+        <p className="mt-2 line-clamp-3 flex-1 text-[12.5px] font-normal leading-[1.65] text-ink-500 transition-colors duration-300 group-hover:text-white/60">
           {product.summary[locale]}
         </p>
 
         {/* ── Spec chips ── */}
         {chips.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1.5">
+          <div className="mt-3 flex flex-wrap gap-1">
             {chips.map((chip, i) => (
               <span
                 key={i}
-                className="inline-flex items-center gap-1.5 rounded-full border border-brand-100 bg-brand-50 px-2.5 py-1 text-[11px] font-semibold leading-none text-brand-700 transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/10 group-hover:text-white"
+                className="inline-flex items-center gap-1 rounded-[2px] border border-brand-100 bg-brand-50/70 px-2 py-[3px] text-[10px] font-medium leading-none tracking-wide text-brand-700 transition-all duration-300 group-hover:border-white/15 group-hover:bg-white/10 group-hover:text-white"
               >
                 {chip.kind === "diameter" && <DiameterIcon />}
                 {chip.kind === "axes"    && <AxesIcon />}
@@ -155,8 +157,8 @@ export function ProductCard({
           </div>
         )}
 
-        {/* ── View details link ── */}
-        <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-600 transition-colors duration-300 group-hover:text-white">
+        {/* ── View details link — pinned to bottom with separator ── */}
+        <span className="mt-4 inline-flex items-center gap-1.5 border-t border-[#F0F2F5] pt-4 text-[12px] font-medium tracking-wide text-brand-600 transition-colors duration-300 group-hover:border-white/10 group-hover:text-white">
           {dict.common.viewDetails}
           <Arrow />
         </span>

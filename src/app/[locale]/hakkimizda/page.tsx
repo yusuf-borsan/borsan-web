@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { isLocale, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
-import { localePath } from "@/lib/routes";
 import { Container, Eyebrow } from "@/components/ui";
-import { PageHero, CtaSection } from "@/components/sections";
 import { RevealOnScroll } from "@/components/RevealOnScroll";
+import { AboutVideoBg } from "./AboutVideoBg";
 
 export async function generateMetadata({
   params,
@@ -27,73 +26,87 @@ export default async function AboutPage({
 
   return (
     <>
-      <PageHero
-        eyebrow={dict.about.eyebrow}
-        title={dict.about.title}
-        subtitle={dict.about.intro}
-        breadcrumb={[
-          { label: dict.common.home, href: localePath(locale) },
-          { label: dict.about.eyebrow },
-        ]}
-      />
+      {/* ── Hero — video plays ONLY here, behind the logo ── */}
+      <section className="relative flex min-h-dvh items-center justify-center overflow-hidden bg-ink-950 text-white">
+        {/* Layer 1 — background video (hero only; desktop + motion; contained) */}
+        <AboutVideoBg />
 
-      {/* Mission / Vision */}
-      <section className="bg-white">
-        <Container className="py-16 lg:py-24">
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-            {[
-              { title: dict.about.missionTitle, text: dict.about.missionText },
-              { title: dict.about.visionTitle, text: dict.about.visionText },
-            ].map((b, idx) => (
-              <RevealOnScroll key={b.title} delay={idx * 100}>
-                <div className="h-full rounded-md border border-ink-100 bg-steel-300/5 p-8 lg:p-10">
-                  <span className="font-display text-5xl text-brand-200">&ldquo;</span>
-                  <h2 className="font-display mt-2 text-2xl text-ink-900">{b.title}</h2>
-                  <p className="mt-4 text-base leading-relaxed text-ink-600">{b.text}</p>
-                </div>
-              </RevealOnScroll>
-            ))}
+        {/* Layer 2 — dark overlay for title readability; fades to solid ink-950
+            at the bottom so the hero meets the copy section seamlessly. Keeps
+            the footage visible without drowning it. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/60 via-ink-950/55 to-ink-950"
+        />
+        {/* Soft central darkening so the white logo keeps contrast over brighter
+            frames — a gentle vignette, not a panel. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(46rem 34rem at 50% 44%, rgba(4,7,12,0.45) 0%, rgba(4,7,12,0.18) 48%, transparent 72%)",
+          }}
+        />
+
+        {/* Layer 3 — soft blue glow (premium light, not neon) */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60rem 42rem at 50% 42%, rgba(31,68,136,0.24) 0%, rgba(31,68,136,0.08) 44%, transparent 68%)",
+          }}
+        />
+
+        {/* No z-index here: the content still paints above the video (it comes
+            later in the DOM), but staying in the same stacking context lets the
+            logo's mix-blend-mode composite against the video/overlay behind it. */}
+        <Container className="relative">
+          {/* Logo (transparent white PNG, used as-is) + welcome, tightly stacked
+              and centered. */}
+          <div className="flex flex-col items-center text-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/borsan-logo.png"
+              alt="Borsan Teknoloji"
+              className="h-auto"
+              style={{ width: "clamp(230px, 34vw, 500px)" }}
+            />
+            <p className="mt-3 text-base font-normal tracking-[0.15em] text-white/85 sm:mt-4 sm:text-lg">
+              {dict.about.welcome}
+            </p>
           </div>
         </Container>
       </section>
 
-      {/* Values */}
-      <section className="relative overflow-hidden bg-ink-900 text-white">
-        <Container className="relative py-16 lg:py-24">
-          <RevealOnScroll>
-            <Eyebrow tone="light">{dict.about.valuesTitle}</Eyebrow>
-          </RevealOnScroll>
-          <RevealOnScroll delay={100}>
-            <div className="mt-10 grid grid-cols-1 gap-px overflow-hidden rounded-md border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-              {dict.about.values.map((v, i) => (
-                <div key={v.title} className="bg-ink-900 p-8">
-                  <div className="font-display text-3xl text-brand-400">0{i + 1}</div>
-                  <h3 className="font-display mt-4 text-lg text-white">{v.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-steel-400">{v.text}</p>
-                </div>
+      {/* ── About copy — plain navy, NO video; flows into the ink-950 footer ── */}
+      <section className="relative overflow-hidden bg-ink-950 text-white">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(52rem 40rem at 100% 0%, rgba(31,68,136,0.12) 0%, transparent 60%)",
+          }}
+        />
+        <Container className="relative py-20 sm:py-24 lg:py-28">
+          <div className="mx-auto max-w-[52rem]">
+            <RevealOnScroll>
+              <Eyebrow tone="light">{dict.about.eyebrow}</Eyebrow>
+            </RevealOnScroll>
+            <div className="mt-8 space-y-6 sm:space-y-7">
+              {dict.about.body.map((paragraph, i) => (
+                <RevealOnScroll key={i} delay={i * 80}>
+                  <p className="text-pretty text-[15px] leading-[1.85] text-steel-200 sm:text-base">
+                    {paragraph}
+                  </p>
+                </RevealOnScroll>
               ))}
             </div>
-          </RevealOnScroll>
+          </div>
         </Container>
       </section>
-
-      {/* Stats */}
-      <section className="bg-white">
-        <Container className="py-16 lg:py-20">
-          <RevealOnScroll>
-            <div className="grid grid-cols-2 gap-px overflow-hidden rounded-md border border-ink-100 bg-ink-100 lg:grid-cols-4">
-              {dict.about.stats.map((s) => (
-                <div key={s.label} className="bg-white p-8 text-center">
-                  <div className="font-display text-4xl text-brand-600 sm:text-5xl">{s.value}</div>
-                  <div className="mt-2 text-sm text-ink-500">{s.label}</div>
-                </div>
-              ))}
-            </div>
-          </RevealOnScroll>
-        </Container>
-      </section>
-
-      <CtaSection locale={locale} dict={dict} />
     </>
   );
 }

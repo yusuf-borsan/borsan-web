@@ -17,8 +17,7 @@ export function RevealOnScroll({
     const el = ref.current;
     if (!el) return;
 
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mq.matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       el.classList.add("reveal-visible");
       return;
     }
@@ -30,7 +29,10 @@ export function RevealOnScroll({
           observer.unobserve(el);
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+      {
+        threshold: 0.08,
+        rootMargin: "0px 0px -6% 0px",
+      },
     );
     observer.observe(el);
     return () => observer.disconnect();

@@ -56,7 +56,7 @@ export default async function ProductPage({
       <section className="bg-white">
 
         {/* Compact breadcrumb bar */}
-        <div className="border-b border-ink-100">
+        <div>
           <Container className="py-3">
             <Breadcrumb
               variant="light"

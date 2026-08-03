@@ -8,6 +8,8 @@ import { Container } from "@/components/ui";
 import { Breadcrumb, CtaSection } from "@/components/sections";
 import { FilterableProductGrid } from "@/components/FilterableProductGrid";
 
+const COMING_SOON_SLUGS = new Set(["taslama-tezgahlari", "cnc-yatay-isleme-merkezleri"]);
+
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
     categories.map((cat) => ({ locale, category: cat.slug })),
@@ -63,7 +65,7 @@ export default async function CategoryPage({
             </p>
 
             {/* Title */}
-            <h1 className="text-[1.875rem] font-semibold leading-[1.15] tracking-[-0.01em] text-[#1F4488] sm:text-[2.25rem] lg:text-[2.625rem]">
+            <h1 className="font-display text-[1.875rem] leading-[1.15] text-[#1F4488] sm:text-[2.25rem] lg:text-[2.625rem]">
               {cat.name[locale]}
             </h1>
 
@@ -76,12 +78,38 @@ export default async function CategoryPage({
             <div className="mt-6 h-[1.5px] w-32 bg-gradient-to-r from-[#1F4488]/65 to-transparent" />
           </div>
 
-          <FilterableProductGrid
-            products={cat.products}
-            locale={locale}
-            dict={dict}
-            noProductsLabel={dict.categoryPage.noProducts}
-          />
+          {COMING_SOON_SLUGS.has(cat.slug) ? (
+            /* Coming-soon banner for categories without products yet */
+            <div className="flex flex-col items-center gap-5 rounded-xl border border-brand-100 bg-brand-50/60 px-8 py-16 text-center">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-12 w-12 text-brand-300"
+                aria-hidden="true"
+              >
+                <path d="M5 3h14M5 21h14M6 3v4a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3M6 21v-4a6 6 0 0 1 6-6 6 6 0 0 1 6 6v4" />
+              </svg>
+              <div>
+                <p className="font-display text-lg font-semibold text-brand-800">
+                  {dict.categoryPage.comingSoon}
+                </p>
+                <p className="mt-2 max-w-md text-[14px] leading-relaxed text-brand-700/70">
+                  {dict.categoryPage.comingSoonDetail}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <FilterableProductGrid
+              products={cat.products}
+              locale={locale}
+              dict={dict}
+              noProductsLabel={dict.categoryPage.noProducts}
+            />
+          )}
         </Container>
       </section>
 
