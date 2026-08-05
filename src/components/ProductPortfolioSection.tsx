@@ -254,7 +254,7 @@ export function ProductPortfolioSection({
                   alt={g.imageAlt[locale]}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-contain mix-blend-multiply transition-opacity duration-[600ms] ease-out"
+                  className="object-contain mix-blend-multiply transition-opacity duration-300 ease-out"
                   style={{ opacity: i === activeIdx ? 1 : 0 }}
                   aria-hidden={i !== activeIdx}
                   priority={i === 0}
