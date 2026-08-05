@@ -50,7 +50,6 @@ export async function generateMetadata({
     alternates: {
       languages: { tr: "/tr", en: "/en" },
     },
-    icons: { icon: "/favicon.ico" },
   };
 }
 
