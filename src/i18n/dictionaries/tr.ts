@@ -64,10 +64,10 @@ const tr = {
         image: "/hero/hero-main2.png",
         href: "/urunler/cnc-tornalar",
         eyebrow: "CNC Tornalar · Yüksek Tork",
-        titleLine1: "Mikron Düzeyinde",
-        titleLine2: "Tornalama Gücü",
+        titleLine1: "Yüksek Verimli",
+        titleLine2: "Tornalama Çözümleri",
         subtitle:
-          "Seri üretimden tekil parça imalatına; yüksek devirli, rijit ve tahrikli takımlı CNC torna çözümleriyle çevrim sürenizi kısaltın, verimliliğinizi artırın.",
+          "Seri üretimden tekil parça imalatına; güçlü, rijit ve tahrikli takımlı CNC torna çözümleriyle çevrim sürenizi kısaltın, genel verimliliğinizi artırın.",
       },
       {
         image: "/hero/hero-main3.png",

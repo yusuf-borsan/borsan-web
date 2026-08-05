@@ -66,10 +66,10 @@ const en: Dictionary = {
         image: "/hero/hero-main2.png",
         href: "/urunler/cnc-tornalar",
         eyebrow: "CNC Lathes · High Torque",
-        titleLine1: "Micron-Level",
-        titleLine2: "Turning Power",
+        titleLine1: "High-Efficiency",
+        titleLine2: "Turning Solutions",
         subtitle:
-          "From serial production to single-part manufacturing — cut your cycle times and boost productivity with high-speed, rigid, live-tooling CNC turning solutions.",
+          "From serial production to single-part manufacturing — cut your cycle times and boost overall productivity with powerful, rigid, live-tooling CNC turning solutions.",
       },
       {
         image: "/hero/hero-main3.png",
