@@ -12,8 +12,12 @@ const COUNTRY_CODES = [
   { code: "+44",  abbr: "GB" },
   { code: "+33",  abbr: "FR" },
   { code: "+39",  abbr: "IT" },
+  { code: "+34",  abbr: "ES" },
   { code: "+31",  abbr: "NL" },
-  { code: "+7",   abbr: "RU" },
+  { code: "+48",  abbr: "PL" },
+  { code: "+420", abbr: "CZ" },
+  { code: "+40",  abbr: "RO" },
+  { code: "+359", abbr: "BG" },
   { code: "+971", abbr: "AE" },
 ] as const;
 
@@ -110,12 +114,46 @@ function FlagIcon({ abbr }: { abbr: string }) {
         </>
       );
       break;
-    case "RU":
+    case "ES":
+      inner = (
+        <>
+          <rect width={20} height={14} fill="#AA151B"/>
+          <rect y={3.5} width={20} height={7} fill="#F1BF00"/>
+        </>
+      );
+      break;
+    case "PL":
+      inner = (
+        <>
+          <rect width={20} height={7} fill="white"/>
+          <rect y={7} width={20} height={7} fill="#DC143C"/>
+        </>
+      );
+      break;
+    case "CZ":
+      inner = (
+        <>
+          <rect width={20} height={7} fill="white"/>
+          <rect y={7} width={20} height={7} fill="#D7141A"/>
+          <polygon points="0,0 10,7 0,14" fill="#11457E"/>
+        </>
+      );
+      break;
+    case "RO":
+      inner = (
+        <>
+          <rect width={6.67} height={14} fill="#002B7F"/>
+          <rect x={6.67} width={6.67} height={14} fill="#FCD116"/>
+          <rect x={13.33} width={6.67} height={14} fill="#CE1126"/>
+        </>
+      );
+      break;
+    case "BG":
       inner = (
         <>
           <rect width={20} height={4.67} fill="white"/>
-          <rect y={4.67} width={20} height={4.67} fill="#0039A6"/>
-          <rect y={9.33} width={20} height={4.67} fill="#D52B1E"/>
+          <rect y={4.67} width={20} height={4.67} fill="#00966E"/>
+          <rect y={9.33} width={20} height={4.67} fill="#D62612"/>
         </>
       );
       break;
