@@ -68,19 +68,8 @@ export default async function ContactPage({
                   </p>
                   <div className="space-y-5">
                     <div>
-                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-steel-500">
-                        {dict.contact.addressLabel}
-                      </p>
                       <p className="text-[13.5px] leading-relaxed text-steel-300">
                         {dict.contact.address}
-                      </p>
-                    </div>
-                    <div>
-                      <p className="mb-1.5 text-[10px] font-semibold uppercase tracking-wider text-steel-500">
-                        {dict.contact.address2Title}
-                      </p>
-                      <p className="text-[13.5px] leading-relaxed text-steel-300">
-                        {dict.contact.address2}
                       </p>
                     </div>
                   </div>
@@ -171,11 +160,11 @@ export default async function ContactPage({
               style={{ aspectRatio: "21/9" }}
             >
               <iframe
-                src="https://maps.google.com/maps?q=Teknik+Yap%C4%B1+Residence+Inn+Deluxia+Ba%C5%9Fakehir+%C4%B0stanbul&hl=tr&z=18&output=embed"
+                src="https://maps.google.com/maps?q=Top%C3%A7ular+Mah.+Maltepe+Cd.+No:4%2F1+D:18+Ey%C3%BCpsultan+%C4%B0stanbul&hl=tr&z=18&output=embed"
                 className="h-full w-full border-0"
                 loading="lazy"
                 allowFullScreen
-                title={dict.contact.address2Title}
+                title={dict.contact.addressTitle}
               />
             </div>
           </RevealOnScroll>

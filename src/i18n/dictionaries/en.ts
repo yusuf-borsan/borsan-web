@@ -349,11 +349,7 @@ const en: Dictionary = {
     intro:
       "You can contact our team directly for quotes, technical consultancy, project assessment or service requests. We would be pleased to evaluate the most suitable solution for your needs.",
     addressTitle: "Address",
-    addressLabel: "Main Address",
     address: "Topçular Mah. Maltepe Cd. No:4/1 D:18 Eyüpsultan / Istanbul",
-    address2Title: "Management Office",
-    address2:
-      "Bahçeşehir 1st District Teknik Yapı Residence Inn Deluxia, Sakarya St., Mevlüt Pehlivan Sk. No:5, Başakşehir / Istanbul",
     phoneTitle: "Phone",
     phone: "+90 533 350 02 64\n+90 545 144 91 10\n+90 535 748 77 43",
     emailTitle: "Email",

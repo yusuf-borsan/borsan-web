@@ -347,11 +347,7 @@ const tr = {
     intro:
       "Teklif, teknik danışmanlık, proje değerlendirmesi veya servis talepleriniz için ekibimizle doğrudan iletişime geçebilirsiniz. İhtiyacınıza en uygun çözümü birlikte değerlendirmekten memnuniyet duyarız.",
     addressTitle: "Adres",
-    addressLabel: "Ana Adres",
     address: "Topçular Mah. Maltepe Cd. No:4/1 D:18 Eyüpsultan / İstanbul",
-    address2Title: "Yönetim Ofisi",
-    address2:
-      "Bahçeşehir 1. Kısım Teknik Yapı Residence Inn Deluxia Sakarya Caddesi, Mevlüt Pehlivan Sk. No:5, Başakşehir / İstanbul",
     phoneTitle: "Telefon",
     phone: "+90 533 350 02 64\n+90 545 144 91 10\n+90 535 748 77 43",
     emailTitle: "E-Posta",
