@@ -93,10 +93,6 @@ const portfolioGroups = [
   imageAlt: { tr: string; en: string };
 }[];
 
-/* ── Easing constants — match globals.css reveal animation exactly ──────── */
-const EASE_IN  = 'opacity 0.2s ease-in, transform 0.2s ease-in';
-const EASE_OUT = 'opacity 0.6s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1)';
-
 /* ── NavArrow ─────────────────────────────────────────────────────────── */
 
 function NavArrow({
@@ -136,11 +132,6 @@ export function ProductPortfolioSection({
   dict: Dictionary;
 }) {
   const [activeIdx, setActiveIdx] = useState(0);
-  const [visible, setVisible]     = useState(true);
-
-  /* Prevent overlapping transitions on rapid clicks */
-  const isTransitioning = useRef(false);
-  const timerRef        = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
   /* Scroll-reveal ref — repeats on every scroll-in, instant reset on scroll-out */
   const revealRef = useRef<HTMLDivElement>(null);
@@ -165,42 +156,18 @@ export function ProductPortfolioSection({
     return () => observer.disconnect();
   }, []);
 
-  /* Cleanup pending timer on unmount */
-  useEffect(() => () => clearTimeout(timerRef.current), []);
-
-  const handleGroupChange = (idx: number) => {
-    if (idx === activeIdx || isTransitioning.current) return;
-    isTransitioning.current = true;
-    setVisible(false);
-    clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => {
-      setActiveIdx(idx);
-      setVisible(true);
-      isTransitioning.current = false;
-    }, 220); // just after the 200ms ease-in fade-out completes
+  const go = (idx: number) => {
+    const n = (idx + portfolioGroups.length) % portfolioGroups.length;
+    if (n !== activeIdx) setActiveIdx(n);
   };
 
-  const prev = () =>
-    handleGroupChange((activeIdx - 1 + portfolioGroups.length) % portfolioGroups.length);
-  const next = () =>
-    handleGroupChange((activeIdx + 1) % portfolioGroups.length);
+  const prev = () => go(activeIdx - 1);
+  const next = () => go(activeIdx + 1);
 
   const group      = portfolioGroups[activeIdx];
   const total      = portfolioGroups.length;
   const prevLabel  = locale === 'tr' ? 'Önceki grup' : 'Previous group';
   const nextLabel  = locale === 'tr' ? 'Sonraki grup' : 'Next group';
-
-  /* Inline styles matching scroll-reveal easing exactly */
-  const textStyle: React.CSSProperties = {
-    opacity:    visible ? 1 : 0,
-    transform:  visible ? 'translateY(0) scale(1)' : 'translateY(24px) scale(0.98)',
-    transition: visible ? EASE_OUT : EASE_IN,
-    willChange: 'opacity, transform',
-  };
-  const imgStyle: React.CSSProperties = {
-    opacity:    visible ? 1 : 0,
-    transition: visible ? 'opacity 0.55s ease-out' : 'opacity 0.2s ease-in',
-  };
 
   return (
     /* Section is relative — arrows are absolute at its left/right edges */
@@ -232,8 +199,8 @@ export function ProductPortfolioSection({
                 {locale === 'tr' ? 'Ürün Portföyü' : 'Product Portfolio'}
               </span>
 
-              {/* Group content — animates on group change */}
-              <div style={textStyle}>
+              {/* Group content — crossfades in on each group change (keyed remount) */}
+              <div key={activeIdx} className="pf-text-in">
 
                 {/* Series label */}
                 <span className="mt-4 block text-[10.5px] font-semibold uppercase tracking-[0.13em] text-brand-400">
@@ -278,18 +245,21 @@ export function ProductPortfolioSection({
               </div>
             </div>
 
-            {/* ── Right: product image — no frame, floating ── */}
-            <div style={imgStyle}>
-              <div className="relative aspect-[4/3]">
+            {/* ── Right: product image — all stacked, crossfade on change ── */}
+            <div className="relative aspect-[4/3]">
+              {portfolioGroups.map((g, i) => (
                 <Image
-                  src={group.image}
-                  alt={group.imageAlt[locale]}
+                  key={g.categorySlug}
+                  src={g.image}
+                  alt={g.imageAlt[locale]}
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-contain mix-blend-multiply"
-                  priority
+                  className="object-contain mix-blend-multiply transition-opacity duration-[600ms] ease-out"
+                  style={{ opacity: i === activeIdx ? 1 : 0 }}
+                  aria-hidden={i !== activeIdx}
+                  priority={i === 0}
                 />
-              </div>
+              ))}
             </div>
           </div>
         </div>
