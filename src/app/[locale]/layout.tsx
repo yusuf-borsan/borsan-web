@@ -66,9 +66,45 @@ export default async function LocaleLayout({
   const typedLocale: Locale = locale;
   const dict = getDictionary(typedLocale);
 
+  const siteUrl = "https://borsanteknoloji.com";
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${siteUrl}/#organization`,
+        name: "Borsan Teknoloji",
+        url: siteUrl,
+        logo: `${siteUrl}/branding/logo.png`,
+        image: `${siteUrl}/branding/logo.png`,
+        email: dict.contact.email,
+        telephone: dict.contact.phone.split("\n")[0],
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Topçular Mah. Maltepe Cd. No:4/1 D:18",
+          addressLocality: "Eyüpsultan",
+          addressRegion: "İstanbul",
+          addressCountry: "TR",
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteUrl}/#website`,
+        name: "Borsan Teknoloji",
+        url: siteUrl,
+        publisher: { "@id": `${siteUrl}/#organization` },
+        inLanguage: locale === "tr" ? "tr-TR" : "en-US",
+      },
+    ],
+  };
+
   return (
     <html lang={locale} className={`${inter.variable} ${manrope.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-white text-ink-900 antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <SmoothScrollProvider>
           <Header locale={typedLocale} dict={dict} />
           <main className="flex-1">
